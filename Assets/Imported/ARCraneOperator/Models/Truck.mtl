@@ -1,0 +1,16 @@
+newmtl Gray
+Kd 0.3301887 0.3301887 0.3301887
+d 1
+
+newmtl TruckAccent
+Kd 0.07600568 0.2641509 0.1491323
+d 1
+
+newmtl Dashboard
+Kd 0.1567618 0.1792453 0.1496529
+d 1
+
+newmtl Truck
+Kd 0.09041668 0.4716981 0.07787468
+d 1
+

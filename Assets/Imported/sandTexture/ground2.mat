@@ -10,7 +10,7 @@ Material:
   m_Name: ground2
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _BORDER_LIGHT_USES_HOVER_COLOR _DIRECTIONAL_LIGHT _EMISSION _HOVER_LIGHT
-    _NORMALMAP _NORMAL_MAP _PARALLAXMAP _REFLECTIONS _SPECULAR_HIGHLIGHTS
+    _NORMALMAP _NORMAL_MAP _REFLECTIONS _SPECULAR_HIGHLIGHTS
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -95,12 +95,12 @@ Material:
     - _FadeBeginDistance: 0.85
     - _FadeCompleteDistance: 0.5
     - _GlossMapScale: 1
-    - _Glossiness: 0.104
+    - _Glossiness: 0.018
     - _GlossyReflections: 1
     - _HoverLight: 1
     - _HoverLightOpaque: 0
     - _InnerGlow: 0
-    - _Metallic: 0.251
+    - _Metallic: 1
     - _Mode: 0
     - _NearPlaneFade: 0
     - _OcclusionStrength: 0.874
