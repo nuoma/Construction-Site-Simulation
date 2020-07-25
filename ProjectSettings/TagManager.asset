@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - selectionTag
+  - Truck
+  - Hook
+  - Container
+  - projectile
+  - hazard
   layers:
   - Default
   - TransparentFX
