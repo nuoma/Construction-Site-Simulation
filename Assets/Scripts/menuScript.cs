@@ -12,6 +12,10 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject scanner;
     [SerializeField] private GameObject scannerCanvas;
     [SerializeField] private GameObject drone;
+    [SerializeField] private GameObject Activity1Bulldozer;
+
+    [SerializeField] private GameObject mainMenu; //added for main menu
+    [SerializeField] private GameObject activityMenu; //added for activity menu
 
     [SerializeField] private GameObject scannerMenu;
     [SerializeField] private GameObject resourceMenu;
@@ -37,6 +41,8 @@ public class menuScript : MonoBehaviour
     {
         menuBackButton2.SetActive(false);
         droneResetPosition = drone.transform.position;
+        mainMenu.SetActive(false);
+        activityMenu.SetActive(false);
     }
 
     //Functions to reset and quit scene.
@@ -47,6 +53,29 @@ public class menuScript : MonoBehaviour
     public void quitGame()
     {
         Application.Quit();
+    }
+
+    // Entrance interface, select sensors, which is default menu for V1.0
+    public void SensorsEnabled()
+    {
+        activityMenu.SetActive(false); //should clear activity menu if possible double selection
+        mainMenu.SetActive(true);
+        
+    }
+
+    // Entrance interface, select activity menu
+    public void ActivityEnabled()
+    {
+        mainMenu.SetActive(false); //should clear main menu if possible double selection
+        activityMenu.SetActive(true);
+    }
+
+
+    //Activity Functions
+
+    public void select_1()
+    {
+        Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
     }
 
     //Sensor Functions

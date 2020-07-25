@@ -94,6 +94,7 @@ public class gpsScript : MonoBehaviour
         else
             Tag.transform.GetChild(0).gameObject.SetActive(true);
     }
+
     private void removeTags()
     {
         if (bulldozer.GetComponent<machine1Move>().tagged)
