@@ -29,6 +29,8 @@ public class Crane : MonoBehaviour
     [SerializeField] private Transform[] moveSpots;
     [SerializeField] private float precision;
 
+    private bool enable = false;
+
     // rotates the crane clockwise along the Y axis
     public void TurnClockwise ()
     {
@@ -193,9 +195,21 @@ public class Crane : MonoBehaviour
 
  
 
-    public void Start()
+    public void start()
     {
-        StartCoroutine(Sequence());
+        if (enable)
+        {
+            enable = false;
+        }
+        else
+        {
+            enable = true;
+        }
+        if (enable)
+        {
+            StartCoroutine(Sequence());
+        }
+            
     }
 
 }

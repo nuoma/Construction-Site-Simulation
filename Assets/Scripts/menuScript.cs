@@ -12,7 +12,11 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject scanner;
     [SerializeField] private GameObject scannerCanvas;
     [SerializeField] private GameObject drone;
+
+    //activities main actuator
     [SerializeField] private GameObject Activity1Bulldozer;
+    [SerializeField] private GameObject Activity4Worker;
+    [SerializeField] private GameObject Activity2Crane;
 
     [SerializeField] private GameObject mainMenu; //added for main menu
     [SerializeField] private GameObject activityMenu; //added for activity menu
@@ -76,6 +80,21 @@ public class menuScript : MonoBehaviour
     public void select_1()
     {
         Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
+    }
+
+    public void select_2()
+    {
+        Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
+    }
+
+    public void select_3()
+    {
+        Activity2Crane.GetComponent<Crane>().start();
+    }
+
+    public void select_4()
+    {
+        Activity4Worker.GetComponent<workerMove>().start();
     }
 
     //Sensor Functions

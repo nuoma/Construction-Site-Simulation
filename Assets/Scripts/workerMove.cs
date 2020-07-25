@@ -24,7 +24,8 @@ public class workerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enable && tagged)
+        //if (enable && tagged)
+        if (enable)
         {
             //transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, speed * Time.deltaTime);
             transform.position += transform.forward * Time.deltaTime * speed;
