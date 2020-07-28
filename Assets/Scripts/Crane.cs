@@ -205,6 +205,7 @@ public class Crane : MonoBehaviour
         {
             enable = true;
         }
+
         if (enable)
         {
             StartCoroutine(Sequence());

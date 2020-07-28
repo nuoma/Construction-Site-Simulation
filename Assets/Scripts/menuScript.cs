@@ -85,7 +85,7 @@ public class menuScript : MonoBehaviour
 
     public void select_2()
     {
-        Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
+        Activity2Crane.GetComponent<Crane>().start();
     }
 
     public void select_3()
