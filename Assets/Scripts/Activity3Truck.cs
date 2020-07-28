@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Activity3Truck : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class Activity3Truck : MonoBehaviour
     private int arrayPosition = 0;
     public GameObject Truck; //manually fill in truck asset
     private bool DisplayResults = false;
+    [SerializeField] private GameObject Activity3Report;
 
     // Update is called once per frame
     void Update()
@@ -44,7 +46,13 @@ public class Activity3Truck : MonoBehaviour
         // After truck movement finish, pull out RFID counting menu
         if (DisplayResults)
         {
-
+            // 5 Log
+            // objects in truck should have tagged TruckActivity3
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("TruckActivity3") as GameObject[];
+            int LogNumber = objectsWithTag.Length;
+            Activity3Report.SetActive(true);
+            Debug.Log("did it output?" + LogNumber);
+            Activity3Report.GetComponent<TextMeshPro>().text = "Truck Carry Log:" + LogNumber;
         }
 
     }
