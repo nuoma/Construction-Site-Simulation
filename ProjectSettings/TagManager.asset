@@ -10,6 +10,10 @@ TagManager:
   - Container
   - projectile
   - hazard
+  - wood
+  - rebar
+  - Log
+  - TruckActivity3
   layers:
   - Default
   - TransparentFX

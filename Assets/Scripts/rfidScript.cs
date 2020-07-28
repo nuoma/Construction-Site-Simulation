@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class rfidScript : MonoBehaviour
 {
@@ -45,7 +46,9 @@ public class rfidScript : MonoBehaviour
             logFlag.SetActive(true);
         }
     }
-    public void woodSelected()
+
+
+    public void WoodSelected()
     {
         if (wood)
         {
@@ -53,11 +56,12 @@ public class rfidScript : MonoBehaviour
             woodFlag.SetActive(false);
         }
         else
-        {            
+        {
             wood = true;
             woodFlag.SetActive(true);
         }
     }
+
     public void rebarSelected()
     {
         if (rebar)
@@ -78,15 +82,25 @@ public class rfidScript : MonoBehaviour
         resultsPage.SetActive(true);
         if (log)
         {
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("Log") as GameObject[];
+            int LogNumber = objectsWithTag.Length;
             logReport.SetActive(true);
+            logReport.GetComponent<TextMeshProUGUI>().text = "Log Number:" + LogNumber;
         }
         if (wood)
         {
+            // All wood object should have a tag with "wood"
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("wood") as GameObject[];
+            int WoodNumber = objectsWithTag.Length;
             woodReport.SetActive(true);
+            woodReport.GetComponent<TextMeshProUGUI>().text = "Wood Number:" + WoodNumber;
         }
         if (rebar)
         {
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("rebar") as GameObject[];
+            int RebarNumber = objectsWithTag.Length;
             rebarReport.SetActive(true);
+            rebarReport.GetComponent<TextMeshProUGUI>().text = "Rebar Number:" + RebarNumber;
         }
     }
 
@@ -106,3 +120,4 @@ public class rfidScript : MonoBehaviour
         rfidPage.SetActive(false);
     }
 }
+

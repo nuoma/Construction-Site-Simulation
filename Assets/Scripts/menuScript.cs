@@ -17,6 +17,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity1Bulldozer;
     [SerializeField] private GameObject Activity4Worker;
     [SerializeField] private GameObject Activity2Crane;
+    [SerializeField] private GameObject Activity3Truck;
 
     [SerializeField] private GameObject mainMenu; //added for main menu
     [SerializeField] private GameObject activityMenu; //added for activity menu
@@ -89,7 +90,7 @@ public class menuScript : MonoBehaviour
 
     public void select_3()
     {
-        Activity2Crane.GetComponent<Crane>().start();
+        Activity3Truck.GetComponent<Activity3Truck>().start();
     }
 
     public void select_4()
