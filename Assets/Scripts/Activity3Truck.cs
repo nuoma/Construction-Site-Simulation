@@ -51,7 +51,7 @@ public class Activity3Truck : MonoBehaviour
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("TruckActivity3") as GameObject[];
             int LogNumber = objectsWithTag.Length;
             Activity3Report.SetActive(true);
-            Debug.Log("did it output?" + LogNumber);
+            //Debug.Log("did it output?" + LogNumber);
             Activity3Report.GetComponent<TextMeshPro>().text = "Truck Carry Log:" + LogNumber;
         }
 

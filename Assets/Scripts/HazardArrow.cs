@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HazardArrow : MonoBehaviour
 {
-    private Color m_red = new Color(1f, 0f, 0f, 0.5f);
+    private Color m_red = new Color(1f, 0f, 0f, 0.4f);
 
     // Start is called before the first frame update
     void Start()

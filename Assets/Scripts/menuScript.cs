@@ -98,6 +98,48 @@ public class menuScript : MonoBehaviour
         Activity4Worker.GetComponent<workerMove>().start();
     }
 
+    public void select_5()
+    {
+
+    }
+
+    public void select_6()
+    {
+
+    }
+
+    public void select_7()
+    {
+
+    }
+
+    public void select_8()
+    {
+
+    }
+
+    public void select_9()
+    {
+
+    }
+
+    public void select_10()
+    {
+
+    }
+
+    public void select_11()
+    {
+
+    }
+
+    public void select_12()
+    {
+
+    }
+
+
+
     //Sensor Functions
     public void gpsSelected()
     {
