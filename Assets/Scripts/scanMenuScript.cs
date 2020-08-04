@@ -83,8 +83,8 @@ public class scanMenuScript : MonoBehaviour
     }
     public void scannerInterface()
     {
-        if (tripod.GetComponent<Renderer>().enabled == true && scanner.GetComponent<Renderer>().enabled == true && targetsEnabled && tripodLevel)
-        {
+        //if (tripod.GetComponent<Renderer>().enabled == true && scanner.GetComponent<Renderer>().enabled == true && targetsEnabled && tripodLevel)
+        //{
             backButton.SetActive(true);
             scannerCanvas.GetComponent<Canvas>().enabled = true;
 
@@ -92,6 +92,6 @@ public class scanMenuScript : MonoBehaviour
             mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
             mainMenu.GetComponent<Canvas>().enabled = false;
             scannerMenu.SetActive(false);
-        }
+        //}
     }
 }

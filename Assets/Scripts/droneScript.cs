@@ -7,7 +7,7 @@ using TMPro;
 public class droneScript : MonoBehaviour
 {
     [SerializeField] private Canvas droneCanvas;
-    [SerializeField] private Canvas tasksCanvas;
+    //[SerializeField] private Canvas tasksCanvas;
     [SerializeField] private Canvas flightCanvas;
     [SerializeField] private GameObject flyButton;
     [SerializeField] private Camera droneCamera;
@@ -29,10 +29,10 @@ public class droneScript : MonoBehaviour
     [HideInInspector] public bool motor = false;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        tasksCanvas.enabled = false;
-        droneCanvas.enabled = false;
+        //tasksCanvas.enabled = false;
+        droneCanvas.enabled = true;
         flightCanvas.enabled = false;
         droneCamera.gameObject.SetActive(false);
         this.gameObject.SetActive(false);
@@ -84,8 +84,8 @@ public class droneScript : MonoBehaviour
     }
     public void selectTask()
     {
-        taskSelected = true;
-        tasksCanvas.enabled = false;
+        // = true;
+        //tasksCanvas.enabled = false;
         droneCanvas.enabled = true;
     }
 

@@ -10,6 +10,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject worker;
     [SerializeField] private GameObject tripod;
     [SerializeField] private GameObject scanner;
+    [SerializeField] private GameObject scannerParentNode;
     [SerializeField] private GameObject scannerCanvas;
     [SerializeField] private GameObject drone;
 
@@ -18,6 +19,13 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity4Worker;
     [SerializeField] private GameObject Activity2Crane;
     [SerializeField] private GameObject Activity3Truck;
+    [SerializeField] private GameObject Activity8Arrow;
+    [SerializeField] private GameObject Activity9Arrow;
+    [SerializeField] private GameObject Activity11AArrow;
+    [SerializeField] private GameObject Activity11BArrow;
+    [SerializeField] private GameObject Activity12Laser;
+    [SerializeField] private GameObject Activity12Drone;
+    [SerializeField] private GameObject Activity13Drone;
 
     [SerializeField] private GameObject mainMenu; //added for main menu
     [SerializeField] private GameObject activityMenu; //added for activity menu
@@ -28,6 +36,10 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject imuMenu;
     [SerializeField] private GameObject rfidMenu;
     [SerializeField] private Canvas droneCanvas;
+    [SerializeField] private GameObject Activity11Canvas;
+    [SerializeField] private GameObject Activity12Canvas;
+    [SerializeField] private GameObject Activity12_DroneCanvas;
+    [SerializeField] private GameObject Activity13_DroneCanvas;
     [SerializeField] private GameObject menuBackButton;
     [SerializeField] private GameObject menuBackButton2;
     [SerializeField] private Canvas flightCanvas;
@@ -115,27 +127,84 @@ public class menuScript : MonoBehaviour
 
     public void select_8()
     {
-
+        switchTag(Activity8Arrow);
+        sensorSelected();
+        Vector3 ScannerPosition= Activity8Arrow.transform.position;
+        scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        scannerMenu.SetActive(true);
     }
 
     public void select_9()
     {
-
+        switchTag(Activity9Arrow);
+        sensorSelected();
+        Vector3 ScannerPosition = Activity9Arrow.transform.position;
+        scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        scannerMenu.SetActive(true);
     }
 
     public void select_10()
     {
-
+        //is skipped
     }
 
-    public void select_11()
+    public void select11()
     {
+        //choose between 11A and 11B
+        Activity11Canvas.SetActive(true);
 
+    }
+    public void select_11A()
+    {
+        switchTag(Activity11AArrow);
+        Activity11Canvas.SetActive(false);
+        sensorSelected();
+        Vector3 ScannerPosition = Activity11AArrow.transform.position;
+        scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        scannerMenu.SetActive(true);
+    }
+
+    public void select_11B()
+    {
+        switchTag(Activity11BArrow);
+        Activity11Canvas.SetActive(false);
+        sensorSelected();
+        Vector3 ScannerPosition = Activity11BArrow.transform.position;
+        scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        scannerMenu.SetActive(true);
     }
 
     public void select_12()
     {
+        Activity12Canvas.SetActive(true);// choose between laser scan and drone scan.
+    }
 
+    public void select_12Laser()
+    {
+        switchTag(Activity12Laser); //Activate laser position arrow
+        Activity12Canvas.SetActive(false);
+        sensorSelected();
+        Vector3 ScannerPosition = Activity12Laser.transform.position;
+        scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        scannerMenu.SetActive(true);
+    }
+
+    public void select_12Drone()
+    {
+        switchTag(Activity12Drone);
+        Activity12Canvas.SetActive(false);
+        sensorSelected();
+        Activity12_DroneCanvas.SetActive(true);
+        //Start the drone and automatically fly around building
+    }
+
+    public void select_13()
+    {
+        //drone around jobsite
+        //switchTag(Activity13Drone);
+        sensorSelected();
+        Activity13_DroneCanvas.SetActive(true);
+        //need to get rid of all canvas
     }
 
 
@@ -170,6 +239,21 @@ public class menuScript : MonoBehaviour
         Vector3 newPosition = droneCanvas.transform.position;
         mainCamera.transform.position = newPosition + new Vector3(droneMove[0], droneMove[1], droneMove[2]);
         GetComponent<Canvas>().enabled = false;
+    }
+
+    //modified for task12, skip task, disable camera movement
+    public void droneMSelected()
+    {
+        sensorSelected();
+
+        drone.SetActive(true);
+ 
+        //Vector3 newPosition = droneCanvas.transform.position;
+        //mainCamera.transform.position = newPosition + new Vector3(droneMove[0], droneMove[1], droneMove[2]);
+        GetComponent<Canvas>().enabled = false;
+        menuBackButton2.SetActive(true);
+        droneCanvas.enabled = true;//here should be drone canvas instead of task canvas
+        drone.GetComponent<droneScript>().Start();
     }
 
     public void backMenu()
@@ -233,6 +317,14 @@ public class menuScript : MonoBehaviour
         resourceMenu.SetActive(false);
         imuMenu.SetActive(false);
         rfidMenu.SetActive(false);
+    }
+
+    private void switchTag(GameObject Tag)
+    {
+        if (Tag.transform.GetChild(0).gameObject.activeSelf)
+            Tag.transform.GetChild(0).gameObject.SetActive(false);
+        else
+            Tag.transform.GetChild(0).gameObject.SetActive(true);
     }
 
 }

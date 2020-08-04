@@ -130,7 +130,7 @@ public class Crane : MonoBehaviour
             bool distancebool = Mathf.Abs(distance) < 0.01f; //distance precision value
             if ( distancebool ) //rotate to desired location.
             {
-                step3flag = false; //set flag to terminate step 2 rotation
+                step3flag = false; //set flag to terminate step 3 rotation
             }
             yield return null;
         }
@@ -166,14 +166,14 @@ public class Crane : MonoBehaviour
         {
             MoveHookForward();// let hook move forward, due to small hack mentioned above 
             float distance = Vector2.Distance(new Vector2(hook.transform.position.x, hook.transform.position.z), new Vector2(moveSpots[1].transform.position.x, moveSpots[1].transform.position.z));//calculate distance between load and target area.
-            bool distancebool = Mathf.Abs(distance) < 0.01f; //distance precision value
-            Debug.Log("hook(x,z):" + hook.transform.position.x + hook.transform.position.z);
-            Debug.Log("spot(x,z):" + moveSpots[1].transform.position.x + moveSpots[1].transform.position.z);
-            Debug.Log("hook transform raw:"+hook.transform.position);
-            Debug.Log("Distance(hook(x,z),sport(x,z))"+distance);
+            bool distancebool = Mathf.Abs(distance) < 0.03f; //distance precision value
+            //Debug.Log("hook(x,z):" + hook.transform.position.x + hook.transform.position.z);
+            //Debug.Log("spot(x,z):" + moveSpots[1].transform.position.x + moveSpots[1].transform.position.z);
+            //Debug.Log("hook transform raw:"+hook.transform.position);
+            //Debug.Log("Distance(hook(x,z),sport(x,z))"+distance);
             if (distancebool) //rotate to desired location.
             {
-                step7flag = false; //set flag to terminate step 2 rotation
+                step7flag = false; //set flag to terminate step 7 rotation
             }
             yield return null;
         }
