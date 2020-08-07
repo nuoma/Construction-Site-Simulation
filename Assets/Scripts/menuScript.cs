@@ -26,6 +26,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity12Laser;
     [SerializeField] private GameObject Activity12Drone;
     [SerializeField] private GameObject Activity13Drone;
+    [SerializeField] private GameObject Activity6_ResourcesCanvas;
 
     [SerializeField] private GameObject mainMenu; //added for main menu
     [SerializeField] private GameObject activityMenu; //added for activity menu
@@ -42,6 +43,9 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity13_DroneCanvas;
     [SerializeField] private GameObject menuBackButton;
     [SerializeField] private GameObject menuBackButton2;
+    [SerializeField] private GameObject A7Worker1;
+    [SerializeField] private GameObject A7Worker2;
+    [SerializeField] private GameObject A7Worker3;
     [SerializeField] private Canvas flightCanvas;
     [SerializeField] private Slider rotateSlider;
     [SerializeField] private Slider horizontalSlider;
@@ -117,12 +121,14 @@ public class menuScript : MonoBehaviour
 
     public void select_6()
     {
-
+        Activity6_ResourcesCanvas.SetActive(true);
     }
 
     public void select_7()
     {
-
+           A7Worker1.GetComponent<workerMove>().start();
+           A7Worker2.GetComponent<workerMove>().start();
+           A7Worker3.GetComponent<workerMove>().start();
     }
 
     public void select_8()
@@ -208,6 +214,11 @@ public class menuScript : MonoBehaviour
     }
 
 
+    public void select_14()
+    {
+        sensorSelected();
+        imuMenu.SetActive(true);
+    }
 
     //Sensor Functions
     public void gpsSelected()
@@ -300,7 +311,7 @@ public class menuScript : MonoBehaviour
 
         if(sensors)
         {
-                //switchTag(worker);
+                switchTag(worker);
                 //worker.GetComponent<workerMove>().switchTag();
         }
     }
