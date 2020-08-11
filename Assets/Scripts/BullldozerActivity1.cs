@@ -14,7 +14,7 @@ public class BullldozerActivity1 : MonoBehaviour
     [HideInInspector] public bool tagged = true;
     [HideInInspector] public int lapCount;
     private int arrayPosition = 0;
-    private string bulldozerContent = "\nBulldozer Data\n\n";
+   // private string bulldozerContent = "\nBulldozer Data\n\n";
 
     // Update is called once per frame
     void Update()
@@ -37,8 +37,10 @@ public class BullldozerActivity1 : MonoBehaviour
                     arrayPosition = 0;
                     lapCount++;
                 }
-                bulldozerContent += "Position " + arrayPosition + ":  x:" + transform.position.x + "  y:" +
-                    transform.position.y + "  z:" + transform.position.z + "\n";
+                
+                //original code for reporting function, disable.
+                //bulldozerContent += "Position " + arrayPosition + ":  x:" + transform.position.x + "  y:" +
+                //transform.position.y + "  z:" + transform.position.z + "\n";
                 //}
             }
         }
@@ -54,5 +56,10 @@ public class BullldozerActivity1 : MonoBehaviour
         {
             enable = true;
         }
+    }
+
+    public void stop()
+    {
+        enable = false;
     }
 }

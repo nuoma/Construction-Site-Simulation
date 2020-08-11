@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HazardZone : MonoBehaviour
 {
-    public GameObject hazard1; //manually fill in hazard worker
+    public GameObject HazardWorker1; //manually fill in hazard worker
 
     private Color m_oldColor = new Color (1f,1f,1f,0f);
     private Color m_red = new Color(1f, 0f, 0f, 0.1f);
@@ -17,7 +17,8 @@ public class HazardZone : MonoBehaviour
             Renderer render = GetComponent<Renderer>();
             m_oldColor = render.material.color;
             render.material.color = m_red;
-            switchTag(hazard1);
+            //switchTag(hazard1);
+            HazardWorker1.transform.Find("Cube").gameObject.SetActive(true);
         }
     }
 
@@ -36,7 +37,8 @@ public class HazardZone : MonoBehaviour
             //Debug.Log("Object left the hazard zone");
             Renderer render = GetComponent<Renderer>();
             render.material.color = m_oldColor;
-            switchTag(hazard1);
+            //switchTag(hazard1);
+            HazardWorker1.transform.Find("Cube").gameObject.SetActive(false);
         }
     }
 

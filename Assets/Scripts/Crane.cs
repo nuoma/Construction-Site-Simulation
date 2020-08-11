@@ -20,12 +20,14 @@ public class Crane : MonoBehaviour
     public GameObject hook;             // the hook object
     public GameObject container;        // the container or load
     public GameObject TargetArea;            // truck, target region
+    public GameObject WorkerGround;
 
     private int arrayPosition = 0; //added to seek target position
     private bool step2flag = true; //flag for step 2
     private bool step3flag = true; //flag for step 2
     private bool step6flag = true; //flag for step 6
     private bool step7flag = true; //flag for step 7
+    private bool GroundWorkerApproach = true;// Insert ground worker tie load
     [SerializeField] private Transform[] moveSpots;
     [SerializeField] private float precision;
 
@@ -127,7 +129,8 @@ public class Crane : MonoBehaviour
             Debug.Log("hook"+ new Vector2(hook.transform.localPosition.x, hook.transform.localPosition.z));
             Debug.Log("container"+ new Vector2(moveSpots[0].position.x, moveSpots[0].position.z));
             */
-            bool distancebool = Mathf.Abs(distance) < 0.01f; //distance precision value
+            Debug.Log("Step3 Distance:"+distance);
+            bool distancebool = Mathf.Abs(distance) < 0.02f; //distance precision value
             if ( distancebool ) //rotate to desired location.
             {
                 step3flag = false; //set flag to terminate step 3 rotation
@@ -140,6 +143,17 @@ public class Crane : MonoBehaviour
             LowerHook();
             yield return null;
         }
+
+        //TODO: insert action so that worker move towards load, perform animation and backup.
+        while (GroundWorkerApproach) //default is true
+        {
+            WorkerGround.GetComponent<A2WorkerMove>().start();//jump to A2WorkerMove.cs
+            // first move, then stop and animate, then move back, then continue coroutine?
+            yield return new WaitForSeconds(2);
+            GroundWorkerApproach = false;
+            yield return null;
+        }
+
         //5.hook go up top
         while (hook.transform.localPosition.y < hookRaiseLimit)
         {
@@ -166,7 +180,8 @@ public class Crane : MonoBehaviour
         {
             MoveHookForward();// let hook move forward, due to small hack mentioned above 
             float distance = Vector2.Distance(new Vector2(hook.transform.position.x, hook.transform.position.z), new Vector2(moveSpots[1].transform.position.x, moveSpots[1].transform.position.z));//calculate distance between load and target area.
-            bool distancebool = Mathf.Abs(distance) < 0.03f; //distance precision value
+            bool distancebool = Mathf.Abs(distance) < 0.04f; //distance precision value
+            Debug.Log("Step7 distance: "+distance);
             //Debug.Log("hook(x,z):" + hook.transform.position.x + hook.transform.position.z);
             //Debug.Log("spot(x,z):" + moveSpots[1].transform.position.x + moveSpots[1].transform.position.z);
             //Debug.Log("hook transform raw:"+hook.transform.position);
@@ -190,13 +205,16 @@ public class Crane : MonoBehaviour
             yield return null;
         }
 
+        //TODO: insert action so that worker move towards load, perform animation and backup.
+
 
     }
 
- 
+
 
     public void start()
     {
+        container.transform.Find("Arrow").gameObject.SetActive(true);
         if (enable)
         {
             enable = false;
@@ -213,6 +231,11 @@ public class Crane : MonoBehaviour
             
     }
 
+    public void stop()
+    {
+        container.transform.Find("Arrow").gameObject.SetActive(false);
+        StopCoroutine(Sequence());
+    }
 }
 
 

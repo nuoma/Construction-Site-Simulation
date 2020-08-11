@@ -19,6 +19,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity4Worker;
     [SerializeField] private GameObject Activity2Crane;
     [SerializeField] private GameObject Activity3Truck;
+    [SerializeField] private GameObject Activity7Arrow;
     [SerializeField] private GameObject Activity8Arrow;
     [SerializeField] private GameObject Activity9Arrow;
     [SerializeField] private GameObject Activity11AArrow;
@@ -36,7 +37,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject tripodMenu;
     [SerializeField] private GameObject imuMenu;
     [SerializeField] private GameObject rfidMenu;
-    [SerializeField] private Canvas droneCanvas;
+    [SerializeField] private GameObject droneCanvas;
     [SerializeField] private GameObject Activity11Canvas;
     [SerializeField] private GameObject Activity12Canvas;
     [SerializeField] private GameObject Activity12_DroneCanvas;
@@ -96,7 +97,14 @@ public class menuScript : MonoBehaviour
 
     public void select_1()
     {
+        Activity1Bulldozer.transform.Find("Arrow").gameObject.SetActive(true);
         Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
+    }
+
+    public void stop_1()
+    {
+        Activity1Bulldozer.transform.Find("Arrow").gameObject.SetActive(false);
+        Activity1Bulldozer.GetComponent<BullldozerActivity1>().stop();
     }
 
     public void select_2()
@@ -104,14 +112,31 @@ public class menuScript : MonoBehaviour
         Activity2Crane.GetComponent<Crane>().start();
     }
 
+    public void stop_2()
+    {
+        Activity2Crane.GetComponent<Crane>().stop();
+    }
+
     public void select_3()
     {
         Activity3Truck.GetComponent<Activity3Truck>().start();
     }
 
+    public void stop_3()
+    {
+        Activity3Truck.GetComponent<Activity3Truck>().stop_3();
+    }
+
     public void select_4()
     {
         Activity4Worker.GetComponent<workerMove>().start();
+        Activity4Worker.transform.Find("Arrow").gameObject.SetActive(true);
+    }
+
+    public void stop_4()
+    {
+        Activity4Worker.GetComponent<workerMove>().stop();
+        Activity4Worker.transform.Find("Arrow").gameObject.SetActive(false);
     }
 
     public void select_5()
@@ -129,6 +154,17 @@ public class menuScript : MonoBehaviour
            A7Worker1.GetComponent<workerMove>().start();
            A7Worker2.GetComponent<workerMove>().start();
            A7Worker3.GetComponent<workerMove>().start();
+           //switchTag(Activity7Arrow);
+           Activity7Arrow.transform.Find("Arrow").gameObject.SetActive(true);
+    }
+
+    public void stop_7()
+    {
+        A7Worker1.GetComponent<workerMove>().stop();
+        A7Worker2.GetComponent<workerMove>().stop();
+        A7Worker3.GetComponent<workerMove>().stop();
+        //switchTag(Activity7Arrow);
+        Activity7Arrow.transform.Find("Arrow").gameObject.SetActive(false);
     }
 
     public void select_8()
@@ -213,6 +249,13 @@ public class menuScript : MonoBehaviour
         //need to get rid of all canvas
     }
 
+    public void select_13Drone()
+    {
+        sensorSelected();
+        Activity13_DroneCanvas.SetActive(false);
+        //need to get rid of all canvas
+    }
+
 
     public void select_14()
     {
@@ -246,9 +289,9 @@ public class menuScript : MonoBehaviour
         sensorSelected();
         menuBackButton2.SetActive(true);
         drone.SetActive(true);
-        droneCanvas.enabled = true;
-        Vector3 newPosition = droneCanvas.transform.position;
-        mainCamera.transform.position = newPosition + new Vector3(droneMove[0], droneMove[1], droneMove[2]);
+        droneCanvas.SetActive(true);
+        //Vector3 newPosition = droneCanvas.transform.position;
+        //mainCamera.transform.position = newPosition + new Vector3(droneMove[0], droneMove[1], droneMove[2]);
         GetComponent<Canvas>().enabled = false;
     }
 
@@ -256,14 +299,12 @@ public class menuScript : MonoBehaviour
     public void droneMSelected()
     {
         sensorSelected();
-
+        menuBackButton2.SetActive(true);
         drone.SetActive(true);
- 
+        droneCanvas.SetActive(true);//here should be drone canvas instead of task canvas
         //Vector3 newPosition = droneCanvas.transform.position;
         //mainCamera.transform.position = newPosition + new Vector3(droneMove[0], droneMove[1], droneMove[2]);
         GetComponent<Canvas>().enabled = false;
-        menuBackButton2.SetActive(true);
-        droneCanvas.enabled = true;//here should be drone canvas instead of task canvas
         drone.GetComponent<droneScript>().Start();
     }
 
@@ -289,7 +330,7 @@ public class menuScript : MonoBehaviour
     private void resetDrone()
     {
         drone.SetActive(false);
-        droneCanvas.enabled = false;
+        droneCanvas.SetActive(true);
         drone.GetComponent<droneScript>().taskSelected = false;
         drone.GetComponent<droneScript>().power = false;
         drone.GetComponent<droneScript>().motor = false;
@@ -336,6 +377,15 @@ public class menuScript : MonoBehaviour
             Tag.transform.GetChild(0).gameObject.SetActive(false);
         else
             Tag.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void stopALL()
+    {
+        stop_7();//Stop activity 7
+        stop_3();
+        stop_4();
+        stop_1();
+        stop_2();
     }
 
 }

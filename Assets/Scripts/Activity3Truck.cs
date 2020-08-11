@@ -68,7 +68,8 @@ public class Activity3Truck : MonoBehaviour
         {
             enable = true;
         }
-        switchTag(Truck);
+        //switchTag(Truck);
+        Truck.transform.Find("Arrow").gameObject.SetActive(true);
 
     }
 
@@ -78,6 +79,11 @@ public class Activity3Truck : MonoBehaviour
             Tag.transform.GetChild(0).gameObject.SetActive(false);
         else
             Tag.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void stop_3()
+    {
+        Truck.transform.Find("Arrow").gameObject.SetActive(false);
     }
 
 }

@@ -56,4 +56,9 @@ public class workerMove : MonoBehaviour
             enable = true;
         }
     }
+
+    public void stop()
+    {
+        enable = false;
+    }
 }
