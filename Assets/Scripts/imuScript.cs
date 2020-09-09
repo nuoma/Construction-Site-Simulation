@@ -24,7 +24,13 @@ public class imuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        filePath = Application.persistentDataPath + "/imuReports";
+        Debug.Log("IMU persistent data path:"+Application.persistentDataPath);
+        Debug.Log("IMU app data path:" + Application.dataPath);
+
+        //filePath = Application.persistentDataPath + "/imuReports";
+
+        filePath = Application.dataPath + "/imuReports";
+
         if (!Directory.Exists(filePath))
         {
             Directory.CreateDirectory(filePath);

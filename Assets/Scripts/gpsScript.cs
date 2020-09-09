@@ -162,7 +162,8 @@ public class gpsScript : MonoBehaviour
 
     private void reportFunction()
     {
-        string filePath = Application.persistentDataPath + "/gpsReports";
+        //string filePath = Application.persistentDataPath + "/gpsReports";
+        string filePath = Application.dataPath + "/gpsReports";
 
         if (!Directory.Exists(filePath))
         {

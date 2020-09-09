@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 public class menuScript : MonoBehaviour
 {
+    #region Parameters and declaration
+
+    //main camera
     [SerializeField] private GameObject mainCamera;
 
+    //legacy objects
     [SerializeField] private GameObject worker;
     [SerializeField] private GameObject tripod;
     [SerializeField] private GameObject scanner;
@@ -16,22 +20,31 @@ public class menuScript : MonoBehaviour
 
     //activities main actuator
     [SerializeField] private GameObject Activity1Bulldozer;
-    [SerializeField] private GameObject Activity4Worker;
     [SerializeField] private GameObject Activity2Crane;
     [SerializeField] private GameObject Activity3Truck;
+    [SerializeField] private GameObject Activity4Worker;
+    [SerializeField] private GameObject Activity5;
+    [SerializeField] private GameObject Activity6_ResourcesCanvas;
     [SerializeField] private GameObject Activity7Arrow;
+    [SerializeField] private GameObject A7Worker1;
+    [SerializeField] private GameObject A7Worker2;
+    [SerializeField] private GameObject A7Worker3;
     [SerializeField] private GameObject Activity8Arrow;
     [SerializeField] private GameObject Activity9Arrow;
     [SerializeField] private GameObject Activity11AArrow;
     [SerializeField] private GameObject Activity11BArrow;
     [SerializeField] private GameObject Activity12Laser;
     [SerializeField] private GameObject Activity12Drone;
+    [SerializeField] private GameObject Activity12_DroneLocator;
+    [SerializeField] private GameObject Activity12_MDroneCameraLocator;
     [SerializeField] private GameObject Activity13Drone;
-    [SerializeField] private GameObject Activity6_ResourcesCanvas;
+    [SerializeField] private GameObject Activity14Canvas;
 
+
+
+    //menus and canvas
     [SerializeField] private GameObject mainMenu; //added for main menu
     [SerializeField] private GameObject activityMenu; //added for activity menu
-
     [SerializeField] private GameObject scannerMenu;
     [SerializeField] private GameObject resourceMenu;
     [SerializeField] private GameObject tripodMenu;
@@ -43,28 +56,31 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity12_DroneCanvas;
     [SerializeField] private GameObject Activity13_DroneCanvas;
     [SerializeField] private GameObject menuBackButton;
-    [SerializeField] private GameObject menuBackButton2;
-    [SerializeField] private GameObject A7Worker1;
-    [SerializeField] private GameObject A7Worker2;
-    [SerializeField] private GameObject A7Worker3;
-    [SerializeField] private Canvas flightCanvas;
+    [SerializeField] private GameObject ManualDroneBackButton;
+    [SerializeField] private GameObject flightCanvas;
     [SerializeField] private Slider rotateSlider;
     [SerializeField] private Slider horizontalSlider;
     [SerializeField] private Slider verticalSlider;
-
     [SerializeField] private float[] droneMove = new float[3];
     [SerializeField] private float[] backMove = new float[3];
+    Vector3 droneResetPosition;
+    Vector3 MainCameraResetPosition;
 
+    //others
     bool move = false;
     bool sensors = false;
-    Vector3 droneResetPosition;
 
+
+    #endregion
+
+    #region main menu functionalities
     void Start()
     {
-        menuBackButton2.SetActive(false);
+        ManualDroneBackButton.SetActive(false);
         droneResetPosition = drone.transform.position;
         mainMenu.SetActive(false);
         activityMenu.SetActive(false);
+        MainCameraResetPosition = mainCamera.transform.position;
     }
 
     //Functions to reset and quit scene.
@@ -92,9 +108,33 @@ public class menuScript : MonoBehaviour
         activityMenu.SetActive(true);
     }
 
+    //this has been re-written as:
+    //Activity1Bulldozer.transform.Find("Arrow").gameObject.SetActive(false);
+    private void switchTag(GameObject Tag)
+    {
+        if (Tag.transform.GetChild(0).gameObject.activeSelf)
+            Tag.transform.GetChild(0).gameObject.SetActive(false);
+        else
+            Tag.transform.GetChild(0).gameObject.SetActive(true);
+    }
 
+
+    //stop all activities
+    public void stopALL()
+    {
+        stop_7();//Stop activity 7
+        stop_3();
+        stop_4();
+        stop_1();
+        stop_2();
+        stop_5();
+        stop_12_a();
+        stop_13_a();
+    }
+#endregion
+
+    #region Activity button actions
     //Activity Functions
-
     public void select_1()
     {
         Activity1Bulldozer.transform.Find("Arrow").gameObject.SetActive(true);
@@ -141,7 +181,12 @@ public class menuScript : MonoBehaviour
 
     public void select_5()
     {
+        Activity5.GetComponent<Activity5>().start();
+    }
 
+    public void stop_5()
+    {
+        Activity5.GetComponent<Activity5>().stop_5();
     }
 
     public void select_6()
@@ -154,7 +199,6 @@ public class menuScript : MonoBehaviour
            A7Worker1.GetComponent<workerMove>().start();
            A7Worker2.GetComponent<workerMove>().start();
            A7Worker3.GetComponent<workerMove>().start();
-           //switchTag(Activity7Arrow);
            Activity7Arrow.transform.Find("Arrow").gameObject.SetActive(true);
     }
 
@@ -163,7 +207,6 @@ public class menuScript : MonoBehaviour
         A7Worker1.GetComponent<workerMove>().stop();
         A7Worker2.GetComponent<workerMove>().stop();
         A7Worker3.GetComponent<workerMove>().stop();
-        //switchTag(Activity7Arrow);
         Activity7Arrow.transform.Find("Arrow").gameObject.SetActive(false);
     }
 
@@ -233,11 +276,17 @@ public class menuScript : MonoBehaviour
 
     public void select_12Drone()
     {
-        switchTag(Activity12Drone);
+        //switchTag(Activity12Drone);
         Activity12Canvas.SetActive(false);
         sensorSelected();
         Activity12_DroneCanvas.SetActive(true);
         //Start the drone and automatically fly around building
+    }
+
+    public void stop_12_a()
+    {
+        Activity12Drone.GetComponent<Drone12>().stop();
+        Activity12_DroneCanvas.SetActive(false);
     }
 
     public void select_13()
@@ -256,13 +305,22 @@ public class menuScript : MonoBehaviour
         //need to get rid of all canvas
     }
 
+    public void stop_13_a()
+    {
+        Activity13Drone.GetComponent<Drone13>().stop();
+    }
+
 
     public void select_14()
     {
         sensorSelected();
-        imuMenu.SetActive(true);
+        //imuMenu.SetActive(true);
+        Debug.Log("14 SELECTED");
+        Activity14Canvas.SetActive(true);
     }
+    #endregion
 
+    #region Legacy Sensor Functions
     //Sensor Functions
     public void gpsSelected()
     {
@@ -284,10 +342,12 @@ public class menuScript : MonoBehaviour
         sensorSelected();
         rfidMenu.SetActive(true);
     }
+
+    //Legacy method to use manually controlled drone
     public void droneSelected()
     {
         sensorSelected();
-        menuBackButton2.SetActive(true);
+        ManualDroneBackButton.SetActive(true);
         drone.SetActive(true);
         droneCanvas.SetActive(true);
         //Vector3 newPosition = droneCanvas.transform.position;
@@ -295,25 +355,40 @@ public class menuScript : MonoBehaviour
         GetComponent<Canvas>().enabled = false;
     }
 
-    //modified for task12, skip task, disable camera movement
+    //modified for activity 13. Skip task, Disable camera movement.
     public void droneMSelected()
     {
         sensorSelected();
-        menuBackButton2.SetActive(true);
+        ManualDroneBackButton.SetActive(true);
         drone.SetActive(true);
         droneCanvas.SetActive(true);//here should be drone canvas instead of task canvas
         //Vector3 newPosition = droneCanvas.transform.position;
         //mainCamera.transform.position = newPosition + new Vector3(droneMove[0], droneMove[1], droneMove[2]);
         GetComponent<Canvas>().enabled = false;
-        drone.GetComponent<droneScript>().Start();
+        drone.transform.Find("Arrow").gameObject.SetActive(true);
+        //flightCanvas.SetActive(true);
+        drone.GetComponent<droneScript>().start();
     }
 
-    public void backMenu()
+    //For activity 12. Jump drone location and camera location to old house.
+    public void ManualDrone12()
     {
-        Vector3 newPosition = this.transform.position;
-        mainCamera.transform.position = newPosition + new Vector3(backMove[0], backMove[1], backMove[2]);
-        menuBackButton.SetActive(false);
-        menuBackButton2.SetActive(false);
+        sensorSelected(); //initialization
+        GetComponent<Canvas>().enabled = false; //1, Disable main menu canvas.
+        drone.SetActive(true);//2, activate drone.
+        drone.transform.position = Activity12_DroneLocator.transform.position; //3, move drone to locator position.
+        mainCamera.transform.position = Activity12_MDroneCameraLocator.transform.position;//4, move camera.
+        ManualDroneBackButton.SetActive(true);//Backbutton active
+        droneCanvas.SetActive(true);//Drone canvas active
+        drone.transform.Find("Arrow").gameObject.SetActive(true);
+        drone.GetComponent<droneScript>().start();
+    }
+
+    public void backMenu() //currently for all Back menus.
+    {
+        mainCamera.transform.position = MainCameraResetPosition;
+        menuBackButton.SetActive(false); 
+        ManualDroneBackButton.SetActive(false);
         GetComponent<Canvas>().enabled = true;
         resetScanner();
         resetDrone();
@@ -330,13 +405,15 @@ public class menuScript : MonoBehaviour
     private void resetDrone()
     {
         drone.SetActive(false);
-        droneCanvas.SetActive(true);
+        drone.transform.Find("Arrow").gameObject.SetActive(false);//For activity 12 back button deactive drone arrow.
+        //droneCanvas.SetActive(true);
         drone.GetComponent<droneScript>().taskSelected = false;
         drone.GetComponent<droneScript>().power = false;
         drone.GetComponent<droneScript>().motor = false;
         drone.transform.position = droneResetPosition;
         drone.transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        flightCanvas.enabled = false;
+        flightCanvas.SetActive(false);
+        droneCanvas.SetActive(false);
         rotateSlider.value = 0;
         horizontalSlider.value = 0;
         verticalSlider.value = 0;
@@ -370,22 +447,7 @@ public class menuScript : MonoBehaviour
         imuMenu.SetActive(false);
         rfidMenu.SetActive(false);
     }
+    #endregion
 
-    private void switchTag(GameObject Tag)
-    {
-        if (Tag.transform.GetChild(0).gameObject.activeSelf)
-            Tag.transform.GetChild(0).gameObject.SetActive(false);
-        else
-            Tag.transform.GetChild(0).gameObject.SetActive(true);
-    }
-
-    public void stopALL()
-    {
-        stop_7();//Stop activity 7
-        stop_3();
-        stop_4();
-        stop_1();
-        stop_2();
-    }
 
 }

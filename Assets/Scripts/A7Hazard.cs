@@ -17,17 +17,17 @@ public class A7Hazard : MonoBehaviour
             if (targetworker.gameObject == HazardWorker1)
             {
                 switchTag(HazardWorker1);
-                Debug.Log("in 1");
+                Debug.Log("Worker 1 in hazard");
             }
             if (targetworker.gameObject == HazardWorker2)
             {
                 switchTag(HazardWorker2);
-                Debug.Log("in 2");
+                Debug.Log("Worker 2 in hazard");
             }
             if (targetworker.gameObject == HazardWorker3)
             {
                 switchTag(HazardWorker3);
-                Debug.Log("in 3");
+                Debug.Log("Worker 3 in hazard");
             }
             //switchTag(HazardWorker2);
             //switchTag(HazardWorker3);

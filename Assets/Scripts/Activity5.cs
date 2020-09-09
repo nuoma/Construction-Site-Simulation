@@ -20,7 +20,6 @@ public class Activity5 : MonoBehaviour
     private bool step0 = true;
     private bool step1 = false;
     private bool step2 = false;
-    private bool step2plus = false;
     private bool step3 = false;
     private bool step4 = false;
     private bool step5 = false;
@@ -28,12 +27,9 @@ public class Activity5 : MonoBehaviour
     private bool step7 = false;
     private bool Step3MoveEnable = false;
     private bool Step7MoveEnable = false;
-    private bool step2moveA = true;
 
     [SerializeField] private Transform[] DT_Trip1_Spots;
     [SerializeField] private Transform[] DT_Trip2_Spots;
-    [SerializeField] private Transform[] Backhoe_Backup_Spot;
-    [SerializeField] private Transform[] Backhoe_Truckside_Spot;
 
 
     private float step1time = 3f;
@@ -129,10 +125,6 @@ public class Activity5 : MonoBehaviour
             {
                 step1 = false;
                 step2 = true;
-
-                //this is anti freeze test
-                //Debug.Log("Distance:" + Vector3.Distance(Backhoe.transform.position, Backhoe_Backup_Spot[0].position));
-                //Backhoe.transform.position = Vector3.MoveTowards(Backhoe.transform.position, Backhoe_Backup_Spot[0].position, speed * Time.deltaTime);
                 yield return new WaitForSeconds(1);
             }
         }
@@ -166,74 +158,36 @@ public class Activity5 : MonoBehaviour
             _BackhoeVC.BrakesInput = 0;
 
             step2 = false;
-            step2plus = true;
-            yield return new WaitForSeconds(1);
-        }
-
-        //Step 2 plus: 
-        while (step2plus)
-        {
-            //Back up to spot 1.
-            //Backhoe_Backup_Spot;
-            //DumpTruck.transform.position = Vector3.MoveTowards(DumpTruck.transform.position, DT_Trip1_Spots[arrayPosition].position, speed * Time.deltaTime);
-            /*
-            while (Vector3.Distance(Backhoe.transform.position, Backhoe_Backup_Spot[0].position) > 0.1f)
-            //while(true)
-            {
-                Debug.Log("Backhoe Backup Distance:" + Vector3.Distance(Backhoe.transform.position, Backhoe_Backup_Spot[0].position));
-                Backhoe.transform.position = Vector3.MoveTowards(Backhoe.transform.position, Backhoe_Backup_Spot[0].position, 0.001f * Time.deltaTime);
-                Debug.Log("Execute Backhoe move 1");
-            }
-            */
-            /*
-            while (step2moveA)
-            {
-                Debug.Log("Backhoe Backup Distance:" + Vector3.Distance(Backhoe.transform.position, Backhoe_Backup_Spot[0].position));
-                Backhoe.transform.position = Vector3.MoveTowards(Backhoe.transform.position, Backhoe_Backup_Spot[0].position, 0.0001f * Time.deltaTime);
-                Debug.Log("Execute Backhoe move 1");
-                if (Vector3.Distance(Backhoe.transform.position, Backhoe_Backup_Spot[0].position) < 0.1f)
-                {
-                    step2moveA = false;
-                }
-            }
-            */
-            //Desired backhoe rotation angle Y is 180 degrees.
-            /*
-            while ( Backhoe.transform.eulerAngles.y != 180f)
-            {
-                Debug.Log("Backhoe rotate:" + Backhoe.transform.eulerAngles.y);
-                //Backhoe.transform.position = Vector3.MoveTowards(Backhoe.transform.position, Backhoe_Backup_Spot[0].position, speed * Time.deltaTime);.
-                Quaternion BackhoeLookDirection = Quaternion.LookRotation(Backhoe_Truckside_Spot[0].position - Backhoe.transform.position);
-                Backhoe.transform.rotation = Quaternion.RotateTowards(Backhoe.transform.rotation, BackhoeLookDirection, 1 * Time.deltaTime);
-                Debug.Log("Execute Backhoe move 2");
-            }
-            */
-            //Go to truck, spot 2.
-            //Backhoe_Truckside_Spot;
-
-
-            step2plus = false;
             step3 = true;
             yield return new WaitForSeconds(1);
         }
+        
+
         /*
-        //Step 2: backhoe backup. Modified due to unable to aim at truck.
+        //Step 2: backhoe backup
+        //MOD: rotation angel as condition
         while (step2)
         {
             //Backhoe steer and backup to 180 degree
             _BackhoeVC.AccelerationInput = -0.01f;
             _BackhoeVC.SteeringInput = 1; //-1 to 1
-            yield return new WaitForSeconds(2);
+            //yield return new WaitForSeconds(4);
 
             //TODO: if 180 degree then brake
-            Debug.Log("Backhoe rotate:"+Backhoe.transform.eulerAngles.y);
-            _BackhoeVC.BrakesInput = 1;
-            yield return new WaitForSeconds(1);
+            //Debug.Log("Backhoe rotate:" + Backhoe.transform.eulerAngles.y);
+            if (Backhoe.transform.eulerAngles.y == 182f)
+            {
+                _BackhoeVC.BrakesInput = 1;
+                Debug.Log("Backhoe reached 180 degree!");
+                yield return new WaitForSeconds(1);
+            }
+
+            yield return new WaitForSeconds(4);
 
             //Release brake, drive straight towards truck
             _BackhoeVC.BrakesInput = 0;
-            _BackhoeVC.SteeringInput = 0; //-1 to 1
             _BackhoeVC.AccelerationInput = 0.001f;
+            _BackhoeVC.SteeringInput = 0; //-1 to 1
             yield return new WaitForSeconds(2);
 
             //Stop and brake
@@ -290,7 +244,6 @@ public class Activity5 : MonoBehaviour
 
             while (Step3MoveEnable)
             {
-                //_DumptruckVC.AccelerationInput = 0.0001f;
                 //Debug.Log("running!");
                 DumpTruck.transform.position = Vector3.MoveTowards(DumpTruck.transform.position, DT_Trip1_Spots[arrayPosition].position, speed * Time.deltaTime);
                 //DumpTruck.transform.position += transform.forward * Time.deltaTime * speed;
@@ -308,8 +261,6 @@ public class Activity5 : MonoBehaviour
                     else
                     {
                         Step3MoveEnable = false; // Stop vehicle when reached to final point, and exit out of this movement loop
-                        _DumptruckVC.AccelerationInput = 0f;
-                        _BackhoeVC.BrakesInput = 1;
                     }
                 }
                 yield return null; //in while loop
@@ -323,7 +274,7 @@ public class Activity5 : MonoBehaviour
         //Step6: truck raise bed, vehicle forward and brake, then lower bed
         while (step6)
         {
-            float Step4aDuration = Time.time + 5f;
+            float Step4aDuration = Time.time + 4f;
             while (Time.time < Step4aDuration)
             {
                 _DumptruckController.MoveDumpBed(1); //The MoveDumpBed method needs a parameter to indicate the direction of the movement: -1 = down | 0 = none | 1 = up

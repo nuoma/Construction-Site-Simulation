@@ -5,17 +5,22 @@ using TMPro;
 
 public class Activity3Truck : MonoBehaviour
 {
+    #region param
     // code base inherit from BulldozerActivity1.cs
     [SerializeField] private float speed; //default 0.1
     [SerializeField] private float precision; //default 0.1
     [SerializeField] private Transform[] moveSpots;
+    [SerializeField] private GameObject Activity3Report;
+
     private bool enable = false;
-    [HideInInspector] public bool tagged = true;
-    [HideInInspector] public int lapCount;
     private int arrayPosition = 0;
     public GameObject Truck; //manually fill in truck asset
     private bool DisplayResults = false;
-    [SerializeField] private GameObject Activity3Report;
+
+    [HideInInspector] public bool tagged = true;
+    [HideInInspector] public int lapCount;
+    #endregion
+
 
     // Update is called once per frame
     void Update()
@@ -68,18 +73,12 @@ public class Activity3Truck : MonoBehaviour
         {
             enable = true;
         }
-        //switchTag(Truck);
+
         Truck.transform.Find("Arrow").gameObject.SetActive(true);
 
     }
 
-    private void switchTag(GameObject Tag)
-    {
-        if (Tag.transform.GetChild(0).gameObject.activeSelf)
-            Tag.transform.GetChild(0).gameObject.SetActive(false);
-        else
-            Tag.transform.GetChild(0).gameObject.SetActive(true);
-    }
+
 
     public void stop_3()
     {

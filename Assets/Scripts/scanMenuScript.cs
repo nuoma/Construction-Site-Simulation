@@ -27,7 +27,7 @@ public class scanMenuScript : MonoBehaviour
         backButton.SetActive(false);
         tripod.GetComponent<Renderer>().enabled = false;
         scanner.GetComponent<Renderer>().enabled = false;
-        //scannerCanvas.GetComponent<Canvas>().enabled = false;
+        scannerCanvas.GetComponent<Canvas>().enabled = false;
 
         for (int i = 0; i < targets.Length; i++)
         {
@@ -62,7 +62,6 @@ public class scanMenuScript : MonoBehaviour
         {
             tripodMenu.SetActive(false);
             scanner.GetComponent<Renderer>().enabled = true;
-            //originally commented by previous author 9/2/2020
             //scanner.transform.parent.parent.GetComponent<ManipulationHandler>()
             //tripodScripts.GetComponent<ManipulationHandler>().enabled = false;
             MonoBehaviour[] scripts = tripodScripts.GetComponents<MonoBehaviour>();
@@ -87,8 +86,8 @@ public class scanMenuScript : MonoBehaviour
         //if (tripod.GetComponent<Renderer>().enabled == true && scanner.GetComponent<Renderer>().enabled == true && targetsEnabled && tripodLevel)
         //{
             backButton.SetActive(true);
-            //scannerCanvas.GetComponent<Canvas>().enabled = true;
-             scannerCanvas.SetActive(true);
+            scannerCanvas.GetComponent<Canvas>().enabled = true;
+
             Vector3 newPosition = scanner.transform.position;
             mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
             mainMenu.GetComponent<Canvas>().enabled = false;

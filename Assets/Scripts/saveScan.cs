@@ -25,7 +25,8 @@ public class saveScan : MonoBehaviour
         }
 
 
-        string filePath = Application.persistentDataPath + "/laserScans";
+        //string filePath = Application.persistentDataPath + "/laserScans";
+        string filePath = Application.dataPath + "/laserScans";
 
         if (!Directory.Exists(filePath))
         {
