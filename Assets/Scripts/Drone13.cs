@@ -30,11 +30,14 @@ public class Drone13 : MonoBehaviour
     {
         if(startRot)
         {
+            DroneModel.SetActive(true);
+            DroneModel.transform.Find("Arrow").gameObject.SetActive(true);
             transform.Rotate(0, speed * Time.deltaTime, 0);
             //when reach one lap, stop save
         }
 
     }
+
 
     private void switchTag(GameObject Tag)
     {
@@ -42,5 +45,14 @@ public class Drone13 : MonoBehaviour
             Tag.transform.GetChild(0).gameObject.SetActive(false);
         else
             Tag.transform.GetChild(0).gameObject.SetActive(true);
+
+
+
+    public void stop()
+    {
+        DroneModel.SetActive(false);
+        DroneModel.transform.Find("Arrow").gameObject.SetActive(false);
+        startRot = false;
+
     }
 }

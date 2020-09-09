@@ -7,8 +7,13 @@ PhysicMaterial:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Metal
+<<<<<<< HEAD
   dynamicFriction: 0.1
   staticFriction: 0.6
+=======
+  dynamicFriction: 1
+  staticFriction: 1
+>>>>>>> 4c4ce2b81b52f8102f714faed3b1b14c2474f096
   bounciness: 0
   frictionCombine: 1
   bounceCombine: 1

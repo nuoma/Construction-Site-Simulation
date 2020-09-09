@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Crane : MonoBehaviour
 {
+
+    #region parameters
+
     // speeds
     public float turnSpeed;             // rate at which the crane can rotate on the Y axis
     public float hookVerticalSpeed;     // rate at which the hook can be raised and lowered
@@ -28,10 +31,15 @@ public class Crane : MonoBehaviour
     private bool step6flag = true; //flag for step 6
     private bool step7flag = true; //flag for step 7
     private bool GroundWorkerApproach = true;// Insert ground worker tie load
+    private bool GroundWorkerBack = false;
     [SerializeField] private Transform[] moveSpots;
     [SerializeField] private float precision;
 
     private bool enable = false;
+
+    #endregion
+
+    #region Crane action definition
 
     // rotates the crane clockwise along the Y axis
     public void TurnClockwise ()
@@ -81,7 +89,9 @@ public class Crane : MonoBehaviour
         }
     }
 
+    #endregion
 
+    #region Coroutine steps for crane
 
     private IEnumerator Sequence()
     {
@@ -129,8 +139,10 @@ public class Crane : MonoBehaviour
             Debug.Log("hook"+ new Vector2(hook.transform.localPosition.x, hook.transform.localPosition.z));
             Debug.Log("container"+ new Vector2(moveSpots[0].position.x, moveSpots[0].position.z));
             */
-            Debug.Log("Step3 Distance:"+distance);
-            bool distancebool = Mathf.Abs(distance) < 0.02f; //distance precision value
+
+            Debug.Log("Crane Step3 Distance:"+distance);
+            bool distancebool = Mathf.Abs(distance) < 0.01f; //distance precision value
+
             if ( distancebool ) //rotate to desired location.
             {
                 step3flag = false; //set flag to terminate step 3 rotation
@@ -144,13 +156,29 @@ public class Crane : MonoBehaviour
             yield return null;
         }
 
-        //TODO: insert action so that worker move towards load, perform animation and backup.
+
+        //4+: insert action so that worker move towards load, perform animation and backup.
         while (GroundWorkerApproach) //default is true
         {
+            //WorkerGround.transform.Rotate(0,0,0);
             WorkerGround.GetComponent<A2WorkerMove>().start();//jump to A2WorkerMove.cs
             // first move, then stop and animate, then move back, then continue coroutine?
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(13);
+            //WorkerGround.GetComponent<A2WorkerMove>().inspect();
+            //yield return new WaitForSeconds(6);
             GroundWorkerApproach = false;
+            GroundWorkerBack = true;
+            yield return null;
+        }
+
+        while (GroundWorkerBack) //default is false, activated by previous finished step.
+        {
+            //change worker orientation
+            //TODO
+            //path back
+            //yield return new WaitForSeconds(6);
+            GroundWorkerBack = false;
+
             yield return null;
         }
 
@@ -210,7 +238,9 @@ public class Crane : MonoBehaviour
 
     }
 
+#endregion
 
+    #region Main Function
 
     public void start()
     {
@@ -236,6 +266,9 @@ public class Crane : MonoBehaviour
         container.transform.Find("Arrow").gameObject.SetActive(false);
         StopCoroutine(Sequence());
     }
+
+    #endregion
+
 }
 
 

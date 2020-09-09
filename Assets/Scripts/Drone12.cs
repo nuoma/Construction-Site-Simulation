@@ -10,6 +10,8 @@ public class Drone12 : MonoBehaviour
 {
     [SerializeField] private float speed = 1;
     [SerializeField] private GameObject DroneModel;
+    [SerializeField] private GameObject DroneParent;
+
     private bool startRot;
 
     public void Start()
@@ -28,9 +30,18 @@ public class Drone12 : MonoBehaviour
     {
         if(startRot)
         {
+            DroneParent.transform.Find("Arrow").gameObject.SetActive(true);
+            DroneModel.SetActive(true);
             transform.Rotate(0, speed * Time.deltaTime, 0);
         }
 
+    }
+
+        public void stop()
+    {
+        DroneModel.SetActive(false);
+        DroneParent.transform.Find("Arrow").gameObject.SetActive(false);
+        startRot = false;
     }
 }
 /*
@@ -159,3 +170,8 @@ public class Drone12 : MonoBehaviour
     }
 }
 */
+
+
+
+
+

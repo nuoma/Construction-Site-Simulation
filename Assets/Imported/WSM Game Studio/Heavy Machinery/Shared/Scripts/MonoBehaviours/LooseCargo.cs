@@ -35,10 +35,18 @@ namespace WSMGameStudio.HeavyMachinery
 
         private void Update()
         {
+
             if (_parentCargoContainer != null && _parentCargoContainer.IsMoving)
             {
                 _transform.position += _parentCargoContainer.Movement;
             }
+
+        }
+
+        private void nothing()
+        {
+            Debug.Log(_parentCargoContainer.IsMoving);
+
         }
     }
 }

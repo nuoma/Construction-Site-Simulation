@@ -7,8 +7,8 @@ public class A2WorkerMove : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float precision;
     [SerializeField] private Transform[] moveSpots;
-    [SerializeField] private Animator workAnimator;
-    [SerializeField] private Animator walkAnimator;
+    [SerializeField] private Animator Animator;
+
 
     private bool enable = false;
     private bool animate = false;
@@ -23,11 +23,19 @@ public class A2WorkerMove : MonoBehaviour
         //if (enable && tagged)
         if (enable)
         {
-            //transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, speed * Time.deltaTime);
+
+            Animator.SetBool("isWalk", true);
+            Animator.SetBool("isInspect", false);
+            Animator.SetBool("isIdle", false);
+            transform.Find("prop").gameObject.SetActive(false);
+            Debug.Log("Ground Worker is walking...");
+
+            //transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, 50 * Time.deltaTime);
             transform.position += transform.forward * Time.deltaTime * speed;
 
-            Quaternion lookDirection = Quaternion.LookRotation(moveSpots[arrayPosition].position - transform.position);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, 50 * Time.deltaTime);
+           Quaternion lookDirection = Quaternion.LookRotation(moveSpots[arrayPosition].position - transform.position);
+           transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, 30 * Time.deltaTime);
+
 
             if (Vector3.Distance(transform.position, moveSpots[arrayPosition].position) < precision)
             {
@@ -44,21 +52,38 @@ public class A2WorkerMove : MonoBehaviour
 
         if (animate)
         {
-            workAnimator.SetBool("moving", true);
+            Animator.SetBool("isInspect", true);
+            Animator.SetBool("isWalk", false);
+            Animator.SetBool("isIdle", false);
+            transform.Find("prop").gameObject.SetActive(true);
+            Debug.Log("Ground Worker Inspecting...");
+
         }
     }
 
     public void start() //called by crane coroutine after step4 
     {
-        walkAnimator.SetBool("moving", true);
+        transform.Find("prop").gameObject.SetActive(false); //writing pad in hand shouldn't appear
         enable = true;
     }
 
     public void stop()
     {
         enable = false;
-        walkAnimator.SetBool("moving", false);
+        Animator.SetBool("isIdle", true);
+        Animator.SetBool("isWalk", false);
+        Animator.SetBool("isInspect", false);
+        transform.Find("prop").gameObject.SetActive(false);
+        Debug.Log("Ground Worker Idle.");
+    }
 
+    public void inspect()
+    {
+        Animator.SetBool("isInspect", true);
+        Animator.SetBool("isWalk", false);
+        Animator.SetBool("isIdle", false);
+        transform.Find("prop").gameObject.SetActive(true);
+        Debug.Log("Ground Worker Inspecting...");
     }
 
 
