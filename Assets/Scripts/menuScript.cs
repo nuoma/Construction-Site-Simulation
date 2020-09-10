@@ -29,8 +29,8 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject A7Worker1;
     [SerializeField] private GameObject A7Worker2;
     [SerializeField] private GameObject A7Worker3;
-    [SerializeField] private GameObject Activity8Arrow;
-    [SerializeField] private GameObject Activity9Arrow;
+    [SerializeField] private GameObject Activity8;
+    [SerializeField] private GameObject Activity9;
     [SerializeField] private GameObject Activity11AArrow;
     [SerializeField] private GameObject Activity11BArrow;
     [SerializeField] private GameObject Activity12Laser;
@@ -212,18 +212,20 @@ public class menuScript : MonoBehaviour
 
     public void select_8()
     {
-        switchTag(Activity8Arrow);
+        //switchTag(Activity8Arrow);
+        Activity8.transform.Find("Arrow").gameObject.SetActive(true);
         sensorSelected();
-        Vector3 ScannerPosition= Activity8Arrow.transform.position;
+        Vector3 ScannerPosition= Activity8.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
     }
 
     public void select_9()
     {
-        switchTag(Activity9Arrow);
+        //switchTag(Activity9Arrow);
+        Activity9.transform.Find("Arrow").gameObject.SetActive(true);
         sensorSelected();
-        Vector3 ScannerPosition = Activity9Arrow.transform.position;
+        Vector3 ScannerPosition = Activity9.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
     }
@@ -262,6 +264,7 @@ public class menuScript : MonoBehaviour
     public void select_12()
     {
         Activity12Canvas.SetActive(true);// choose between laser scan and drone scan.
+        Activity13_DroneCanvas.SetActive(false);
     }
 
     public void select_12Laser()
@@ -295,6 +298,8 @@ public class menuScript : MonoBehaviour
         //switchTag(Activity13Drone);
         sensorSelected();
         Activity13_DroneCanvas.SetActive(true);
+        Activity12Canvas.SetActive(false);
+        Activity12_DroneCanvas.SetActive(false);
         //need to get rid of all canvas
     }
 
@@ -392,10 +397,13 @@ public class menuScript : MonoBehaviour
         GetComponent<Canvas>().enabled = true;
         resetScanner();
         resetDrone();
+        Activity12_DroneCanvas.SetActive(false);
+        Activity13_DroneCanvas.SetActive(false);
     }
     private void resetScanner()
     {
-        scannerCanvas.GetComponent<Canvas>().enabled = false;
+        //scannerCanvas.GetComponent<Canvas>().enabled = false;
+        scannerCanvas.SetActive(false); 
         scannerCanvas.GetComponent<scanScript>().resolution = 0;
         scannerCanvas.GetComponent<scanScript>().quality = 0;
         scannerCanvas.GetComponent<scanScript>().color = 0;

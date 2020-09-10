@@ -32,6 +32,8 @@ public class Drone12 : MonoBehaviour
             DroneModel.GetComponent<Animator>().SetBool("fly", true);
             transform.Rotate(0, speed * Time.deltaTime, 0);
         }
+        else
+        DroneModel.SetActive(false);
 
     }
 
