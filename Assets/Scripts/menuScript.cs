@@ -31,8 +31,8 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject A7Worker3;
     [SerializeField] private GameObject Activity8;
     [SerializeField] private GameObject Activity9;
-    [SerializeField] private GameObject Activity11AArrow;
-    [SerializeField] private GameObject Activity11BArrow;
+    [SerializeField] private GameObject Activity11A;
+    [SerializeField] private GameObject Activity11B;
     [SerializeField] private GameObject Activity12Laser;
     [SerializeField] private GameObject Activity12Drone;
     [SerializeField] private GameObject Activity12_DroneLocator;
@@ -128,6 +128,7 @@ public class menuScript : MonoBehaviour
         stop_1();
         stop_2();
         stop_5();
+        stop_11();
         stop_12_a();
         stop_13_a();
     }
@@ -241,25 +242,38 @@ public class menuScript : MonoBehaviour
         Activity11Canvas.SetActive(true);
 
     }
+
+    //laser scan stockpile 1
     public void select_11A()
     {
-        switchTag(Activity11AArrow);
+        //switchTag(Activity11AArrow);
+        Activity11A.transform.Find("Arrow").gameObject.SetActive(true);
         Activity11Canvas.SetActive(false);
         sensorSelected();
-        Vector3 ScannerPosition = Activity11AArrow.transform.position;
+        Vector3 ScannerPosition = Activity11A.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
     }
 
+    //laser scan stockpile 2
     public void select_11B()
     {
-        switchTag(Activity11BArrow);
+        //switchTag(Activity11BArrow);
+        Activity11B.transform.Find("Arrow").gameObject.SetActive(true);
         Activity11Canvas.SetActive(false);
         sensorSelected();
-        Vector3 ScannerPosition = Activity11BArrow.transform.position;
+        Vector3 ScannerPosition = Activity11B.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
     }
+
+    public void stop_11()
+    {
+        sensorSelected();
+        Activity11A.transform.Find("Arrow").gameObject.SetActive(false);
+        Activity11B.transform.Find("Arrow").gameObject.SetActive(false);
+    }
+
 
     public void select_12()
     {

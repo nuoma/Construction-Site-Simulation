@@ -22,6 +22,7 @@ public class Crane : MonoBehaviour
     public GameObject container;        // the container or load
     public GameObject TargetArea;            // truck, target region
     public GameObject WorkerGround;
+    public GameObject WorkerTop;
 
     private int arrayPosition = 0; //added to seek target position
     private bool step2flag = true; //flag for step 2
@@ -96,6 +97,11 @@ public class Crane : MonoBehaviour
             yield return null;
         }
         */
+
+        //0. activate ground worker animation
+        WorkerGround.GetComponent<A2WorkerMove>().activate();
+        WorkerTop.GetComponent<A2WorkerMove>().activate();
+
         //1.hook go up top
         while (hook.transform.localPosition.y < hookRaiseLimit) 
         {
@@ -133,7 +139,7 @@ public class Crane : MonoBehaviour
             Debug.Log("container"+ new Vector2(moveSpots[0].position.x, moveSpots[0].position.z));
             */
             Debug.Log("Step3 Distance:"+distance);
-            bool distancebool = Mathf.Abs(distance) < 0.01f; //distance precision value
+            bool distancebool = Mathf.Abs(distance) < 0.003f; //distance precision value
             if ( distancebool ) //rotate to desired location.
             {
                 step3flag = false; //set flag to terminate step 3 rotation
@@ -150,9 +156,9 @@ public class Crane : MonoBehaviour
         //4+: insert action so that worker move towards load, perform animation and backup.
         while (GroundWorkerApproach) //default is true
         {
-            WorkerGround.GetComponent<A2WorkerMove>().activate();//jump to A2WorkerMove.cs
+            //WorkerGround.GetComponent<A2WorkerMove>().activate();//jump to A2WorkerMove.cs
             // first move, then stop and animate, then move back, then continue coroutine?
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(2);
 
             //WorkerGround.GetComponent<A2WorkerMove>().inspect();
             //yield return new WaitForSeconds(6);
@@ -177,8 +183,8 @@ public class Crane : MonoBehaviour
             //calculate look angle from crane top pivot point to target location
             Quaternion lookDirection = Quaternion.LookRotation(moveSpots[1].position - transform.position); //moveSpots is first target location, transform position is top tower crane
             float angle = Quaternion.Angle(lookDirection, craneTop.transform.rotation); //the angle between look direction and actual crane top pivot angle
-            //Debug.Log(angle);
-            bool sameRotation = Mathf.Abs(angle) < 90f; //after test, desire angle is 90, due to top crane model coordinate initial direction. Container placed directly before crane, use orthognal view to adjust.
+            Debug.Log("Step 6 angle:"+angle);
+            bool sameRotation = Mathf.Abs(angle) < 95f; //after test, desire angle is 90, due to top crane model coordinate initial direction. Container placed directly before crane, use orthognal view to adjust.
             if (sameRotation) //rotate to desired location.
             {
                 step6flag = false; //set flag to terminate step 2 rotation
@@ -190,7 +196,7 @@ public class Crane : MonoBehaviour
         {
             MoveHookForward();// let hook move forward, due to small hack mentioned above 
             float distance = Vector2.Distance(new Vector2(hook.transform.position.x, hook.transform.position.z), new Vector2(moveSpots[1].transform.position.x, moveSpots[1].transform.position.z));//calculate distance between load and target area.
-            bool distancebool = Mathf.Abs(distance) < 0.04f; //distance precision value
+            bool distancebool = Mathf.Abs(distance) < 0.02f; //distance precision value
             Debug.Log("Step7 distance: "+distance);
             //Debug.Log("hook(x,z):" + hook.transform.position.x + hook.transform.position.z);
             //Debug.Log("spot(x,z):" + moveSpots[1].transform.position.x + moveSpots[1].transform.position.z);

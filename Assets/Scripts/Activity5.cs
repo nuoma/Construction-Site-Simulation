@@ -30,6 +30,7 @@ public class Activity5 : MonoBehaviour
 
     [SerializeField] private Transform[] DT_Trip1_Spots;
     [SerializeField] private Transform[] DT_Trip2_Spots;
+    [SerializeField] private Transform[] CameraSite2Position;
 
 
     private float step1time = 3f;
@@ -37,6 +38,10 @@ public class Activity5 : MonoBehaviour
     private float speed = 0.1f;
     private float speedBack = 0.1f;
     private float precision = 0.2f;
+
+    //main camera
+    [SerializeField] private GameObject mainCamera;
+    Vector3 MainCameraResetPosition;
     #endregion
 
     #region main function body
@@ -44,6 +49,7 @@ public class Activity5 : MonoBehaviour
     // Start is called before the first frame update
     public void start()
     {
+        MainCameraResetPosition = mainCamera.transform.position;
         //Move the GetComponent to the Start method and cache the components on your private variables
         _DumptruckVC = DumpTruck.GetComponent<WSMVehicleController>();
         _DumptruckController = DumpTruck.GetComponent<DumpTruckController>();
@@ -274,6 +280,10 @@ public class Activity5 : MonoBehaviour
         //Step6: truck raise bed, vehicle forward and brake, then lower bed
         while (step6)
         {
+
+            //move camera to new location
+            mainCamera.transform.position = CameraSite2Position[0].transform.position;
+
             float Step4aDuration = Time.time + 4f;
             while (Time.time < Step4aDuration)
             {
@@ -329,6 +339,9 @@ public class Activity5 : MonoBehaviour
                 }
                 yield return null; //in while loop
             }
+
+            //reset main camera position
+            mainCamera.transform.position = MainCameraResetPosition;
 
             step7 = false;
             yield return null;
