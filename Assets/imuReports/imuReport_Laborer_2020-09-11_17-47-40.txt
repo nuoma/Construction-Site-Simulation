@@ -1,0 +1,301 @@
+IMU Report: Laborer
+
+Shoulder Data
+
+Time: 1 seconds   x:26.16  y:70.29  z:30.55
+Time: 2 seconds   x:30.14  y:70.02  z:24.64
+Time: 3 seconds   x:32.82  y:70.02  z:18.64
+Time: 4 seconds   x:39.37  y:66.88  z:1.33
+Time: 5 seconds   x:41.38  y:64.94  z:355.02
+Time: 6 seconds   x:42.84  y:63.27  z:350.02
+Time: 7 seconds   x:46.46  y:58.00  z:335.73
+Time: 8 seconds   x:49.06  y:52.65  z:321.86
+Time: 9 seconds   x:50.28  y:49.37  z:312.63
+Time: 10 seconds   x:50.87  y:46.85  z:304.87
+Time: 11 seconds   x:50.88  y:45.71  z:300.06
+Time: 12 seconds   x:50.75  y:45.85  z:299.62
+Time: 13 seconds   x:50.30  y:47.26  z:301.90
+Time: 14 seconds   x:49.99  y:48.43  z:304.42
+Time: 15 seconds   x:48.63  y:52.83  z:315.26
+Time: 16 seconds   x:45.20  y:59.37  z:333.49
+Time: 17 seconds   x:40.27  y:64.52  z:350.52
+Time: 18 seconds   x:36.64  y:67.30  z:1.09
+Time: 19 seconds   x:33.47  y:68.85  z:8.47
+Time: 20 seconds   x:31.26  y:69.54  z:12.63
+Time: 21 seconds   x:28.85  y:70.02  z:16.41
+Time: 22 seconds   x:25.37  y:70.38  z:20.94
+Time: 23 seconds   x:23.59  y:70.53  z:22.96
+Time: 24 seconds   x:21.38  y:70.85  z:25.08
+Time: 25 seconds   x:19.79  y:71.37  z:25.93
+Time: 26 seconds   x:19.78  y:71.38  z:25.93
+Time: 27 seconds   x:19.23  y:71.63  z:26.10
+Time: 28 seconds   x:18.80  y:71.87  z:26.38
+Time: 29 seconds   x:18.65  y:71.96  z:26.80
+Time: 30 seconds   x:18.60  y:72.13  z:27.82
+Time: 31 seconds   x:18.78  y:72.47  z:29.66
+Time: 32 seconds   x:18.99  y:72.68  z:30.56
+Time: 33 seconds   x:19.11  y:72.75  z:30.97
+Time: 34 seconds   x:19.17  y:72.79  z:31.13
+Time: 35 seconds   x:19.65  y:72.91  z:32.08
+Time: 36 seconds   x:20.35  y:72.58  z:32.72
+Time: 37 seconds   x:21.81  y:71.92  z:32.82
+Time: 38 seconds   x:25.91  y:70.39  z:30.72
+Time: 39 seconds   x:27.30  y:69.93  z:29.55
+Time: 40 seconds   x:29.00  y:69.81  z:26.97
+Time: 41 seconds   x:32.35  y:70.09  z:19.72
+Time: 42 seconds   x:35.32  y:69.29  z:12.36
+Time: 43 seconds   x:38.39  y:67.65  z:4.15
+Time: 44 seconds   x:42.49  y:63.69  z:351.25
+Time: 45 seconds   x:46.87  y:57.26  z:333.85
+Time: 46 seconds   x:49.87  y:50.63  z:316.24
+Time: 47 seconds   x:50.12  y:49.88  z:314.10
+Time: 48 seconds   x:50.74  y:47.55  z:307.17
+Time: 49 seconds   x:50.93  y:45.84  z:300.95
+Time: 50 seconds   x:50.89  y:45.71  z:300.14
+Time: 51 seconds   x:50.74  y:45.89  z:299.63
+Time: 52 seconds   x:50.03  y:48.27  z:304.08
+Time: 53 seconds   x:48.82  y:52.31  z:313.89
+Time: 54 seconds   x:47.52  y:55.39  z:322.11
+Time: 55 seconds   x:42.59  y:62.45  z:343.25
+Time: 56 seconds   x:37.97  y:66.41  z:357.48
+Time: 57 seconds   x:35.87  y:67.74  z:3.03
+Time: 58 seconds   x:34.49  y:68.42  z:6.29
+Time: 59 seconds   x:32.84  y:69.08  z:9.75
+Time: 60 seconds   x:28.43  y:70.09  z:17.02
+Time: 61 seconds   x:27.12  y:70.25  z:18.81
+Time: 62 seconds   x:25.04  y:70.41  z:21.32
+Time: 63 seconds   x:22.84  y:70.61  z:23.76
+Time: 64 seconds   x:21.27  y:70.87  z:25.16
+Time: 65 seconds   x:19.73  y:71.40  z:25.95
+Time: 66 seconds   x:19.06  y:71.73  z:26.15
+Time: 67 seconds   x:18.76  y:71.89  z:26.45
+Time: 68 seconds   x:18.61  y:72.03  z:27.30
+Time: 69 seconds   x:18.65  y:72.26  z:28.57
+Time: 70 seconds   x:18.76  y:72.44  z:29.53
+Time: 71 seconds   x:18.87  y:72.58  z:30.12
+Time: 72 seconds   x:19.27  y:72.86  z:31.41
+
+Thigh Data
+
+Time: 1 seconds Thigh:  x:13.27  y:11.17  z:61.95
+Time: 2 seconds Thigh:  x:13.08  y:11.78  z:62.22
+Time: 3 seconds Thigh:  x:13.02  y:12.34  z:62.60
+Time: 4 seconds Thigh:  x:13.14  y:13.55  z:63.57
+Time: 5 seconds Thigh:  x:13.27  y:13.84  z:63.91
+Time: 6 seconds Thigh:  x:13.38  y:14.04  z:64.22
+Time: 7 seconds Thigh:  x:13.81  y:14.51  z:65.35
+Time: 8 seconds Thigh:  x:14.27  y:14.91  z:66.87
+Time: 9 seconds Thigh:  x:14.62  y:15.25  z:68.12
+Time: 10 seconds Thigh:  x:14.98  y:15.67  z:69.25
+Time: 11 seconds Thigh:  x:15.30  y:16.07  z:70.01
+Time: 12 seconds Thigh:  x:15.39  y:16.18  z:70.11
+Time: 13 seconds Thigh:  x:15.42  y:16.25  z:69.82
+Time: 14 seconds Thigh:  x:15.37  y:16.22  z:69.48
+Time: 15 seconds Thigh:  x:15.12  y:16.08  z:68.11
+Time: 16 seconds Thigh:  x:14.77  y:15.85  z:66.08
+Time: 17 seconds Thigh:  x:14.56  y:15.68  z:64.45
+Time: 18 seconds Thigh:  x:14.49  y:15.18  z:64.00
+Time: 19 seconds Thigh:  x:14.47  y:14.46  z:63.77
+Time: 20 seconds Thigh:  x:14.43  y:13.90  z:63.68
+Time: 21 seconds Thigh:  x:14.36  y:13.25  z:63.66
+Time: 22 seconds Thigh:  x:14.18  y:12.48  z:63.98
+Time: 23 seconds Thigh:  x:14.07  y:12.18  z:64.32
+Time: 24 seconds Thigh:  x:13.92  y:11.96  z:64.99
+Time: 25 seconds Thigh:  x:13.82  y:11.96  z:65.59
+Time: 26 seconds Thigh:  x:13.82  y:11.96  z:65.59
+Time: 27 seconds Thigh:  x:13.79  y:11.96  z:65.76
+Time: 28 seconds Thigh:  x:13.77  y:11.95  z:65.83
+Time: 29 seconds Thigh:  x:13.77  y:11.93  z:65.76
+Time: 30 seconds Thigh:  x:13.77  y:11.90  z:65.45
+Time: 31 seconds Thigh:  x:13.76  y:11.80  z:64.66
+Time: 32 seconds Thigh:  x:13.75  y:11.63  z:64.07
+Time: 33 seconds Thigh:  x:13.73  y:11.54  z:63.79
+Time: 34 seconds Thigh:  x:13.73  y:11.50  z:63.68
+Time: 35 seconds Thigh:  x:13.66  y:11.25  z:62.97
+Time: 36 seconds Thigh:  x:13.59  y:11.08  z:62.50
+Time: 37 seconds Thigh:  x:13.48  y:10.99  z:62.13
+Time: 38 seconds Thigh:  x:13.28  y:11.16  z:61.96
+Time: 39 seconds Thigh:  x:13.21  y:11.26  z:61.96
+Time: 40 seconds Thigh:  x:13.13  y:11.52  z:62.08
+Time: 41 seconds Thigh:  x:13.03  y:12.25  z:62.54
+Time: 42 seconds Thigh:  x:13.02  y:12.86  z:62.95
+Time: 43 seconds Thigh:  x:13.10  y:13.40  z:63.42
+Time: 44 seconds Thigh:  x:13.35  y:14.00  z:64.14
+Time: 45 seconds Thigh:  x:13.87  y:14.57  z:65.53
+Time: 46 seconds Thigh:  x:14.48  y:15.10  z:67.62
+Time: 47 seconds Thigh:  x:14.56  y:15.19  z:67.92
+Time: 48 seconds Thigh:  x:14.86  y:15.53  z:68.90
+Time: 49 seconds Thigh:  x:15.22  y:15.97  z:69.87
+Time: 50 seconds Thigh:  x:15.29  y:16.06  z:70.00
+Time: 51 seconds Thigh:  x:15.39  y:16.19  z:70.11
+Time: 52 seconds Thigh:  x:15.38  y:16.22  z:69.53
+Time: 53 seconds Thigh:  x:15.16  y:16.10  z:68.28
+Time: 54 seconds Thigh:  x:14.98  y:15.99  z:67.31
+Time: 55 seconds Thigh:  x:14.63  y:15.75  z:65.11
+Time: 56 seconds Thigh:  x:14.51  y:15.43  z:64.13
+Time: 57 seconds Thigh:  x:14.49  y:15.02  z:63.94
+Time: 58 seconds Thigh:  x:14.48  y:14.70  z:63.83
+Time: 59 seconds Thigh:  x:14.46  y:14.31  z:63.74
+Time: 60 seconds Thigh:  x:14.34  y:13.15  z:63.68
+Time: 61 seconds Thigh:  x:14.28  y:12.84  z:63.77
+Time: 62 seconds Thigh:  x:14.16  y:12.41  z:64.03
+Time: 63 seconds Thigh:  x:14.02  y:12.08  z:64.53
+Time: 64 seconds Thigh:  x:13.92  y:11.95  z:65.03
+Time: 65 seconds Thigh:  x:13.82  y:11.96  z:65.61
+Time: 66 seconds Thigh:  x:13.78  y:11.96  z:65.81
+Time: 67 seconds Thigh:  x:13.77  y:11.95  z:65.82
+Time: 68 seconds Thigh:  x:13.77  y:11.90  z:65.61
+Time: 69 seconds Thigh:  x:13.77  y:11.89  z:65.19
+Time: 70 seconds Thigh:  x:13.76  y:11.82  z:64.74
+Time: 71 seconds Thigh:  x:13.76  y:11.72  z:64.37
+Time: 72 seconds Thigh:  x:13.71  y:11.43  z:63.47
+
+Back Data
+
+Time: 1 seconds Back:  x:350.06  y:28.78  z:232.76
+Time: 2 seconds Back:  x:351.60  y:29.86  z:234.56
+Time: 3 seconds Back:  x:352.96  y:30.60  z:235.73
+Time: 4 seconds Back:  x:356.94  y:33.16  z:238.82
+Time: 5 seconds Back:  x:358.49  y:34.35  z:239.95
+Time: 6 seconds Back:  x:359.73  y:35.38  z:240.89
+Time: 7 seconds Back:  x:3.27  y:38.91  z:243.89
+Time: 8 seconds Back:  x:6.29  y:43.02  z:247.05
+Time: 9 seconds Back:  x:8.04  y:46.30  z:249.27
+Time: 10 seconds Back:  x:9.41  y:49.40  z:251.14
+Time: 11 seconds Back:  x:10.29  y:51.90  z:252.36
+Time: 12 seconds Back:  x:10.44  y:52.53  z:252.51
+Time: 13 seconds Back:  x:10.30  y:52.69  z:252.04
+Time: 14 seconds Back:  x:10.03  y:52.32  z:251.47
+Time: 15 seconds Back:  x:8.62  y:50.06  z:248.94
+Time: 16 seconds Back:  x:5.80  y:45.80  z:244.57
+Time: 17 seconds Back:  x:2.66  y:41.73  z:240.28
+Time: 18 seconds Back:  x:.50  y:39.32  z:237.58
+Time: 19 seconds Back:  x:358.90  y:37.63  z:235.30
+Time: 20 seconds Back:  x:357.77  y:36.45  z:233.69
+Time: 21 seconds Back:  x:356.51  y:35.16  z:231.91
+Time: 22 seconds Back:  x:354.43  y:33.10  z:229.36
+Time: 23 seconds Back:  x:353.29  y:31.99  z:228.06
+Time: 24 seconds Back:  x:351.83  y:30.56  z:226.44
+Time: 25 seconds Back:  x:350.89  y:29.53  z:225.44
+Time: 26 seconds Back:  x:350.88  y:29.52  z:225.44
+Time: 27 seconds Back:  x:350.63  y:29.14  z:225.24
+Time: 28 seconds Back:  x:350.45  y:28.77  z:225.24
+Time: 29 seconds Back:  x:350.40  y:28.53  z:225.43
+Time: 30 seconds Back:  x:350.29  y:28.15  z:225.99
+Time: 31 seconds Back:  x:349.99  y:27.59  z:227.15
+Time: 32 seconds Back:  x:349.74  y:27.37  z:227.78
+Time: 33 seconds Back:  x:349.60  y:27.29  z:228.08
+Time: 34 seconds Back:  x:349.53  y:27.27  z:228.19
+Time: 35 seconds Back:  x:349.10  y:27.19  z:228.95
+Time: 36 seconds Back:  x:348.90  y:27.25  z:229.73
+Time: 37 seconds Back:  x:348.99  y:27.55  z:230.74
+Time: 38 seconds Back:  x:349.99  y:28.71  z:232.65
+Time: 39 seconds Back:  x:350.40  y:29.11  z:233.27
+Time: 40 seconds Back:  x:351.07  y:29.57  z:234.05
+Time: 41 seconds Back:  x:352.71  y:30.46  z:235.52
+Time: 42 seconds Back:  x:354.32  y:31.39  z:236.85
+Time: 43 seconds Back:  x:356.24  y:32.66  z:238.31
+Time: 44 seconds Back:  x:359.42  y:35.12  z:240.65
+Time: 45 seconds Back:  x:3.71  y:39.42  z:244.30
+Time: 46 seconds Back:  x:7.38  y:44.99  z:248.40
+Time: 47 seconds Back:  x:7.78  y:45.76  z:248.91
+Time: 48 seconds Back:  x:9.01  y:48.42  z:250.58
+Time: 49 seconds Back:  x:10.11  y:51.32  z:252.12
+Time: 50 seconds Back:  x:10.27  y:51.85  z:252.34
+Time: 51 seconds Back:  x:10.45  y:52.57  z:252.51
+Time: 52 seconds Back:  x:10.07  y:52.38  z:251.55
+Time: 53 seconds Back:  x:8.81  y:50.37  z:249.27
+Time: 54 seconds Back:  x:7.62  y:48.49  z:247.32
+Time: 55 seconds Back:  x:4.06  y:43.47  z:242.13
+Time: 56 seconds Back:  x:1.24  y:40.14  z:238.56
+Time: 57 seconds Back:  x:.09  y:38.88  z:237.02
+Time: 58 seconds Back:  x:359.40  y:38.15  z:236.03
+Time: 59 seconds Back:  x:358.58  y:37.29  z:234.84
+Time: 60 seconds Back:  x:356.27  y:34.92  z:231.60
+Time: 61 seconds Back:  x:355.51  y:34.16  z:230.64
+Time: 62 seconds Back:  x:354.23  y:32.89  z:229.12
+Time: 63 seconds Back:  x:352.79  y:31.50  z:227.49
+Time: 64 seconds Back:  x:351.76  y:30.49  z:226.37
+Time: 65 seconds Back:  x:350.85  y:29.49  z:225.42
+Time: 66 seconds Back:  x:350.56  y:29.00  z:225.22
+Time: 67 seconds Back:  x:350.44  y:28.72  z:225.27
+Time: 68 seconds Back:  x:350.36  y:28.34  z:225.70
+Time: 69 seconds Back:  x:350.20  y:27.90  z:226.45
+Time: 70 seconds Back:  x:350.02  y:27.62  z:227.06
+Time: 71 seconds Back:  x:349.87  y:27.47  z:227.47
+Time: 72 seconds Back:  x:349.40  y:27.23  z:228.39
+
+Neck Data
+
+Time: 1 seconds Neck:  x:4.19  y:17.82  z:190.25
+Time: 2 seconds Neck:  x:7.56  y:18.58  z:191.50
+Time: 3 seconds Neck:  x:10.19  y:20.30  z:192.01
+Time: 4 seconds Neck:  x:15.89  y:27.37  z:193.47
+Time: 5 seconds Neck:  x:17.64  y:30.43  z:194.25
+Time: 6 seconds Neck:  x:18.95  y:32.98  z:195.08
+Time: 7 seconds Neck:  x:22.35  y:.96  z:198.58
+Time: 8 seconds Neck:  x:24.75  y:9.21  z:203.74
+Time: 9 seconds Neck:  x:25.81  y:14.68  z:208.25
+Time: 10 seconds Neck:  x:26.47  y:19.14  z:212.51
+Time: 11 seconds Neck:  x:26.90  y:21.68  z:215.79
+Time: 12 seconds Neck:  x:27.03  y:21.76  z:216.54
+Time: 13 seconds Neck:  x:27.16  y:19.92  z:216.50
+Time: 14 seconds Neck:  x:27.11  y:18.17  z:215.79
+Time: 15 seconds Neck:  x:26.38  y:11.07  z:211.88
+Time: 16 seconds Neck:  x:23.59  y:39.92  z:205.14
+Time: 17 seconds Neck:  x:19.33  y:30.21  z:199.62
+Time: 18 seconds Neck:  x:16.02  y:25.67  z:197.26
+Time: 19 seconds Neck:  x:13.21  y:23.19  z:195.81
+Time: 20 seconds Neck:  x:11.29  y:22.15  z:194.88
+Time: 21 seconds Neck:  x:9.25  y:21.57  z:193.87
+Time: 22 seconds Neck:  x:6.38  y:21.53  z:192.38
+Time: 23 seconds Neck:  x:4.94  y:21.80  z:191.52
+Time: 24 seconds Neck:  x:3.21  y:22.46  z:190.17
+Time: 25 seconds Neck:  x:2.19  y:23.12  z:188.71
+Time: 26 seconds Neck:  x:2.19  y:23.12  z:188.70
+Time: 27 seconds Neck:  x:1.93  y:23.34  z:188.02
+Time: 28 seconds Neck:  x:1.73  y:23.42  z:187.29
+Time: 29 seconds Neck:  x:1.62  y:23.28  z:186.75
+Time: 30 seconds Neck:  x:1.45  y:22.79  z:186.10
+Time: 31 seconds Neck:  x:1.21  y:21.76  z:185.72
+Time: 32 seconds Neck:  x:1.12  y:21.16  z:185.83
+Time: 33 seconds Neck:  x:1.11  y:20.86  z:185.96
+Time: 34 seconds Neck:  x:1.11  y:20.73  z:186.02
+Time: 35 seconds Neck:  x:1.18  y:19.89  z:186.63
+Time: 36 seconds Neck:  x:1.37  y:19.20  z:187.35
+Time: 37 seconds Neck:  x:1.96  y:18.52  z:188.33
+Time: 38 seconds Neck:  x:4.05  y:17.84  z:190.15
+Time: 39 seconds Neck:  x:4.90  y:17.78  z:190.69
+Time: 40 seconds Neck:  x:6.36  y:18.13  z:191.21
+Time: 41 seconds Neck:  x:9.76  y:19.94  z:191.93
+Time: 42 seconds Neck:  x:12.41  y:22.57  z:192.44
+Time: 43 seconds Neck:  x:15.06  y:26.06  z:193.17
+Time: 44 seconds Neck:  x:18.63  y:32.34  z:194.85
+Time: 45 seconds Neck:  x:22.73  y:2.06  z:199.16
+Time: 46 seconds Neck:  x:25.44  y:12.56  z:206.44
+Time: 47 seconds Neck:  x:25.67  y:13.82  z:207.50
+Time: 48 seconds Neck:  x:26.29  y:17.83  z:211.17
+Time: 49 seconds Neck:  x:26.79  y:21.27  z:215.05
+Time: 50 seconds Neck:  x:26.89  y:21.65  z:215.72
+Time: 51 seconds Neck:  x:27.04  y:21.74  z:216.59
+Time: 52 seconds Neck:  x:27.12  y:18.40  z:215.90
+Time: 53 seconds Neck:  x:26.51  y:11.94  z:212.40
+Time: 54 seconds Neck:  x:25.54  y:6.77  z:209.30
+Time: 55 seconds Neck:  x:21.34  y:34.26  z:201.84
+Time: 56 seconds Neck:  x:17.23  y:27.07  z:198.01
+Time: 57 seconds Neck:  x:15.33  y:24.97  z:196.88
+Time: 58 seconds Neck:  x:14.10  y:23.87  z:196.24
+Time: 59 seconds Neck:  x:12.66  y:22.83  z:195.54
+Time: 60 seconds Neck:  x:8.90  y:21.51  z:193.69
+Time: 61 seconds Neck:  x:7.80  y:21.42  z:193.15
+Time: 62 seconds Neck:  x:6.11  y:21.57  z:192.23
+Time: 63 seconds Neck:  x:4.33  y:22.00  z:191.12
+Time: 64 seconds Neck:  x:3.14  y:22.50  z:190.09
+Time: 65 seconds Neck:  x:2.16  y:23.14  z:188.64
+Time: 66 seconds Neck:  x:1.86  y:23.40  z:187.76
+Time: 67 seconds Neck:  x:1.70  y:23.40  z:187.18
+Time: 68 seconds Neck:  x:1.53  y:23.04  z:186.35
+Time: 69 seconds Neck:  x:1.34  y:22.39  z:185.86
+Time: 70 seconds Neck:  x:1.22  y:21.84  z:185.72
+Time: 71 seconds Neck:  x:1.16  y:21.46  z:185.75
+Time: 72 seconds Neck:  x:1.11  y:20.50  z:186.16
