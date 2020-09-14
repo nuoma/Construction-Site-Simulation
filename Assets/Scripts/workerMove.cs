@@ -27,7 +27,7 @@ public class workerMove : MonoBehaviour
         //if (enable && tagged)
         if (enable)
         {
-            //transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, speed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, 0.05f * Time.deltaTime);
             transform.position += transform.forward * Time.deltaTime * speed;
 
             Quaternion lookDirection = Quaternion.LookRotation(moveSpots[arrayPosition].position - transform.position);

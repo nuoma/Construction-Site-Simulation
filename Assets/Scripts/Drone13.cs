@@ -11,7 +11,9 @@ public class Drone13 : MonoBehaviour
 {
     [SerializeField] private float speed = 15;
     [SerializeField] private GameObject DroneModel;
+    [SerializeField] private GameObject DroneCamera;
     private bool startRot;
+    private int FrmCount = 0;
 
     public void Start()
     {
@@ -31,6 +33,10 @@ public class Drone13 : MonoBehaviour
             DroneModel.GetComponent<Animator>().SetBool("fly", true);
             DroneModel.transform.Find("Arrow").gameObject.SetActive(true);
             transform.Rotate(0, speed * Time.deltaTime, 0);
+            
+            //capture image every 5 frames.
+            if(FrmCount % 5 == 0) DroneCamera.GetComponent<DroneCapture>().capture = true;
+            FrmCount++;
         }
 
     }
@@ -40,5 +46,6 @@ public class Drone13 : MonoBehaviour
         DroneModel.SetActive(false);
         DroneModel.transform.Find("Arrow").gameObject.SetActive(false);
         startRot = false;
+        FrmCount = 0;
     }
 }

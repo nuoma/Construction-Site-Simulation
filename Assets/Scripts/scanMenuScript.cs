@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class scanMenuScript : MonoBehaviour
 {
@@ -14,9 +15,13 @@ public class scanMenuScript : MonoBehaviour
     [SerializeField] private GameObject backButton;
     [SerializeField] private GameObject[] targets;
     [SerializeField] private GameObject tripodScripts;
+    [SerializeField] private GameObject SelectionPrompt;
     [SerializeField] private float[] scannerMove = new float[3];
 
-
+    string p1;
+    string p2;
+    string p3;
+    string p4;
     bool targetsEnabled = false;
     bool tripodLevel = false;
     Renderer[][] targetRenderers = new Renderer[3][];
@@ -62,7 +67,7 @@ public class scanMenuScript : MonoBehaviour
         {
             tripodMenu.SetActive(false);
             scanner.GetComponent<Renderer>().enabled = true;
-            //scanner.transform.parent.parent.GetComponent<ManipulationHandler>()
+            //scanner.transform.parent.parent.GetComponent<ManipulationHandler>();
             //tripodScripts.GetComponent<ManipulationHandler>().enabled = false;
             MonoBehaviour[] scripts = tripodScripts.GetComponents<MonoBehaviour>();
             foreach (MonoBehaviour script in scripts)
@@ -95,5 +100,19 @@ public class scanMenuScript : MonoBehaviour
             mainMenu.GetComponent<Canvas>().enabled = false;
             scannerMenu.SetActive(false);
         //}
+    }
+
+    private void Update()
+    {
+        if (tripod.GetComponent<Renderer>().enabled == true)
+            p1 = "Tripod Selected. ";
+        if (scanner.GetComponent<Renderer>().enabled == true)
+            p2 = "Scanner Selected. ";
+        if (targetsEnabled)
+            p3 = "Targets Selected. ";
+        if (tripodLevel)
+            p4 = "Tripod Levelled.";
+
+        SelectionPrompt.GetComponent<TextMeshProUGUI>().text = "Selected:" +  p1+p2+p3+p4;
     }
 }

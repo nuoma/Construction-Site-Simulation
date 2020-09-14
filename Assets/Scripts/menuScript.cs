@@ -214,7 +214,7 @@ public class menuScript : MonoBehaviour
     public void select_8()
     {
         //switchTag(Activity8Arrow);
-        Activity8.transform.Find("Arrow").gameObject.SetActive(true);
+        //Activity8.transform.Find("Arrow").gameObject.SetActive(true);
         sensorSelected();
         Vector3 ScannerPosition= Activity8.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
@@ -224,7 +224,7 @@ public class menuScript : MonoBehaviour
     public void select_9()
     {
         //switchTag(Activity9Arrow);
-        Activity9.transform.Find("Arrow").gameObject.SetActive(true);
+        //Activity9.transform.Find("Arrow").gameObject.SetActive(true);
         sensorSelected();
         Vector3 ScannerPosition = Activity9.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
@@ -247,7 +247,7 @@ public class menuScript : MonoBehaviour
     public void select_11A()
     {
         //switchTag(Activity11AArrow);
-        Activity11A.transform.Find("Arrow").gameObject.SetActive(true);
+        //Activity11A.transform.Find("Arrow").gameObject.SetActive(true);
         Activity11Canvas.SetActive(false);
         sensorSelected();
         Vector3 ScannerPosition = Activity11A.transform.position;
@@ -259,7 +259,7 @@ public class menuScript : MonoBehaviour
     public void select_11B()
     {
         //switchTag(Activity11BArrow);
-        Activity11B.transform.Find("Arrow").gameObject.SetActive(true);
+        //Activity11B.transform.Find("Arrow").gameObject.SetActive(true);
         Activity11Canvas.SetActive(false);
         sensorSelected();
         Vector3 ScannerPosition = Activity11B.transform.position;
@@ -283,7 +283,7 @@ public class menuScript : MonoBehaviour
 
     public void select_12Laser()
     {
-        switchTag(Activity12Laser); //Activate laser position arrow
+        //switchTag(Activity12Laser); //Activate laser position arrow
         Activity12Canvas.SetActive(false);
         sensorSelected();
         Vector3 ScannerPosition = Activity12Laser.transform.position;

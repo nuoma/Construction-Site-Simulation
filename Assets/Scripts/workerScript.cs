@@ -42,7 +42,10 @@ public class workerScript : MonoBehaviour
     private void Start()
     {
         //default file name to resolve unity error, if no start function it probably work.
-        filePath = Application.dataPath + "/imuReports";
+        Debug.Log("IMU persistent data path:" + Application.persistentDataPath);
+        filePath = Application.persistentDataPath + "/imuReports";
+        
+
         fileName = string.Format("{0}/imuReport_{1}.txt",filePath,System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
         workerText.SetActive(true);
     }

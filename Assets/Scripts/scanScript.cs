@@ -6,6 +6,8 @@ using TMPro;
 
 public class scanScript : MonoBehaviour
 {
+
+    #region parameters
     [SerializeField] private GameObject scannerField;
     [SerializeField] private GameObject scanner;
     [SerializeField] private scannerCamera scannerCamera;
@@ -29,6 +31,7 @@ public class scanScript : MonoBehaviour
     [SerializeField] private GameObject thirtysecondthResButton;
 
     [SerializeField] private GameObject ScanStatusText;
+    [SerializeField] private GameObject SelectionPrompt;
 
     //Scan settings
     [HideInInspector]  public int resolution = 0;
@@ -36,6 +39,12 @@ public class scanScript : MonoBehaviour
     [HideInInspector]  public int color = 0;
     [HideInInspector]  public int profile = 0;
     [HideInInspector] public bool coverage = false;
+
+    string p1;
+    string p2;
+    string p3;
+    string p4;
+    string p5;
     bool scanning = false;
     bool camera360 = false;
     float scanTime = 0;
@@ -47,6 +56,7 @@ public class scanScript : MonoBehaviour
     float cameraHeight;
 
     ColorBlock colorVar;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -68,6 +78,20 @@ public class scanScript : MonoBehaviour
 
     private void Update()
     {
+        //prompt interface
+        if (resolution != 0)
+            p1 = "Resolution Selected. \n";
+        if (quality != 0)
+            p2 = "Quality Selected. \n";
+        if (color != 0)
+            p3 = "Color Selected. \n";
+        if (profile != 0)
+            p4 = "Profile Selected. \n";
+        if (coverage)
+            p5 = "Coverage Selected.\n";
+
+        SelectionPrompt.GetComponent<TextMeshProUGUI>().text = "Selected:" + p1 + p2 + p3 + p4 +p5;
+
         if (resolution != 0 && quality != 0 && color != 0 && profile != 0 && coverage)
         {
             ColorBlock colorVarUpdated = scanButton.GetComponent<Button>().colors;

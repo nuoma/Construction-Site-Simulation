@@ -13,10 +13,10 @@ public class droneScript : MonoBehaviour
     [SerializeField] private Camera droneCamera;
     [SerializeField] private float speed = 1;
 
-    private float zMax = 5.15f;
-    private float zMin = -1.178f;
-    private float xMax = 4.111f;
-    private float xMin = -2.563f;
+    private float zMax = 7.8f;
+    private float zMin = -6f;
+    private float xMax = 6.6f;
+    private float xMin = -5f;
     private float yMax = 1.25f;
     private float yMin = -0.25f;
 

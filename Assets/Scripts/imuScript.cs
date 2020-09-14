@@ -25,11 +25,11 @@ public class imuScript : MonoBehaviour
     void Start()
     {
         Debug.Log("IMU persistent data path:"+Application.persistentDataPath);
-        Debug.Log("IMU app data path:" + Application.dataPath);
+        //Debug.Log("IMU app data path:" + Application.dataPath);
 
-        //filePath = Application.persistentDataPath + "/imuReports";
+        filePath = Application.persistentDataPath + "/imuReports";
 
-        filePath = Application.dataPath + "/imuReports";
+        //filePath = Application.dataPath + "/imuReports";
 
         if (!Directory.Exists(filePath))
         {
