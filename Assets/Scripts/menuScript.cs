@@ -55,7 +55,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity12Canvas;
     [SerializeField] private GameObject Activity12_DroneCanvas;
     [SerializeField] private GameObject Activity13_DroneCanvas;
-    [SerializeField] private GameObject menuBackButton;
+    [SerializeField] private GameObject LaserScannerBackButton;
     [SerializeField] private GameObject ManualDroneBackButton;
     [SerializeField] private GameObject flightCanvas;
     [SerializeField] private Slider rotateSlider;
@@ -65,6 +65,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private float[] backMove = new float[3];
     Vector3 droneResetPosition;
     Vector3 MainCameraResetPosition;
+    Quaternion MainCameraResetRotation;
 
     //others
     bool move = false;
@@ -81,6 +82,7 @@ public class menuScript : MonoBehaviour
         mainMenu.SetActive(false);
         activityMenu.SetActive(false);
         MainCameraResetPosition = mainCamera.transform.position;
+        MainCameraResetRotation = mainCamera.transform.rotation;
     }
 
     //Functions to reset and quit scene.
@@ -405,10 +407,13 @@ public class menuScript : MonoBehaviour
 
     public void backMenu() //currently for all Back menus.
     {
+        //reset camera location to 0,0,0
         mainCamera.transform.position = MainCameraResetPosition;
-        menuBackButton.SetActive(false); 
+        mainCamera.transform.rotation = MainCameraResetRotation;
+        LaserScannerBackButton.SetActive(false); 
         ManualDroneBackButton.SetActive(false);
         GetComponent<Canvas>().enabled = true;
+        gameObject.SetActive(true);
         resetScanner();
         resetDrone();
         Activity12_DroneCanvas.SetActive(false);
