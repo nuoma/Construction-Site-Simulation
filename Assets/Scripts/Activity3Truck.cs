@@ -16,6 +16,7 @@ public class Activity3Truck : MonoBehaviour
     private int arrayPosition = 0;
     public GameObject Truck; //manually fill in truck asset
     private bool DisplayResults = false;
+    public string A3RFID;
 
     [HideInInspector] public bool tagged = true;
     [HideInInspector] public int lapCount;
@@ -27,6 +28,7 @@ public class Activity3Truck : MonoBehaviour
     {
         if (enable)
         {
+            A3RFID = "Wait for truck to arrive.";
             transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, speed * Time.deltaTime);
             //transform.position += transform.forward * Time.deltaTime * speed;
 
@@ -55,9 +57,10 @@ public class Activity3Truck : MonoBehaviour
             // objects in truck should have tagged TruckActivity3
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("TruckActivity3") as GameObject[];
             int LogNumber = objectsWithTag.Length;
-            Activity3Report.SetActive(true);
+            A3RFID = "A3 New Material Delivery Truck Carrying:" + LogNumber + " Log.";
+            //Activity3Report.SetActive(true);
             //Debug.Log("did it output?" + LogNumber);
-            Activity3Report.GetComponent<TextMeshPro>().text = "Truck Carry Log:" + LogNumber;
+            //Activity3Report.GetComponent<TextMeshPro>().text = "Truck Carry Log:" + LogNumber;
         }
 
     }

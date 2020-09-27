@@ -15,6 +15,7 @@ public class Crane : MonoBehaviour
     public float hookLowerLimit;        // the lowest the hook can be lowered
     public float hookForwardsLimit;     // the furthest forward the hook can be moved
     public float hookBackwardsLimit;    // the furthest backwards the hook can be moved
+    public float step8limit;
 
     // components
     public GameObject craneTop;         // top of the crane which rotates
@@ -209,7 +210,7 @@ public class Crane : MonoBehaviour
             yield return null;
         }
         //8.move hook down to bottom
-        while (hook.transform.localPosition.y > hookLowerLimit)
+        while (hook.transform.localPosition.y > step8limit)
         {
             LowerHook();
             yield return null;

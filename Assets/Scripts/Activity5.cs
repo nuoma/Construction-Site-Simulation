@@ -147,7 +147,7 @@ public class Activity5 : MonoBehaviour
             _BackhoeVC.SteeringInput = 1; //-1 to 1
             yield return new WaitForSeconds(2);
 
-            //TODO: if 180 degree then brake
+            
             Debug.Log("Backhoe rotate:"+Backhoe.transform.eulerAngles.y);
             _BackhoeVC.BrakesInput = 1;
             yield return new WaitForSeconds(1);
@@ -171,49 +171,7 @@ public class Activity5 : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         
-
-        /*
-        //Step 2: backhoe backup
-        //MOD: rotation angel as condition
-        while (step2)
-        {
-            //Backhoe steer and backup to 180 degree
-            _BackhoeVC.AccelerationInput = -0.01f;
-            _BackhoeVC.SteeringInput = 1; //-1 to 1
-            //yield return new WaitForSeconds(4);
-
-            //TODO: if 180 degree then brake
-            //Debug.Log("Backhoe rotate:" + Backhoe.transform.eulerAngles.y);
-            if (Backhoe.transform.eulerAngles.y == 182f)
-            {
-                _BackhoeVC.BrakesInput = 1;
-                Debug.Log("Backhoe reached 180 degree!");
-                yield return new WaitForSeconds(1);
-            }
-
-            yield return new WaitForSeconds(4);
-
-            //Release brake, drive straight towards truck
-            _BackhoeVC.BrakesInput = 0;
-            _BackhoeVC.AccelerationInput = 0.001f;
-            _BackhoeVC.SteeringInput = 0; //-1 to 1
-            yield return new WaitForSeconds(2);
-
-            //Stop and brake
-            _BackhoeVC.BrakesInput = 1;
-            _BackhoeVC.AccelerationInput = 0;
-            yield return new WaitForSeconds(1);
-
-            //reset for next backhoe action
-            _BackhoeVC.BrakesInput = 0;
-
-            step2 = false;
-            step3 = true;
-            yield return new WaitForSeconds(1);
-        }
-        */
-
-
+        
         //Step 3: backhoe dump bucket
         while (step3)
         {
@@ -283,10 +241,7 @@ public class Activity5 : MonoBehaviour
         //Step6: truck raise bed, vehicle forward and brake, then lower bed
         while (step6)
         {
-
-            
-
-            float Step4aDuration = Time.time + 4f;
+            float Step4aDuration = Time.time + 5f;
             while (Time.time < Step4aDuration)
             {
                 _DumptruckController.MoveDumpBed(1); //The MoveDumpBed method needs a parameter to indicate the direction of the movement: -1 = down | 0 = none | 1 = up
@@ -298,7 +253,7 @@ public class Activity5 : MonoBehaviour
             yield return new WaitForSeconds(3);
             _DumptruckVC.BrakesInput = 0.1f;
             _DumptruckVC.AccelerationInput = 0;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(3);
 
             float Step4bDuration = Time.time + 4f;
             while (Time.time < Step4bDuration)

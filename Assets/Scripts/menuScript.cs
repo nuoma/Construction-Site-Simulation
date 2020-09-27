@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,14 +22,22 @@ public class menuScript : MonoBehaviour
     //activities main actuator
     [SerializeField] private GameObject Activity1Bulldozer;
     [SerializeField] private GameObject Activity2Crane;
+    [SerializeField] private GameObject Activity2CraneLoad;
     [SerializeField] private GameObject Activity3Truck;
     [SerializeField] private GameObject Activity4Worker;
+    [SerializeField] private GameObject Activity4Worker_GPSTMP;
     [SerializeField] private GameObject Activity5;
+    [SerializeField] private GameObject Activity5Loader;
+    [SerializeField] private GameObject Activity5dumptruck;
     [SerializeField] private GameObject Activity6_ResourcesCanvas;
     [SerializeField] private GameObject Activity7Arrow;
+    [SerializeField] private GameObject A7w1_GPSTMP;
+    [SerializeField] private GameObject A7w2_GPSTMP;
+    [SerializeField] private GameObject A7w3_GPSTMP;
     [SerializeField] private GameObject A7Worker1;
     [SerializeField] private GameObject A7Worker2;
     [SerializeField] private GameObject A7Worker3;
+    [SerializeField] private GameObject Activity6;
     [SerializeField] private GameObject Activity8;
     [SerializeField] private GameObject Activity9;
     [SerializeField] private GameObject Activity11A;
@@ -39,7 +48,7 @@ public class menuScript : MonoBehaviour
     [SerializeField] private GameObject Activity12_MDroneCameraLocator;
     [SerializeField] private GameObject Activity13Drone;
     [SerializeField] private GameObject Activity14Canvas;
-
+    [SerializeField] private GameObject Activity14;
 
 
     //menus and canvas
@@ -71,18 +80,90 @@ public class menuScript : MonoBehaviour
     bool move = false;
     bool sensors = false;
 
+    public string A1_Dozer_GPS;
+    public string A2_Load_GPS;
+    public string A3_Truck_GPS;
+    public string A5_Loader_GPS;
+    public string A5_Dumptruck_GPS;
+    public string A4_worker_GPS;
+    public string A6_Wood_RFID;
+    public string A6_Log_RFID;
+    public string A6_Rebar_RFID;
+    public bool A6_wood_flag;
+    public bool A6_log_flag;
+    public bool A6_rebar_flag;
+    public string A3RFID;
+    public bool A14_laborer;
+    public bool A14_painter;
+    public bool A14_c1;
+    public bool A14_c2;
+    public bool A4_worker_GPSRFID;
+    public bool A7_worker_GPSRFID;
+    public string A14_l_report;
+    public string A14_p_report;
+    public string A14_c1_report;
+    public string A14_c2_report;
+    private bool A4_worker_GPSdisplay;
+    public bool A7_w1_flag;
+    public bool A7_w2_flag;
+    public bool A7_w3_flag;
+    public string A7_w1_GPS;
+    public string A7_w2_GPS;
+    public string A7_w3_GPS;
+    public bool A7_w1_GPSdisplay;
+    public bool A7_w2_GPSdisplay;
+    public bool A7_w3_GPSdisplay;
+
 
     #endregion
 
     #region main menu functionalities
     void Start()
     {
-        ManualDroneBackButton.SetActive(false);
-        droneResetPosition = drone.transform.position;
-        mainMenu.SetActive(false);
-        activityMenu.SetActive(false);
         MainCameraResetPosition = mainCamera.transform.position;
         MainCameraResetRotation = mainCamera.transform.rotation;
+        droneResetPosition = drone.transform.position;
+
+        ManualDroneBackButton.SetActive(false);
+        mainMenu.SetActive(false);
+        activityMenu.SetActive(false);
+        Activity4Worker.transform.Find("Canvas").gameObject.SetActive(false);
+        Activity4Worker_GPSTMP.SetActive(false);
+
+        A7Worker1.transform.Find("Canvas").gameObject.SetActive(false);
+        A7w1_GPSTMP.SetActive(false);
+
+        A7Worker2.transform.Find("Canvas").gameObject.SetActive(false);
+        A7w2_GPSTMP.SetActive(false);
+
+        A7Worker3.transform.Find("Canvas").gameObject.SetActive(false);
+        A7w3_GPSTMP.SetActive(false);
+
+    }
+
+    private void Update()
+    {
+        A1_Dozer_GPS = Activity1Bulldozer.GetComponent<GenericGPS>().GGPSConent;
+        A2_Load_GPS = Activity2CraneLoad.GetComponent<GenericGPS>().GGPSConent;
+        A3_Truck_GPS = Activity3Truck.GetComponent<GenericGPS>().GGPSConent;
+        A4_worker_GPS = Activity4Worker.GetComponent<GenericGPS>().GGPSConent;
+        A5_Loader_GPS = Activity5Loader.GetComponent<GenericGPS>().GGPSConent;
+        A5_Dumptruck_GPS = Activity5dumptruck.GetComponent<GenericGPS>().GGPSConent;
+        A3RFID = Activity3Truck.GetComponent<Activity3Truck>().A3RFID;
+        A6_Wood_RFID = Activity6.GetComponent<A6_RFID>().wood;
+        A6_Log_RFID = Activity6.GetComponent<A6_RFID>().log;
+        A6_Rebar_RFID = Activity6.GetComponent<A6_RFID>().rebar;
+        A14_c1_report = Activity14.GetComponent<A14>().c1_string;
+        A14_c2_report = Activity14.GetComponent<A14>().c2_string;
+        A14_l_report = Activity14.GetComponent<A14>().l_string;
+        A14_p_report = Activity14.GetComponent<A14>().p_string;
+        if(A4_worker_GPSdisplay) Activity4Worker_GPSTMP.GetComponent<TextMeshProUGUI>().text = A4_worker_GPS;
+        A7_w1_GPS = A7Worker1.GetComponent<GenericGPS>().GGPSConent;
+        A7_w2_GPS = A7Worker2.GetComponent<GenericGPS>().GGPSConent;
+        A7_w3_GPS = A7Worker3.GetComponent<GenericGPS>().GGPSConent;
+        if (A7_w1_GPSdisplay) { A7w1_GPSTMP.GetComponent<TextMeshProUGUI>().text = A7_w1_GPS; }
+        if (A7_w2_GPSdisplay) { A7w2_GPSTMP.GetComponent<TextMeshProUGUI>().text = A7_w2_GPS; }
+        if (A7_w3_GPSdisplay) { A7w3_GPSTMP.GetComponent<TextMeshProUGUI>().text = A7_w3_GPS; }
     }
 
     //Functions to reset and quit scene.
@@ -90,6 +171,7 @@ public class menuScript : MonoBehaviour
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
+
     public void quitGame()
     {
         Application.Quit();
@@ -100,7 +182,7 @@ public class menuScript : MonoBehaviour
     {
         activityMenu.SetActive(false); //should clear activity menu if possible double selection
         mainMenu.SetActive(true);
-        
+
     }
 
     // Entrance interface, select activity menu
@@ -130,11 +212,11 @@ public class menuScript : MonoBehaviour
         stop_1();
         stop_2();
         stop_5();
-        stop_11();
+        stop_10();
+        stop_11_a();
         stop_12_a();
-        stop_13_a();
     }
-#endregion
+    #endregion
 
     #region Activity button actions
     //Activity Functions
@@ -143,6 +225,12 @@ public class menuScript : MonoBehaviour
         Activity1Bulldozer.transform.Find("Arrow").gameObject.SetActive(true);
         Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
     }
+
+    public void select_1_Dozer_GPS()
+    {
+        Activity1Bulldozer.GetComponent<GenericGPS>().start();
+    }
+
 
     public void stop_1()
     {
@@ -155,6 +243,12 @@ public class menuScript : MonoBehaviour
         Activity2Crane.GetComponent<Crane>().start();
     }
 
+    public void select_2_CraneLoad_GPS()
+    {
+        Activity2CraneLoad.GetComponent<GenericGPS>().start();
+    }
+
+
     public void stop_2()
     {
         Activity2Crane.GetComponent<Crane>().stop();
@@ -165,6 +259,10 @@ public class menuScript : MonoBehaviour
         Activity3Truck.GetComponent<Activity3Truck>().start();
     }
 
+    public void select_3_truck_GPS()
+    {
+        Activity3Truck.GetComponent<GenericGPS>().start();
+    }
     public void stop_3()
     {
         Activity3Truck.GetComponent<Activity3Truck>().stop_3();
@@ -175,6 +273,24 @@ public class menuScript : MonoBehaviour
         Activity4Worker.GetComponent<workerMove>().start();
         Activity4Worker.transform.Find("Arrow").gameObject.SetActive(true);
     }
+
+    public void select_4worker_gps()
+    {
+        Activity4Worker.GetComponent<GenericGPS>().start();
+    }
+
+    public void select_4worker_RFID()
+    {
+        Activity4Worker.transform.Find("Canvas").gameObject.SetActive(true);
+        if (A4_worker_GPSRFID)
+        {
+            //activate GPS report function
+            Activity4Worker_GPSTMP.SetActive(true);
+            A4_worker_GPSdisplay = true;
+            
+        }
+    }
+
 
     public void stop_4()
     {
@@ -187,14 +303,35 @@ public class menuScript : MonoBehaviour
         Activity5.GetComponent<Activity5>().start();
     }
 
+    public void select_5_Loader_GPS()
+    {
+        Activity5Loader.GetComponent<GenericGPS>().start();
+    }
+
+    public void select_5_dumptruck_GPS()
+    {
+        Activity5dumptruck.GetComponent<GenericGPS>().start();
+    }
+
+
     public void stop_5()
     {
         Activity5.GetComponent<Activity5>().stop_5();
     }
 
+    //Old canvas style method
     public void select_6()
     {
         Activity6_ResourcesCanvas.SetActive(true);
+    }
+
+    public void A6_RFID()
+    {
+        if(A6_wood_flag) Activity6.GetComponent<A6_RFID>().WoodFlag = true;
+        if(A6_log_flag) Activity6.GetComponent<A6_RFID>().LogFlag = true;
+        if(A6_rebar_flag) Activity6.GetComponent<A6_RFID>().RebarFlag = true;
+
+        Activity6.GetComponent<A6_RFID>().start();
     }
 
     public void select_7()
@@ -203,6 +340,36 @@ public class menuScript : MonoBehaviour
            A7Worker2.GetComponent<workerMove>().start();
            A7Worker3.GetComponent<workerMove>().start();
            Activity7Arrow.transform.Find("Arrow").gameObject.SetActive(true);
+    }
+
+    public void select_7_new()
+    {
+        if (A7_w1_flag) A7Worker1.GetComponent<workerMove>().start();
+        if (A7_w2_flag) A7Worker2.GetComponent<workerMove>().start();
+        if (A7_w3_flag) A7Worker3.GetComponent<workerMove>().start();
+    }
+
+    public void select_7_GPS()
+    {
+        if (A7_w1_flag) A7Worker1.GetComponent<GenericGPS>().start();
+        if (A7_w2_flag) A7Worker2.GetComponent<GenericGPS>().start();
+        if (A7_w3_flag) A7Worker3.GetComponent<GenericGPS>().start();
+    }
+
+    public void select_7_RFID()
+    {
+        if (A7_w1_flag) A7Worker1.transform.Find("Canvas").gameObject.SetActive(true);
+        if (A7_w2_flag) A7Worker2.transform.Find("Canvas").gameObject.SetActive(true);
+        if (A7_w3_flag) A7Worker3.transform.Find("Canvas").gameObject.SetActive(true);
+
+        //GPS with RFID together, activate GPS TMP.
+        if (A7_worker_GPSRFID)
+        {
+            //activate GPS report function
+            if (A7_w1_flag) { A7w1_GPSTMP.SetActive(true);A7_w1_GPSdisplay = true; }
+            if (A7_w2_flag) { A7w2_GPSTMP.SetActive(true); A7_w2_GPSdisplay = true; }
+            if (A7_w3_flag) { A7w3_GPSTMP.SetActive(true); A7_w3_GPSdisplay = true; }
+        }
     }
 
     public void stop_7()
@@ -233,12 +400,9 @@ public class menuScript : MonoBehaviour
         scannerMenu.SetActive(true);
     }
 
-    public void select_10()
-    {
-        //is skipped
-    }
 
-    public void select11()
+
+    public void select10()
     {
         //choose between 11A and 11B
         Activity11Canvas.SetActive(true);
@@ -246,7 +410,7 @@ public class menuScript : MonoBehaviour
     }
 
     //laser scan stockpile 1
-    public void select_11A()
+    public void select_10A()
     {
         //switchTag(Activity11AArrow);
         //Activity11A.transform.Find("Arrow").gameObject.SetActive(true);
@@ -258,7 +422,7 @@ public class menuScript : MonoBehaviour
     }
 
     //laser scan stockpile 2
-    public void select_11B()
+    public void select_10B()
     {
         //switchTag(Activity11BArrow);
         //Activity11B.transform.Find("Arrow").gameObject.SetActive(true);
@@ -269,7 +433,7 @@ public class menuScript : MonoBehaviour
         scannerMenu.SetActive(true);
     }
 
-    public void stop_11()
+    public void stop_10()
     {
         sensorSelected();
         Activity11A.transform.Find("Arrow").gameObject.SetActive(false);
@@ -277,13 +441,13 @@ public class menuScript : MonoBehaviour
     }
 
 
-    public void select_12()
+    public void select_11()
     {
         Activity12Canvas.SetActive(true);// choose between laser scan and drone scan.
         Activity13_DroneCanvas.SetActive(false);
     }
 
-    public void select_12Laser()
+    public void select_11Laser()
     {
         //switchTag(Activity12Laser); //Activate laser position arrow
         Activity12Canvas.SetActive(false);
@@ -293,7 +457,7 @@ public class menuScript : MonoBehaviour
         scannerMenu.SetActive(true);
     }
 
-    public void select_12Drone()
+    public void select_11Drone()
     {
         //switchTag(Activity12Drone);
         Activity12Canvas.SetActive(false);
@@ -302,13 +466,13 @@ public class menuScript : MonoBehaviour
         //Start the drone and automatically fly around building
     }
 
-    public void stop_12_a()
+    public void stop_11_a()
     {
         Activity12Drone.GetComponent<Drone12>().stop();
         Activity12_DroneCanvas.SetActive(false);
     }
 
-    public void select_13()
+    public void select_12()
     {
         //drone around jobsite
         //switchTag(Activity13Drone);
@@ -319,25 +483,45 @@ public class menuScript : MonoBehaviour
         //need to get rid of all canvas
     }
 
-    public void select_13Drone()
+    public void select_12Drone()
     {
         sensorSelected();
         Activity13_DroneCanvas.SetActive(false);
         //need to get rid of all canvas
     }
 
-    public void stop_13_a()
+    public void stop_12_a()
     {
         Activity13Drone.GetComponent<Drone13>().stop();
     }
 
 
-    public void select_14()
+    public void select_13()
     {
         sensorSelected();
         //imuMenu.SetActive(true);
-        Debug.Log("14 SELECTED");
-        Activity14Canvas.SetActive(true);
+        //Debug.Log("14 SELECTED");
+        //Activity14Canvas.SetActive(true);
+    }
+
+    public void select_13_new()
+    {
+        //initialize
+        sensorSelected();
+        Activity14.GetComponent<A14>().Start();
+        //select worker
+        if (A14_painter) Activity14.GetComponent<A14>().painterSelect();
+        if (A14_laborer) Activity14.GetComponent<A14>().laborerSelect();
+        if (A14_c1) Activity14.GetComponent<A14>().carpenter1Select();
+        if (A14_c2) Activity14.GetComponent<A14>().carpenter2Select();
+
+        //execute IMU function
+        Activity14.GetComponent<A14>().done();
+    }
+
+    public void A13_stop()
+    {
+        Activity14.GetComponent<A14>().backSelected();
     }
     #endregion
 

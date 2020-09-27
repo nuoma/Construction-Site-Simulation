@@ -39,11 +39,16 @@ public class A14 : MonoBehaviour
     string LFileName;
     string PFileName;
     string C1FileName;
-    string C2FileName; 
+    string C2FileName;
+
+    public string l_string;
+    public string p_string;
+    public string c1_string;
+    public string c2_string;
 	#endregion
     
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         Debug.Log("IMU persistent data path:"+Application.persistentDataPath);
         //Debug.Log("IMU app data path:" + Application.dataPath);
@@ -119,16 +124,16 @@ public class A14 : MonoBehaviour
         //fileName = string.Format("{0}/imuReport_{1}.txt",filePath,System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
 
         //Close all canvas
-        WorkerSelectPage.SetActive(false);
-        ReportPage.SetActive(false);
-        SelectedWorkerText.GetComponent<TextMeshProUGUI>().text = "";
+        //WorkerSelectPage.SetActive(false);
+        //ReportPage.SetActive(false);
+        //SelectedWorkerText.GetComponent<TextMeshProUGUI>().text = "";
     }
 
     //Finish selection of worker, proceed to report
     public void done()
     {
     	//activate report canvas
-    	ReportPage.SetActive(true);
+    	//ReportPage.SetActive(true);
 
     	//activate workers selected
     	if(laborerSelected)
@@ -153,9 +158,16 @@ public class A14 : MonoBehaviour
     	}
     }
 
-    // Update is called once per frame
-    public void Update()
+    
+    void Update()
     {
-        SelectedWorkerText.GetComponent<TextMeshProUGUI>().text = "Selected:" + worker1 + worker2 + worker3 + worker4 +".";
-    }
+        //Deprecated, old canvas display style.
+        //SelectedWorkerText.GetComponent<TextMeshProUGUI>().text = "Selected:" + worker1 + worker2 + worker3 + worker4 +".";
+        
+        l_string = laborer.GetComponent<workerScript>().ReportString;
+        p_string = painter.GetComponent<workerScript>().ReportString;
+        c1_string = carpenter1.GetComponent<workerScript>().ReportString;
+        c2_string = carpenter2.GetComponent<workerScript>().ReportString;
+}
+    
 }

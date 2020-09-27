@@ -78,24 +78,15 @@ public class droneScript : MonoBehaviour
             GetComponent<Animator>().SetBool("fly", true);
             motor = true;
 
-            /*
+            
             ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
             colorVar.highlightedColor = new Color32(138, 255, 114, 255);
             colorVar.pressedColor = new Color32(17, 101, 0, 255);
             flyButton.GetComponent<Button>().colors = colorVar;
-            */
+            
         }
     }
 
-    /*
-     * //no longer used because task selection is disabled
-    public void selectTask()
-    {
-        // = true;
-        //tasksCanvas.enabled = false;
-        droneCanvas.enabled = true;
-    }
-    */
 
     //Fly Drone Functions
     public void fly()
