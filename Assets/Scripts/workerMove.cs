@@ -24,9 +24,10 @@ public class workerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (enable && tagged)
+        //if (enable && tagged)
+        if (enable)
         {
-            //transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, speed * Time.deltaTime);
+            //transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, 0.05f * Time.deltaTime);
             transform.position += transform.forward * Time.deltaTime * speed;
 
             Quaternion lookDirection = Quaternion.LookRotation(moveSpots[arrayPosition].position - transform.position);
@@ -54,5 +55,11 @@ public class workerMove : MonoBehaviour
             workerAnimator.SetBool("moving", true);
             enable = true;
         }
+    }
+
+    public void stop()
+    {
+        enable = false;
+        workerAnimator.SetBool("moving", false);
     }
 }

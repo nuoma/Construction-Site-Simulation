@@ -94,6 +94,7 @@ public class gpsScript : MonoBehaviour
         else
             Tag.transform.GetChild(0).gameObject.SetActive(true);
     }
+
     private void removeTags()
     {
         if (bulldozer.GetComponent<machine1Move>().tagged)
@@ -161,7 +162,8 @@ public class gpsScript : MonoBehaviour
 
     private void reportFunction()
     {
-        string filePath = Application.persistentDataPath + "/gpsReports";
+        //string filePath = Application.persistentDataPath + "/gpsReports";
+        string filePath = Application.dataPath + "/gpsReports";
 
         if (!Directory.Exists(filePath))
         {

@@ -5,7 +5,7 @@ using System.IO;
 
 public class saveScan : MonoBehaviour
 {
-    [SerializeField] private Canvas display;
+    [SerializeField] private GameObject display;
     [SerializeField] private RenderTexture texture360;
 
     private Texture2D texture180;
@@ -25,7 +25,8 @@ public class saveScan : MonoBehaviour
         }
 
 
-        string filePath = Application.persistentDataPath + "/laserScans";
+        //string filePath = Application.persistentDataPath + "/laserScans";
+        string filePath = Application.dataPath + "/laserScans";
 
         if (!Directory.Exists(filePath))
         {
@@ -38,7 +39,8 @@ public class saveScan : MonoBehaviour
 
         File.WriteAllBytes(filename, bytes);
 
-        display.enabled = false;
+        //display.enabled = false;
+        display.SetActive(false);
     }
 
     private Texture2D toTexture2D(RenderTexture rTex)
@@ -59,7 +61,8 @@ public class saveScan : MonoBehaviour
     public void close()
     {
         //Debug.Log("test");
-        display.enabled = false;
+        //display. = false;
+        display.SetActive(false);
     }
 
     public void saveTexture180(Texture2D input)

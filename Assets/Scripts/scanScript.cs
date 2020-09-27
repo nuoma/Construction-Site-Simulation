@@ -6,10 +6,12 @@ using TMPro;
 
 public class scanScript : MonoBehaviour
 {
+
+    #region parameters
     [SerializeField] private GameObject scannerField;
     [SerializeField] private GameObject scanner;
     [SerializeField] private scannerCamera scannerCamera;
-    [SerializeField] private testScript testScript;
+    [SerializeField] private textureCamera textureCamera;
     [SerializeField] private GameObject[] targets;
 
     [SerializeField] private GameObject resolutionCanvas;
@@ -19,7 +21,7 @@ public class scanScript : MonoBehaviour
     [SerializeField] private GameObject coverageCanvas;
     [SerializeField] private GameObject scanButton;
     [SerializeField] private GameObject scanTimeText;
-    [SerializeField] private Canvas display;
+    [SerializeField] private GameObject displayCanvas;
 
     [SerializeField] private GameObject x2Button;
     [SerializeField] private GameObject x6Button;
@@ -28,12 +30,21 @@ public class scanScript : MonoBehaviour
     [SerializeField] private GameObject sixteenthResButton;
     [SerializeField] private GameObject thirtysecondthResButton;
 
+    [SerializeField] private GameObject ScanStatusText;
+    [SerializeField] private GameObject SelectionPrompt;
+
     //Scan settings
     [HideInInspector]  public int resolution = 0;
     [HideInInspector]  public int quality = 0;
     [HideInInspector]  public int color = 0;
     [HideInInspector]  public int profile = 0;
     [HideInInspector] public bool coverage = false;
+
+    string p1;
+    string p2;
+    string p3;
+    string p4;
+    string p5;
     bool scanning = false;
     bool camera360 = false;
     float scanTime = 0;
@@ -45,16 +56,19 @@ public class scanScript : MonoBehaviour
     float cameraHeight;
 
     ColorBlock colorVar;
+    #endregion
 
     // Start is called before the first frame update
     void Start()
     {
+        /*
         resolutionCanvas.GetComponent<Canvas>().enabled = false;
         qualityCanvas.GetComponent<Canvas>().enabled = false;
         colorCanvas.GetComponent<Canvas>().enabled = false;
         profileCanvas.GetComponent<Canvas>().enabled = false;
         coverageCanvas.GetComponent<Canvas>().enabled = false;
         display.enabled = false;
+        */
 
         scannerFieldScale = scannerField.transform.localScale;
         scannerFieldRotation = scannerField.transform.eulerAngles;
@@ -64,6 +78,20 @@ public class scanScript : MonoBehaviour
 
     private void Update()
     {
+        //prompt interface
+        if (resolution != 0)
+            p1 = "Resolution Selected. \n";
+        if (quality != 0)
+            p2 = "Quality Selected. \n";
+        if (color != 0)
+            p3 = "Color Selected. \n";
+        if (profile != 0)
+            p4 = "Profile Selected. \n";
+        if (coverage)
+            p5 = "Coverage Selected.\n";
+
+        SelectionPrompt.GetComponent<TextMeshProUGUI>().text = "Selected:" + p1 + p2 + p3 + p4 +p5;
+
         if (resolution != 0 && quality != 0 && color != 0 && profile != 0 && coverage)
         {
             ColorBlock colorVarUpdated = scanButton.GetComponent<Button>().colors;
@@ -78,16 +106,17 @@ public class scanScript : MonoBehaviour
         {
             scanning = false;
             scanner.GetComponent<Animator>().SetBool("spin", false);
-            display.enabled = true;
+            displayCanvas.SetActive(true);
+            ScanStatusText.GetComponent<TextMeshProUGUI>().text = "Scan Finished";
             if(camera360)
             {
-                display.transform.GetChild(0).gameObject.SetActive(false);
-                display.transform.GetChild(1).gameObject.SetActive(true);
+                displayCanvas.transform.Find("Panel").gameObject.SetActive(false);
+                displayCanvas.transform.Find("Panel").gameObject.SetActive(true);
             }
             else
             {
-                display.transform.GetChild(0).gameObject.SetActive(true);
-                display.transform.GetChild(1).gameObject.SetActive(false);
+                displayCanvas.transform.Find("Panel").gameObject.SetActive(true);
+                displayCanvas.transform.Find("Panel").gameObject.SetActive(false);
             }
         }
         if(scanning)
@@ -139,36 +168,42 @@ public class scanScript : MonoBehaviour
     {
         if(scanButton.GetComponent<Button>().colors.highlightedColor == new Color32(138, 255, 114, 255) && scanning == false)
         {
-            display.enabled = false;
+            displayCanvas.SetActive(false);
             scanner.GetComponent<Animator>().SetBool("spin", true);
             scannerCamera.takeScan(resolution, quality, color);
-            testScript.test();
+            textureCamera.test();
             scanning = true;
             scanTime = startingScanTime;
+            ScanStatusText.GetComponent<TextMeshProUGUI>().text = "Scanning...";
         }
     }
 
     //Functions to open options menus
     public void resolutionSelected()
     {
-        resolutionCanvas.GetComponent<Canvas>().enabled = true;
+        //resolutionCanvas.GetComponent<Canvas>().enabled = true;
+        resolutionCanvas.SetActive(true);
     }
     public void qualitySelected()
     {
-        qualityCanvas.GetComponent<Canvas>().enabled = true;
+        //qualityCanvas.GetComponent<Canvas>().enabled = true;
+        qualityCanvas.SetActive(true);
     }
     public void coverageSelected()
     {
         scannerField.GetComponent<Renderer>().enabled = true;
-        coverageCanvas.GetComponent<Canvas>().enabled = true;
+        //coverageCanvas.GetComponent<Canvas>().enabled = true;
+        coverageCanvas.SetActive(true);
     }
     public void colorSelected()
     {
-        colorCanvas.GetComponent<Canvas>().enabled = true;
+        //colorCanvas.GetComponent<Canvas>().enabled = true;
+        colorCanvas.SetActive(true);
     }
     public void profileSelected()
     {
-        profileCanvas.GetComponent<Canvas>().enabled = true;
+        //profileCanvas.GetComponent<Canvas>().enabled = true;
+        profileCanvas.SetActive(true);
     }
 
     //Functions for resolution selection

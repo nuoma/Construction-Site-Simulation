@@ -6,17 +6,17 @@ using TMPro;
 
 public class droneScript : MonoBehaviour
 {
-    [SerializeField] private Canvas droneCanvas;
-    [SerializeField] private Canvas tasksCanvas;
-    [SerializeField] private Canvas flightCanvas;
+    [SerializeField] private GameObject droneCanvas;
+    //[SerializeField] private Canvas tasksCanvas; //deactivated because they are the same
+    [SerializeField] private GameObject flightCanvas;
     [SerializeField] private GameObject flyButton;
     [SerializeField] private Camera droneCamera;
     [SerializeField] private float speed = 1;
 
-    private float zMax = 5.15f;
-    private float zMin = -1.178f;
-    private float xMax = 4.111f;
-    private float xMin = -2.563f;
+    private float zMax = 7.8f;
+    private float zMin = -6f;
+    private float xMax = 6.6f;
+    private float xMin = -5f;
     private float yMax = 1.25f;
     private float yMin = -0.25f;
 
@@ -29,13 +29,14 @@ public class droneScript : MonoBehaviour
     [HideInInspector] public bool motor = false;
 
     // Start is called before the first frame update
-    void Start()
+    public void start()
     {
-        tasksCanvas.enabled = false;
-        droneCanvas.enabled = false;
-        flightCanvas.enabled = false;
-        droneCamera.gameObject.SetActive(false);
-        this.gameObject.SetActive(false);
+        //tasksCanvas.enabled = false;
+        //droneCanvas.SetActive(true);
+        //flightCanvas.SetActive(false);
+        //droneCamera.gameObject.SetActive(false);
+        //this.gameObject.SetActive(false);
+        Debug.Log("drone start flag");
     }
 
     // Update is called once per frame
@@ -69,6 +70,7 @@ public class droneScript : MonoBehaviour
     {
         power = true;
     }
+
     public void enginesOn()
     {
         if(power)
@@ -76,30 +78,29 @@ public class droneScript : MonoBehaviour
             GetComponent<Animator>().SetBool("fly", true);
             motor = true;
 
+            
             ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
             colorVar.highlightedColor = new Color32(138, 255, 114, 255);
             colorVar.pressedColor = new Color32(17, 101, 0, 255);
             flyButton.GetComponent<Button>().colors = colorVar;
+            
         }
     }
-    public void selectTask()
-    {
-        taskSelected = true;
-        tasksCanvas.enabled = false;
-        droneCanvas.enabled = true;
-    }
+
 
     //Fly Drone Functions
     public void fly()
     {
         if(motor)
         {
-            flightCanvas.enabled = true;
-            droneCanvas.enabled = false;
-            droneCamera.depth = 1;
-            droneCamera.gameObject.SetActive(true);
+            Debug.Log("Activate flight canvas, disable drone canvas");
+            flightCanvas.SetActive(true);
+            droneCanvas.SetActive(false);
+            //droneCamera.depth = 1;
+            //droneCamera.gameObject.SetActive(true);
         }
     }
+
     public void verticalMove(Slider newValue)
     {
         if(newValue.value > 0.15 || newValue.value < -0.15)

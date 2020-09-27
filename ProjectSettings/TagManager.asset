@@ -5,6 +5,15 @@ TagManager:
   serializedVersion: 2
   tags:
   - selectionTag
+  - Truck
+  - Hook
+  - Container
+  - projectile
+  - hazard
+  - wood
+  - rebar
+  - Log
+  - TruckActivity3
   layers:
   - Default
   - TransparentFX

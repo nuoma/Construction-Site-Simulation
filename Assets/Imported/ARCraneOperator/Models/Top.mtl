@@ -1,0 +1,8 @@
+newmtl Gray
+Kd 0.3301887 0.3301887 0.3301887
+d 1
+
+newmtl CraneMetal
+Kd 0.9811321 0.7321458 0
+d 1
+
