@@ -38,6 +38,8 @@ public class Drone13 : MonoBehaviour
             if(FrmCount % 5 == 0) DroneCamera.GetComponent<DroneCapture>().capture = true;
             FrmCount++;
         }
+        else
+            DroneModel.SetActive(false);
 
     }
 
