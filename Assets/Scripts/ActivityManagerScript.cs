@@ -450,7 +450,7 @@ public class ActivityManagerScript : MonoBehaviour
     public void select_11Laser()
     {
         //switchTag(Activity12Laser); //Activate laser position arrow
-        Activity12Canvas.SetActive(false);
+        //Activity12Canvas.SetActive(false);
         sensorSelected();
         Vector3 ScannerPosition = Activity12Laser.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
@@ -460,7 +460,7 @@ public class ActivityManagerScript : MonoBehaviour
     public void select_11Drone()
     {
         //switchTag(Activity12Drone);
-        Activity12Canvas.SetActive(false);
+        //Activity12Canvas.SetActive(false);
         sensorSelected();
         Activity12_DroneCanvas.SetActive(true);
         //Start the drone and automatically fly around building
@@ -478,7 +478,7 @@ public class ActivityManagerScript : MonoBehaviour
         //switchTag(Activity13Drone);
         sensorSelected();
         Activity13_DroneCanvas.SetActive(true);
-        Activity12Canvas.SetActive(false);
+        //Activity12Canvas.SetActive(false);
         Activity12_DroneCanvas.SetActive(false);
         //need to get rid of all canvas
     }
@@ -560,7 +560,7 @@ public class ActivityManagerScript : MonoBehaviour
         GetComponent<Canvas>().enabled = false;
     }
 
-    //modified for activity 13. Skip task, Disable camera movement.
+    //modified for activity 12. Skip task, Disable camera movement.
     public void droneMSelected()
     {
         sensorSelected();
@@ -575,7 +575,7 @@ public class ActivityManagerScript : MonoBehaviour
         drone.GetComponent<droneScript>().start();
     }
 
-    //For activity 12. Jump drone location and camera location to old house.
+    //For activity 11. Jump drone location and camera location to old house.
     public void ManualDrone12()
     {
         sensorSelected(); //initialization
@@ -645,7 +645,7 @@ public class ActivityManagerScript : MonoBehaviour
         }
     }
 
-    private void sensorSelected()
+    public void sensorSelected()
     {
         resetDrone();
         resetScanner();
@@ -654,9 +654,9 @@ public class ActivityManagerScript : MonoBehaviour
         imuMenu.GetComponent<imuScript>().backSelected();
         scanner.GetComponent<Animator>().SetBool("spin", false);
         scannerMenu.SetActive(false);
-        resourceMenu.SetActive(false);
-        imuMenu.SetActive(false);
-        rfidMenu.SetActive(false);
+        //resourceMenu.SetActive(false);//GPS report, can disable.
+        //imuMenu.SetActive(false);//can discart
+        //rfidMenu.SetActive(false);//can discart
     }
     #endregion
 

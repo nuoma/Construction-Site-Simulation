@@ -49,9 +49,9 @@ public class MenuManager : MonoBehaviour
 
     List<string> ActivityList;
     List<string> SensorsList;
-    List<string> ResourcesList = new List<string> {};
+    List<string> ResourcesList = new List<string> { };
     Dictionary<int, List<string>> ComboList = new Dictionary<int, List<string>>();
-    
+
 
     private bool onActivityChanged;
     private bool MultiLaserScan;
@@ -61,6 +61,8 @@ public class MenuManager : MonoBehaviour
     private bool ChangeResourcesBool;
     private bool ShowComboBool;
     private bool CurrentConfigurationBool = true;
+    private bool A11Drone;
+    private bool A11LS;
 
     private string GPSReportString;
     private string RFIDReportString;
@@ -131,7 +133,7 @@ public class MenuManager : MonoBehaviour
         //if multiple selected, then prompt.
         //if (MultiLaserScan)
         //{
-            //DisplayWarning.GetComponent<TextMeshProUGUI>().text = "We only have 1 Laser Scanner, Please only select 1 Laser Scanner Activity."; 
+        //DisplayWarning.GetComponent<TextMeshProUGUI>().text = "We only have 1 Laser Scanner, Please only select 1 Laser Scanner Activity."; 
         //    Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "We only have 1 Laser Scanner, Please only select 1 Laser Scanner Activity.", false);
         //}
 
@@ -139,7 +141,7 @@ public class MenuManager : MonoBehaviour
         //Display results that fit filter condition
         //DisplayResults.GetComponent<TextMeshProUGUI>().text = "Old String Selected" + SelectedString;
         //int ActivityDisplayNumber = CurrentActivitySelection + 1;
-        
+
 
         //Show current configuration
         if (CurrentConfigurationBool)
@@ -301,14 +303,10 @@ public class MenuManager : MonoBehaviour
                 SelectedString = SelectedString + " , " + Mdropdown3.dropdownItems[i].itemName;
                 SelectedResources[i] = Mdropdown3.dropdownItems[i].itemName;
             }
+            //else
+            //{ SelectedResources[i] = "void"; }
         }
     }
-
-    private void ResetEverything()
-    {
-        //how to reset dropdowns
-    }
-
 
 
     //update resources list accroding to dropdown 1's selection
@@ -363,6 +361,7 @@ public class MenuManager : MonoBehaviour
     {
         //disable canvas that show combo selections
         ComboSelectionCanvas.SetActive(false);
+        ActivityManager.GetComponent<ActivityManagerScript>().sensorSelected();
 
         //Initialize combos
         string[] ExeList = new string[14];
@@ -371,7 +370,7 @@ public class MenuManager : MonoBehaviour
             ExeList[ComboList.ElementAt(j).Key] = string.Join(", ", ComboList.ElementAt(j).Value);
         }
 
-        
+
 
         if (SelectedActivities[0] == true)
             ActivityManager.GetComponent<ActivityManagerScript>().select_1();
@@ -382,36 +381,36 @@ public class MenuManager : MonoBehaviour
             ActivityManager.GetComponent<ActivityManagerScript>().select_2();
         if (SelectedActivities[1] == true && ExeList[1].Contains("GPS") == true && ExeList[1].Contains("2.Load") == true)
         { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS(); }//2.Load GPS
-        
+
         if (SelectedActivities[2] == true)
             ActivityManager.GetComponent<ActivityManagerScript>().select_3();
-        if (SelectedActivities[2] == true && ExeList[2].Contains("GPS") == true && ExeList[2].Contains( "3.Truck") == true)
+        if (SelectedActivities[2] == true && ExeList[2].Contains("GPS") == true && ExeList[2].Contains("3.Truck") == true)
         { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_3_truck_GPS(); }//3.truck GPS
-        if (SelectedActivities[2] == true && ExeList[2].Contains("RFID") == true && ExeList[2].Contains( "3.Rebar") == true)
+        if (SelectedActivities[2] == true && ExeList[2].Contains("RFID") == true && ExeList[2].Contains("3.Rebar") == true)
         { RFIDReportEnable = true; } //3.Rebar RFID
 
 
         if (SelectedActivities[3] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_4();
-        if (SelectedActivities[3] == true && ExeList[3].Contains("GPS") == true && ExeList[3].Contains( "4.Worker 1"))
+        if (SelectedActivities[3] == true && ExeList[3].Contains("GPS") == true && ExeList[3].Contains("4.Worker 1"))
         { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_gps(); }
-        if (SelectedActivities[3] == true && ExeList[3].Contains("RFID") == true && ExeList[3].Contains( "4.Worker 1"))
+        if (SelectedActivities[3] == true && ExeList[3].Contains("RFID") == true && ExeList[3].Contains("4.Worker 1"))
         { ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }//Since we are using panel above worker, so no RFID panel needed.
-        if (SelectedActivities[3] == true && ExeList[3].Contains("GPS") == true && ExeList[3].Contains("RFID") == true && ExeList[3].Contains( "4.Worker 1"))
+        if (SelectedActivities[3] == true && ExeList[3].Contains("GPS") == true && ExeList[3].Contains("RFID") == true && ExeList[3].Contains("4.Worker 1"))
         { ActivityManager.GetComponent<ActivityManagerScript>().A4_worker_GPSRFID = true; ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }
 
         if (SelectedActivities[4] == true)
             ActivityManager.GetComponent<ActivityManagerScript>().select_5();
-        if (SelectedActivities[4] == true && ExeList[4].Contains("GPS") == true && ExeList[4].Contains( "5.Loader"))
+        if (SelectedActivities[4] == true && ExeList[4].Contains("GPS") == true && ExeList[4].Contains("5.Loader"))
         { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }
-        if (SelectedActivities[4] == true && ExeList[4].Contains("GPS") == true && ExeList[4].Contains( "5.dumptruck"))
+        if (SelectedActivities[4] == true && ExeList[4].Contains("GPS") == true && ExeList[4].Contains("5.dumptruck"))
         { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_dumptruck_GPS(); }
 
         //RFID & rebar, wood and log.
         if (SelectedActivities[5] == true && ExeList[5].Contains("RFID") == true)
         {
-            if (ExeList[5].Contains( "6.wood")) ActivityManager.GetComponent<ActivityManagerScript>().A6_wood_flag = true;
-            if (ExeList[5].Contains( "6.Log")) ActivityManager.GetComponent<ActivityManagerScript>().A6_log_flag = true;
-            if (ExeList[5].Contains( "6.Rebar")) ActivityManager.GetComponent<ActivityManagerScript>().A6_rebar_flag = true;
+            if (ExeList[5].Contains("6.wood")) ActivityManager.GetComponent<ActivityManagerScript>().A6_wood_flag = true;
+            if (ExeList[5].Contains("6.Log")) ActivityManager.GetComponent<ActivityManagerScript>().A6_log_flag = true;
+            if (ExeList[5].Contains("6.Rebar")) ActivityManager.GetComponent<ActivityManagerScript>().A6_rebar_flag = true;
             ActivityManager.GetComponent<ActivityManagerScript>().A6_RFID();
             RFIDReportEnable = true;
         }
@@ -419,9 +418,9 @@ public class MenuManager : MonoBehaviour
         //7. Workers on top floor
         if (SelectedActivities[6] == true)
         {
-            if (ExeList[6].Contains( "7.Worker 1")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w1_flag = true;
-            if (ExeList[6].Contains( "7.Worker 2")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w2_flag = true;
-            if (ExeList[6].Contains( "7.Worker 3")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w3_flag = true;
+            if (ExeList[6].Contains("7.Worker 1")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w1_flag = true;
+            if (ExeList[6].Contains("7.Worker 2")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w2_flag = true;
+            if (ExeList[6].Contains("7.Worker 3")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w3_flag = true;
 
             //Run basic activity: danger zone red box. Based on worker selection bool.
             ActivityManager.GetComponent<ActivityManagerScript>().select_7_new();
@@ -443,132 +442,34 @@ public class MenuManager : MonoBehaviour
         //if MultiLaserScan, then cannot proceed
         if (MultiLaserScan == false) { if (SelectedActivities[7] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_8(); }//8.scan part of building
         if (MultiLaserScan == false) { if (SelectedActivities[8] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_9(); }//9.scan concrete slab
-        if (MultiLaserScan == false) { if (SelectedActivities[9] == true && ExeList[9].Contains("LaserScanner") == true && ExeList[9].Contains( "10.Stockpile 1")) ActivityManager.GetComponent<ActivityManagerScript>().select_10A(); }
-        if (MultiLaserScan == false) { if (SelectedActivities[9] == true && ExeList[9].Contains("LaserScanner") == true && ExeList[9].Contains( "10.Stockpile 2")) ActivityManager.GetComponent<ActivityManagerScript>().select_10B(); }
-        if (MultiLaserScan == false) { if (SelectedActivities[10] == true && ExeList[10].Contains("LaserScanner") == true && ExeList[10].Contains( "11.Old Building")) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser(); }
+        if (MultiLaserScan == false) { if (SelectedActivities[9] == true && ExeList[9].Contains("LaserScanner") == true && ExeList[9].Contains("10.Stockpile 1")) ActivityManager.GetComponent<ActivityManagerScript>().select_10A(); }
+        if (MultiLaserScan == false) { if (SelectedActivities[9] == true && ExeList[9].Contains("LaserScanner") == true && ExeList[9].Contains("10.Stockpile 2")) ActivityManager.GetComponent<ActivityManagerScript>().select_10B(); }
 
+        //A11 Old House LS 
+        if (MultiLaserScan == false) { if (SelectedActivities[10] == true && ExeList[10].Contains("LaserScanner") == true && ExeList[10].Contains("Drone") == false && ExeList[10].Contains("11.Old Building")) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser(); }
         //11. Old house drone
-        if (SelectedActivities[10] == true && ExeList[10].Contains("Drone") == true && ExeList[10].Contains( "11.Old Building")) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
+        if (SelectedActivities[10] == true && ExeList[10].Contains("Drone") == true && ExeList[10].Contains("LaserScanner") == false && ExeList[10].Contains("11.Old Building")) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
+        //11. Old House LS && Drone
+        if (SelectedActivities[10] == true && ExeList[10].Contains("Drone") == true && ExeList[10].Contains("LaserScanner") == true && ExeList[10].Contains("11.Old Building"))
+        {
+            OpenChoiceDialogSmall();
+            if(A11Drone) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
+            if(A11LS) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser();
+        }
+
         //12. Jobsite drone
         if (SelectedActivities[11] == true && ExeList[11].Contains("Drone") == true && ExeList[11].Contains("12.Jobsite")) ActivityManager.GetComponent<ActivityManagerScript>().select_12();
 
         //13.IMU workers
         if (SelectedActivities[12] == true && ExeList[12].Contains("IMU") == true)
         {
-            if (ExeList[12].Contains( "13.Painter"))
+            if (ExeList[12].Contains("13.Painter"))
             { ActivityManager.GetComponent<ActivityManagerScript>().A14_painter = true; }
-            if (ExeList[12].Contains( "13.Laborer"))
+            if (ExeList[12].Contains("13.Laborer"))
             { ActivityManager.GetComponent<ActivityManagerScript>().A14_laborer = true; }
-            if (ExeList[12].Contains( "13.Carpenter 1"))
+            if (ExeList[12].Contains("13.Carpenter 1"))
             { ActivityManager.GetComponent<ActivityManagerScript>().A14_c1 = true; }
-            if (ExeList[12].Contains( "13.Carpenter 2"))
-            { ActivityManager.GetComponent<ActivityManagerScript>().A14_c2 = true; }
-            //With given worker bool, get IMU string, handle finish file write use backselected()
-            ActivityManager.GetComponent<ActivityManagerScript>().select_13_new();
-            //display IMU
-            IMUReportEnable = true;
-        }
-
-        //Acitivity Idrection Indicator
-        ActivityIndicator();
-        
-    }
-
-
-    /* old implementation, commented 10/4/2020
-    public void Select()
-    {
-        ComboSelectionCanvas.SetActive(false);
-
-        if (SelectedActivities[0] == true)
-            ActivityManager.GetComponent<ActivityManagerScript>().select_1();
-        if (SelectedActivities[0] == true && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "1.Dozer"))
-        { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_1_Dozer_GPS(); } //1.Dozer GPS
-
-        if (SelectedActivities[1] == true)
-            ActivityManager.GetComponent<ActivityManagerScript>().select_2();
-        if (SelectedActivities[1] == true && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "2.Load"))
-        { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS(); }//2.Load GPS
-
-        if (SelectedActivities[2] == true)
-            ActivityManager.GetComponent<ActivityManagerScript>().select_3();
-        if (SelectedActivities[2] == true && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "3.Truck"))
-        { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_3_truck_GPS(); }//3.truck GPS
-        if (SelectedActivities[2] == true && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "3.Rebar"))
-        { RFIDReportEnable = true; } //3.Rebar RFID
-
-
-        if (SelectedActivities[3] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_4();
-        if (SelectedActivities[3] == true && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "4.Worker 1"))
-        { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_gps(); }
-        if (SelectedActivities[3] == true && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "4.Worker 1"))
-        { ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }//Since we are using panel above worker, so no RFID panel needed.
-        if (SelectedActivities[3] == true && SelectedSensors[0] == true && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "4.Worker 1"))
-        { ActivityManager.GetComponent<ActivityManagerScript>().A4_worker_GPSRFID = true; ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }
-
-        if (SelectedActivities[4] == true)
-            ActivityManager.GetComponent<ActivityManagerScript>().select_5();
-        if (SelectedActivities[4] == true && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "5.Loader"))
-        { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }
-        if (SelectedActivities[4] == true && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "5.dumptruck"))
-        { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_dumptruck_GPS(); }
-
-        //RFID & rebar, wood and log.
-        if (SelectedActivities[5] == true && SelectedSensors[1] == true)
-        {
-            if (Array.Exists(SelectedResources, element => element == "6.wood")) ActivityManager.GetComponent<ActivityManagerScript>().A6_wood_flag = true;
-            if (Array.Exists(SelectedResources, element => element == "6.Log")) ActivityManager.GetComponent<ActivityManagerScript>().A6_log_flag = true;
-            if (Array.Exists(SelectedResources, element => element == "6.Rebar")) ActivityManager.GetComponent<ActivityManagerScript>().A6_rebar_flag = true;
-            ActivityManager.GetComponent<ActivityManagerScript>().A6_RFID();
-            RFIDReportEnable = true;
-        }
-
-        //7. Workers on top floor
-        if (SelectedActivities[6] == true)
-        {
-            if (Array.Exists(SelectedResources, element => element == "7.Worker 1")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w1_flag = true;
-            if (Array.Exists(SelectedResources, element => element == "7.Worker 2")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w2_flag = true;
-            if (Array.Exists(SelectedResources, element => element == "7.Worker 3")) ActivityManager.GetComponent<ActivityManagerScript>().A7_w3_flag = true;
-
-            //Run basic activity: danger zone red box. Based on worker selection bool.
-            ActivityManager.GetComponent<ActivityManagerScript>().select_7_new();
-
-            //GPS only
-            if (SelectedSensors[0] == true) { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_7_GPS(); }
-
-            //RFID only, GPS hidden.
-            if (SelectedSensors[1] == true) { ActivityManager.GetComponent<ActivityManagerScript>().select_7_RFID(); }
-
-            //RFID and GPS
-            if (SelectedSensors[0] == true && SelectedSensors[1] == true)
-            { ActivityManager.GetComponent<ActivityManagerScript>().A7_worker_GPSRFID = true; ActivityManager.GetComponent<ActivityManagerScript>().select_7_RFID(); }
-
-        }
-
-
-        //Laser Scan related activities [7,8,9,10]
-        //if MultiLaserScan, then cannot proceed
-        if (MultiLaserScan == false) { if (SelectedActivities[7] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_8(); }
-        if (MultiLaserScan == false) { if (SelectedActivities[8] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_9(); }
-        if (MultiLaserScan == false) { if (SelectedActivities[9] == true && SelectedSensors[2] == true && Array.Exists(SelectedResources, element => element == "10.Stockpile 1")) ActivityManager.GetComponent<ActivityManagerScript>().select_10A(); }
-        if (MultiLaserScan == false) { if (SelectedActivities[9] == true && SelectedSensors[2] == true && Array.Exists(SelectedResources, element => element == "10.Stockpile 2")) ActivityManager.GetComponent<ActivityManagerScript>().select_10B(); }
-        if (MultiLaserScan == false) { if (SelectedActivities[10] == true && SelectedSensors[2] == true && Array.Exists(SelectedResources, element => element == "11.Old Building")) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser(); }
-
-        //11. Old house drone
-        if (SelectedActivities[10] == true && SelectedSensors[3] == true && Array.Exists(SelectedResources, element => element == "11.Old Building")) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
-        //12. Jobsite drone
-        if (SelectedActivities[11] == true && SelectedSensors[3] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_12();
-
-        //13.IMU workers
-        if (SelectedActivities[12] == true && SelectedSensors[4] == true)
-        {
-            if (Array.Exists(SelectedResources, element => element == "13.Painter"))
-            { ActivityManager.GetComponent<ActivityManagerScript>().A14_painter = true; }
-            if (Array.Exists(SelectedResources, element => element == "13.Laborer"))
-            { ActivityManager.GetComponent<ActivityManagerScript>().A14_laborer = true; }
-            if (Array.Exists(SelectedResources, element => element == "13.Carpenter 1"))
-            { ActivityManager.GetComponent<ActivityManagerScript>().A14_c1 = true; }
-            if (Array.Exists(SelectedResources, element => element == "13.Carpenter 2"))
+            if (ExeList[12].Contains("13.Carpenter 2"))
             { ActivityManager.GetComponent<ActivityManagerScript>().A14_c2 = true; }
             //With given worker bool, get IMU string, handle finish file write use backselected()
             ActivityManager.GetComponent<ActivityManagerScript>().select_13_new();
@@ -580,7 +481,9 @@ public class MenuManager : MonoBehaviour
         ActivityIndicator();
 
     }
-    */
+
+
+    
 
     private void MultiLaserScanCheck()
     {
@@ -629,11 +532,11 @@ public class MenuManager : MonoBehaviour
 
     private void PrepareComboDisplayString()
     {
-        ComboDisplayString = "Current Configured Combos: \n"; 
+        ComboDisplayString = "Current Configured Combos: \n";
         for (int j = 0; j < ComboList.Count; j++)
         {
             //Debug.Log(String.Format("Key: {0}, Value: {1}", ComboList.ElementAt(j).Key, string.Join(", ", ComboList.ElementAt(j).Value)));
-            ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[ComboList.ElementAt(j).Key].itemName + string.Join(", ", ComboList.ElementAt(j).Value) + ".\n";
+            ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[ComboList.ElementAt(j).Key].itemName + string.Join(", ", ComboList.ElementAt(j).Value) + ". ";
         }
     }
 
@@ -726,7 +629,7 @@ public class MenuManager : MonoBehaviour
 
     #endregion
 
- 
+
 
 
     //----------------------------------------------------------
@@ -737,7 +640,7 @@ public class MenuManager : MonoBehaviour
     //Activities Confirm.
     public void A_Confirm()
     {
-        
+
         //Check if multiple laser scan activity selected
         MultiLaserScanCheck();
 
@@ -751,13 +654,15 @@ public class MenuManager : MonoBehaviour
         }
 
         //Find first active activity number
-        for (int i = 0; i < 12; ++i)
+        for (int i = 0; i < 13; ++i)
         {
-            if(SelectedActivities[i] == true)
+            if (SelectedActivities[i] == true)
             { CurrentActivitySelection = i; break; }
-                
+
         }
-            
+
+        Debug.Log("A-confirm activity:" + CurrentActivitySelection);
+
     }
 
     //Sensor Confirm.
@@ -769,12 +674,20 @@ public class MenuManager : MonoBehaviour
         ChangeResourcesBool = true;
     }
 
-    public void CheckActivitySensors()
+    private void CheckActivitySensors()
     {
         bool pass = false;
         //Debug.Log("CAS"+CurrentActivitySelection+ SelectedSensors[0]+ SelectedSensors[1]);
         //Check if selected sensors fit selected activity? If fit, give pass.
         //"GPS", "RFID", "LaserScanner", "Drone", "IMU"
+
+        Debug.Log("CurrentActivitySelection: "+CurrentActivitySelection);
+        for (int j = 0; j < SelectedSensors.Length;j++ )
+        {
+            Debug.Log("Selected sensor:" + SelectedSensors[j]);
+        }
+
+
         //A1+GPS[0]
         if (CurrentActivitySelection == 0 && SelectedSensors[0] == true && SelectedSensors[1] == false && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) pass = true;
         //A2+GPS
@@ -821,10 +734,60 @@ public class MenuManager : MonoBehaviour
     //Resources Confirm
     public void R_Confirm()
     {
-        //Dropdown 3 active.
-        Mdropdown3.GetComponent<Button>().interactable = false;
-        //TODO: Record current Combo
-        UpdateComboList();
+        CheckSensorsResources();
+    }
+
+    public void CheckSensorsResources()
+    {
+        bool pass = false;
+
+        //Check Sensors Resources.
+        // Which activity, correct sensor (don't need all, already determined in previouys step), correct resources?
+        //A1+GPS[0]+1.dozer
+        if (CurrentActivitySelection == 0 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "1.Dozer")) pass = true;
+        //A2+GPS+2.load
+        if (CurrentActivitySelection == 1 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "2.Load")) pass = true;
+        //A3+GPS+truck
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "3.Truck")) pass = true;
+        //A3+RFID+Rebar
+        if (CurrentActivitySelection == 2 && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "3.Rebar")) pass = true;
+        //A3+(GPS&&RFID)+(truck&&rebar)
+        if (CurrentActivitySelection == 2 && (SelectedSensors[0] == true && SelectedSensors[1] == true) && (Array.Exists(SelectedResources, element => element == "3.Truck") && Array.Exists(SelectedResources, element => element == "3.Rebar"))) pass = true;
+        //A4+GPS/RFID+worker
+        if (CurrentActivitySelection == 3 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && Array.Exists(SelectedResources, element => element == "4.Worker 1")) pass = true;
+        //A5+GPS+loader/truck
+        if (CurrentActivitySelection == 4 && SelectedSensors[0] == true && (Array.Exists(SelectedResources, element => element == "5.Loader")) || Array.Exists(SelectedResources, element => element == "5.dumptruck")) pass = true;
+        //A6+RFID+WLR
+        if (CurrentActivitySelection == 5 && SelectedSensors[1] == true && (Array.Exists(SelectedResources, element => element == "6.wood") || Array.Exists(SelectedResources, element => element == "6.Log") || Array.Exists(SelectedResources, element => element == "6.Rebar"))) pass = true;
+        //A7+(GPS||RFID)&&(w1w2w3)
+        if (CurrentActivitySelection == 6 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && (Array.Exists(SelectedResources, element => element == "7.Worker 1") || Array.Exists(SelectedResources, element => element == "7.Worker 2") || Array.Exists(SelectedResources, element => element == "7.Worker 3"))) pass = true;
+        //A8+LS
+        if (CurrentActivitySelection == 7 && SelectedSensors[2] == true ) pass = true;
+        //A9+LS
+        if (CurrentActivitySelection == 8 && SelectedSensors[2] == true ) pass = true;
+        //A10+LS+(only 1 stockpile at a time)
+        if (CurrentActivitySelection == 9 && SelectedSensors[2] == true && (Array.Exists(SelectedResources, element => element == "10.Stockpile 1") && !Array.Exists(SelectedResources, element => element == "10.Stockpile 2"))) pass = true;
+        //A11+LS/Drone+old house
+        if (CurrentActivitySelection == 10 && (SelectedSensors[2] == true || SelectedSensors[3] == true) && Array.Exists(SelectedResources, element => element == "11.Old Building")) pass = true;
+        //A12+drone+jobsite
+        if (CurrentActivitySelection == 11 && SelectedSensors[3] == true && Array.Exists(SelectedResources, element => element == "12.Jobsite")) pass = true;
+        //A13+IMU+w1w2w3w4
+        if (CurrentActivitySelection == 12 && SelectedSensors[4] == true && (Array.Exists(SelectedResources, element => element == "13.Painter") || Array.Exists(SelectedResources, element => element == "13.Laborer") || Array.Exists(SelectedResources, element => element == "13.Carpenter 1") || Array.Exists(SelectedResources, element => element == "13.Carpenter 2"))) pass = true;
+
+        if (pass)
+        {
+            //Dropdown 3 active.
+            Mdropdown3.GetComponent<Button>().interactable = false;
+            //Record current Combo
+            UpdateComboList();
+        }
+        else
+        {
+            //dialogue warning
+            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning",
+                "Wrong resources selected for this sensor, Please correct your selection!", false);
+            //reset selection
+        }
     }
 
     //Find next active activity, or out of bound.
@@ -858,7 +821,6 @@ public class MenuManager : MonoBehaviour
     {
         //currently focusing on CurrentActivitySelection
         //Initialize as empty list
-        //ComboEntry.Clear();
         List<string> ComboEntry = new List<string>();
 
         //refresh sensor selection status
@@ -893,7 +855,7 @@ public class MenuManager : MonoBehaviour
         //    Debug.Log("ComboEntry List: "+x.ToString());
         //}
 
-        //complete current combo list
+        //Add current ComboEntry to completed ComboList
         ComboList.Add(CurrentActivitySelection, ComboEntry);
 
         /*
@@ -924,9 +886,16 @@ public class MenuManager : MonoBehaviour
         LegacyMainMenu.SetActive(true);
     }
 
-    public void ReloadScene()
+    public void ReloadSceneButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MenuHub",LoadSceneMode.Single);
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("MenuHub",LoadSceneMode.Single);
+        ActivityManager.GetComponent<ActivityManagerScript>().resetScene();
+    }
+
+    public void StopButton()
+    {
+        //stop all activities.
+        ActivityManager.GetComponent<ActivityManagerScript>().stopALL();
     }
 
     //For warning dialogue
@@ -939,6 +908,33 @@ public class MenuManager : MonoBehaviour
     public void OpenConfirmationDialogSmall()
     {
         //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Confirmation Dialog, Small, Far", "This is an example of a small dialog with only one button, placed at near interaction range", false);
+    }
+
+    /// <summary>
+    /// Opens choice dialog example
+    /// </summary>
+    public void OpenChoiceDialogSmall()
+    {
+        Dialog myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.Yes | DialogButtonType.No, "Activity 11 Warning", "Both Laser Scanner and Drone selected. Do you want to use Drone first, and then Laser Scanner?", false);
+        if (myDialog != null)
+        {
+            myDialog.OnClosed += OnClosedDialogEvent;
+        }
+    }
+
+    private void OnClosedDialogEvent(DialogResult obj)
+    {
+        if (obj.Result == DialogButtonType.Yes)
+        {
+            Debug.Log(obj.Result);
+            A11Drone = true;
+        }
+        if (obj.Result == DialogButtonType.No)
+        {
+            Debug.Log(obj.Result);
+            A11LS = true;
+        }
+
     }
 
     #endregion
