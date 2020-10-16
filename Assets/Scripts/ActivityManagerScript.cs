@@ -384,7 +384,7 @@ public class ActivityManagerScript : MonoBehaviour
     {
         //switchTag(Activity8Arrow);
         //Activity8.transform.Find("Arrow").gameObject.SetActive(true);
-        sensorSelected();
+        //sensorSelected();
         Vector3 ScannerPosition= Activity8.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
@@ -394,7 +394,7 @@ public class ActivityManagerScript : MonoBehaviour
     {
         //switchTag(Activity9Arrow);
         //Activity9.transform.Find("Arrow").gameObject.SetActive(true);
-        sensorSelected();
+        //sensorSelected();
         Vector3 ScannerPosition = Activity9.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
@@ -415,7 +415,7 @@ public class ActivityManagerScript : MonoBehaviour
         //switchTag(Activity11AArrow);
         //Activity11A.transform.Find("Arrow").gameObject.SetActive(true);
         Activity11Canvas.SetActive(false);
-        sensorSelected();
+        //sensorSelected();
         Vector3 ScannerPosition = Activity11A.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
@@ -427,7 +427,7 @@ public class ActivityManagerScript : MonoBehaviour
         //switchTag(Activity11BArrow);
         //Activity11B.transform.Find("Arrow").gameObject.SetActive(true);
         Activity11Canvas.SetActive(false);
-        sensorSelected();
+        //sensorSelected();
         Vector3 ScannerPosition = Activity11B.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
@@ -451,7 +451,7 @@ public class ActivityManagerScript : MonoBehaviour
     {
         //switchTag(Activity12Laser); //Activate laser position arrow
         //Activity12Canvas.SetActive(false);
-        sensorSelected();
+        //sensorSelected();
         Vector3 ScannerPosition = Activity12Laser.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerMenu.SetActive(true);
@@ -461,7 +461,7 @@ public class ActivityManagerScript : MonoBehaviour
     {
         //switchTag(Activity12Drone);
         //Activity12Canvas.SetActive(false);
-        sensorSelected();
+        //sensorSelected();
         Activity12_DroneCanvas.SetActive(true);
         //Start the drone and automatically fly around building
     }
@@ -476,7 +476,7 @@ public class ActivityManagerScript : MonoBehaviour
     {
         //drone around jobsite
         //switchTag(Activity13Drone);
-        sensorSelected();
+        //sensorSelected();
         Activity13_DroneCanvas.SetActive(true);
         //Activity12Canvas.SetActive(false);
         Activity12_DroneCanvas.SetActive(false);
@@ -485,7 +485,7 @@ public class ActivityManagerScript : MonoBehaviour
 
     public void select_12Drone()
     {
-        sensorSelected();
+        //sensorSelected();
         Activity13_DroneCanvas.SetActive(false);
         //need to get rid of all canvas
     }
@@ -498,7 +498,7 @@ public class ActivityManagerScript : MonoBehaviour
 
     public void select_13()
     {
-        sensorSelected();
+        //sensorSelected();
         //imuMenu.SetActive(true);
         //Debug.Log("14 SELECTED");
         //Activity14Canvas.SetActive(true);
@@ -507,7 +507,7 @@ public class ActivityManagerScript : MonoBehaviour
     public void select_13_new()
     {
         //initialize
-        sensorSelected();
+        //sensorSelected();
         Activity14.GetComponent<A14>().Start();
         //select worker
         if (A14_painter) Activity14.GetComponent<A14>().painterSelect();
@@ -551,7 +551,7 @@ public class ActivityManagerScript : MonoBehaviour
     //Legacy method to use manually controlled drone
     public void droneSelected()
     {
-        sensorSelected();
+        //sensorSelected();
         ManualDroneBackButton.SetActive(true);
         drone.SetActive(true);
         droneCanvas.SetActive(true);
@@ -563,7 +563,7 @@ public class ActivityManagerScript : MonoBehaviour
     //modified for activity 12. Skip task, Disable camera movement.
     public void droneMSelected()
     {
-        sensorSelected();
+        //sensorSelected();
         ManualDroneBackButton.SetActive(true);
         drone.SetActive(true);
         droneCanvas.SetActive(true);//here should be drone canvas instead of task canvas
@@ -578,7 +578,7 @@ public class ActivityManagerScript : MonoBehaviour
     //For activity 11. Jump drone location and camera location to old house.
     public void ManualDrone12()
     {
-        sensorSelected(); //initialization
+        //sensorSelected(); //initialization
         GetComponent<Canvas>().enabled = false; //1, Disable main menu canvas.
         drone.SetActive(true);//2, activate drone.
         drone.transform.position = Activity12_DroneLocator.transform.position; //3, move drone to locator position.
