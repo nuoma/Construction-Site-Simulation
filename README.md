@@ -13,5 +13,5 @@ Release V2.3 All activities implemented.
 
 Release V2.4 New UI implemented.
 
-
+V2.5 Improvements on New UI (activity selection, per sensor configuration etc.). Untested so bugs outstanding. 
 
