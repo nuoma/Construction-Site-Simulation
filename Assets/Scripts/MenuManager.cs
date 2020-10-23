@@ -38,8 +38,8 @@ public class MenuManager : MonoBehaviour
 
     private string ComboDisplayString;
     private string SelectedString;
-    private string DisplayString;
-    public TextMeshProUGUI DisplayResults;
+
+
     public TextMeshProUGUI GPSReportText;
     public TextMeshProUGUI RFIDReportText;
     public TextMeshProUGUI IMUReportText;
@@ -65,7 +65,7 @@ public class MenuManager : MonoBehaviour
     private bool IMUReportEnable;
     private bool ChangeResourcesBool;
     private bool ShowComboBool;
-    private bool CurrentConfigurationBool = true;
+
     private bool A11Drone;
     private bool A11LS;
 
@@ -180,13 +180,6 @@ public class MenuManager : MonoBehaviour
         if (Dropdown2ShowCurrentSensor) Dropdown2Title.GetComponent<TextMeshProUGUI>().text = Mdropdown2.dropdownItems[CurrentSensorConfig].itemName;
 
 
-        //Show current configuration
-        if (CurrentConfigurationBool)
-        {
-            PrepareCurrentConfigDisplay();
-            DisplayResults.GetComponent<TextMeshProUGUI>().text = DisplayString;
-        }
-        else DisplayResults.GetComponent<TextMeshProUGUI>().text = "Finished Configuration, Press Select Button To Start.";
 
         //Show all configured combo in panel.
         if (ShowComboBool)
@@ -467,8 +460,8 @@ public class MenuManager : MonoBehaviour
             }
         }
 
-        if (SelectedActivities[3] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_4();
-        if (SelectedActivities[3] == true)
+        if (SelectedActivities[3] == true) { ActivityManager.GetComponent<ActivityManagerScript>().select_4(); ActivityManager.GetComponent<ActivityManagerScript>().select_2(); }
+            if (SelectedActivities[3] == true)
         {
             foreach (int key in InterpretLUT2(3))
             {
@@ -556,7 +549,7 @@ public class MenuManager : MonoBehaviour
 
         //Laser Scan related activities [7,8,9,10]
         //if MultiLaserScan, then cannot proceed
-        if (MultiLaserScan == false) { if (SelectedActivities[7] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_8(); }//8.scan part of building
+        if (MultiLaserScan == false) { if (SelectedActivities[7] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_8(); Debug.Log("Execute 8 scan."); }//8.scan part of building
         if (MultiLaserScan == false) { if (SelectedActivities[8] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_9(); }//9.scan concrete slab
         if (MultiLaserScan == false)
         {
@@ -710,24 +703,119 @@ public class MenuManager : MonoBehaviour
 
     private void PrepareComboDisplayString()
     {
-        ComboDisplayString = "Current Configured Combos: \n";
+        ComboDisplayString = "Already Configured Combinitions: \n";
+        //for (int j = 0; j < ComboList.Count; j++)
+        //{
+        //    //Debug.Log(String.Format("Key: {0}, Value: {1}", ComboList.ElementAt(j).Key, string.Join(", ", ComboList.ElementAt(j).Value)));
+        //    ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[ComboList.ElementAt(j).Key].itemName + string.Join(", ", ComboList.ElementAt(j).Value) + ". ";
+        //}
+
+
+        //Interpret ComboList(i,selections)
+        string[] ExeList = new string[ComboList.Count];//unknown size, because of selection limits, based on estimation (21?), size set to 50.
+        //Debug.Log("ComboList count:" + ComboList.Count);
         for (int j = 0; j < ComboList.Count; j++)
         {
-            //Debug.Log(String.Format("Key: {0}, Value: {1}", ComboList.ElementAt(j).Key, string.Join(", ", ComboList.ElementAt(j).Value)));
-            ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[ComboList.ElementAt(j).Key].itemName + string.Join(", ", ComboList.ElementAt(j).Value) + ". ";
+            ExeList[ComboList.ElementAt(j).Key] = string.Join(", ", ComboList.ElementAt(j).Value);
         }
+
+
+        if (SelectedActivities[0] == true)
+            {
+                foreach (int key in InterpretLUT2(0))
+                {
+                    ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[0].itemName + ", " + ExeList[key] + "\n";
+                }
+            }
+        if (SelectedActivities[1] == true)
+        {
+            foreach (int key in InterpretLUT2(1))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[1].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[2] == true)
+        {
+            foreach (int key in InterpretLUT2(2))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[2].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[3] == true)
+        {
+            foreach (int key in InterpretLUT2(3))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[3].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[4] == true)
+        {
+            foreach (int key in InterpretLUT2(4))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[4].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[5] == true)
+        {
+            foreach (int key in InterpretLUT2(5))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[5].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[6] == true)
+        {
+            foreach (int key in InterpretLUT2(6))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[6].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[7] == true)
+        {
+            foreach (int key in InterpretLUT2(7))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[7].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[8] == true)
+        {
+            foreach (int key in InterpretLUT2(8))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[8].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[9] == true)
+        {
+            foreach (int key in InterpretLUT2(9))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[9].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[10] == true)
+        {
+            foreach (int key in InterpretLUT2(10))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[10].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[11] == true)
+        {
+            foreach (int key in InterpretLUT2(11))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[11].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+        if (SelectedActivities[12] == true)
+        {
+            foreach (int key in InterpretLUT2(12))
+            {
+                ComboDisplayString = ComboDisplayString + "Activity: " + Mdropdown1.dropdownItems[12].itemName + ", " + ExeList[key] + "\n";
+            }
+        }
+
+
     }
 
-    private void PrepareCurrentConfigDisplay()
-    {
-        //Current Activity Selection by default is 0, but it may not be active.
-        if (CurrentActivitySelection == 0 && SelectedActivities[0] == false) DisplayString = "Select activity.";
-        else
-            DisplayString = "Currently Configuring Activity:" + Mdropdown1.dropdownItems[CurrentActivitySelection].itemName + ". \n" +
-                "Selected:" + SelectedString + ".";
 
-        SelectedString = "";
-    }
 
     public void A13_stop()
     {
@@ -1069,23 +1157,39 @@ public class MenuManager : MonoBehaviour
             if (CurrentActivitySelection == 1 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Crane")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
       "Crane cannot be used with GPS", false);
         }
+        
+        
         //A3+GPS+truck
-        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Truck")) { pass = true; }
-        //A3+gps rfid truck, warning: select a resource for rfid
-        else
-        { if(CurrentActivitySelection == 2 && (SelectedSensors[0] == true && SelectedSensors[1] == true) && (Array.Exists(SelectedResources, element => element == "Truck") && !Array.Exists(SelectedResources, element => element == "Rebar"))) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
-       "Select a resource for GPS.", false);
-        }
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == false && Array.Exists(SelectedResources, element => element == "Truck") && !Array.Exists(SelectedResources, element => element == "Rebar")) { pass = true; }
         //A3+RFID+Rebar
-        if (CurrentActivitySelection == 2 && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "Rebar")) { pass = true; }
-        //A3+ gps rfid rebar, warning: select a resource for gps, vice versa.
-        else
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == false && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "Rebar") && !Array.Exists(SelectedResources, element => element == "Truck")) { pass = true; }
+        //A3+GPS+Rebar
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == false && Array.Exists(SelectedResources, element => element == "Rebar") && !Array.Exists(SelectedResources, element => element == "Truck"))
         {
-            if (CurrentActivitySelection == 2 && (SelectedSensors[0] == true && SelectedSensors[1] == true) && !(Array.Exists(SelectedResources, element => element == "Truck") && !Array.Exists(SelectedResources, element => element == "Rebar"))) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
-"Select a resource for RFID.", false);
+            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
+"Rebar cannot be tagged with GPS.", false);
         }
+        //A3+RFID+truck
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == false && SelectedSensors[1] == true && !Array.Exists(SelectedResources, element => element == "Rebar") && Array.Exists(SelectedResources, element => element == "Truck"))
+        {
+            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
+"Truck cannot be tagged with RFID.", false);
+        }
+        //A3+gps+rfid+truck, warning: select a resource for rfid
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "Truck") && !Array.Exists(SelectedResources, element => element == "Rebar")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
+       "Select a resource for GPS.", false);
+        //A3+gps+rfid+rebar, warning: select a resource for gps, vice versa.
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && !Array.Exists(SelectedResources, element => element == "Truck") && Array.Exists(SelectedResources, element => element == "Rebar")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
+"Select a resource for RFID.", false);
         //A3+(GPS&&RFID)+(truck&&rebar)
-        if (CurrentActivitySelection == 2 && (SelectedSensors[0] == true && SelectedSensors[1] == true) && (Array.Exists(SelectedResources, element => element == "Truck") && Array.Exists(SelectedResources, element => element == "Rebar"))) { pass = true; }
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "Truck") && Array.Exists(SelectedResources, element => element == "Rebar")) { pass = true; }
+        //A3+gps+rfid+none
+        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && !Array.Exists(SelectedResources, element => element == "Truck") && !Array.Exists(SelectedResources, element => element == "Rebar"))
+        {
+            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
+"Please select at least one resource.", false);
+        }
+
         //A4+GPS/RFID+worker
         if (CurrentActivitySelection == 3 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && Array.Exists(SelectedResources, element => element == "Worker 1")) { pass = true; }
         //A5+GPS+loader/truck
@@ -1232,7 +1336,6 @@ public class MenuManager : MonoBehaviour
             NAButton.SetActive(false);
             SelectButton.SetActive(true);
             Debug.Log("Finished configuration. Can execute.");
-            CurrentConfigurationBool = false;
         }
         else
         {

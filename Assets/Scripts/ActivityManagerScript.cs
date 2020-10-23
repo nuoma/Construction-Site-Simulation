@@ -114,7 +114,8 @@ public class ActivityManagerScript : MonoBehaviour
     public bool A7_w2_GPSdisplay;
     public bool A7_w3_GPSdisplay;
 
-
+    public GameObject LSConstraint;
+    public GameObject MainUI;
     #endregion
 
     #region main menu functionalities
@@ -387,7 +388,9 @@ public class ActivityManagerScript : MonoBehaviour
         //sensorSelected();
         Vector3 ScannerPosition= Activity8.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        LSConstraint.GetComponent<LSConstraint>().BeginSignal();
         scannerMenu.SetActive(true);
+        //MainUI.SetActive(false);
     }
 
     public void select_9()
@@ -397,6 +400,7 @@ public class ActivityManagerScript : MonoBehaviour
         //sensorSelected();
         Vector3 ScannerPosition = Activity9.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        LSConstraint.GetComponent<LSConstraint>().BeginSignal();
         scannerMenu.SetActive(true);
     }
 
@@ -418,6 +422,7 @@ public class ActivityManagerScript : MonoBehaviour
         //sensorSelected();
         Vector3 ScannerPosition = Activity11A.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        LSConstraint.GetComponent<LSConstraint>().BeginSignal();
         scannerMenu.SetActive(true);
     }
 
@@ -430,6 +435,7 @@ public class ActivityManagerScript : MonoBehaviour
         //sensorSelected();
         Vector3 ScannerPosition = Activity11B.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        LSConstraint.GetComponent<LSConstraint>().BeginSignal();
         scannerMenu.SetActive(true);
     }
 
@@ -454,6 +460,7 @@ public class ActivityManagerScript : MonoBehaviour
         //sensorSelected();
         Vector3 ScannerPosition = Activity12Laser.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        LSConstraint.GetComponent<LSConstraint>().BeginSignal();
         scannerMenu.SetActive(true);
     }
 
@@ -602,6 +609,8 @@ public class ActivityManagerScript : MonoBehaviour
         resetDrone();
         Activity12_DroneCanvas.SetActive(false);
         Activity13_DroneCanvas.SetActive(false);
+
+        MainUI.SetActive(true);
     }
     private void resetScanner()
     {
