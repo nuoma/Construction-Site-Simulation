@@ -14,6 +14,7 @@ public class scanScript : MonoBehaviour
     [SerializeField] private textureCamera textureCamera;
     [SerializeField] private GameObject[] targets;
 
+    [SerializeField] private GameObject scannerCanvas;
     [SerializeField] private GameObject resolutionCanvas;
     [SerializeField] private GameObject qualityCanvas;
     [SerializeField] private GameObject colorCanvas;
@@ -62,11 +63,11 @@ public class scanScript : MonoBehaviour
     void Start()
     {
         /*
-        resolutionCanvas.GetComponent<Canvas>().enabled = false;
-        qualityCanvas.GetComponent<Canvas>().enabled = false;
-        colorCanvas.GetComponent<Canvas>().enabled = false;
-        profileCanvas.GetComponent<Canvas>().enabled = false;
-        coverageCanvas.GetComponent<Canvas>().enabled = false;
+        resolutionCanvas.SetActive(false);
+        qualityCanvas.SetActive(false);
+        colorCanvas.SetActive(false);
+        profileCanvas.SetActive(false);
+        coverageCanvas.SetActive(false);
         display.enabled = false;
         */
 
@@ -74,6 +75,18 @@ public class scanScript : MonoBehaviour
         scannerFieldRotation = scannerField.transform.eulerAngles;
 
         colorVar = scanButton.GetComponent<Button>().colors;
+        scanButton.GetComponent<Button>().interactable = false;
+    }
+
+    public void exit()
+    {
+        scannerCanvas.SetActive(false);
+        resolutionCanvas.SetActive(false);
+        qualityCanvas.SetActive(false);
+        colorCanvas.SetActive(false);
+        profileCanvas.SetActive(false);
+        coverageCanvas.SetActive(false);
+        displayCanvas.SetActive(false);
     }
 
     private void Update()
@@ -89,20 +102,29 @@ public class scanScript : MonoBehaviour
             p4 = "Profile Selected. \n";
         if (coverage)
             p5 = "Coverage Selected.\n";
-
         SelectionPrompt.GetComponent<TextMeshProUGUI>().text = "Selected:" + p1 + p2 + p3 + p4 +p5;
 
+        //Scan condition filter check
         if (resolution != 0 && quality != 0 && color != 0 && profile != 0 && coverage)
         {
             ColorBlock colorVarUpdated = scanButton.GetComponent<Button>().colors;
             colorVarUpdated.highlightedColor = new Color32(138, 255, 114, 255);
             colorVarUpdated.pressedColor = new Color32(17, 101, 0, 255);
             scanButton.GetComponent<Button>().colors = colorVarUpdated;
+            scanButton.GetComponent<Button>().interactable = true;
         }
         else
             scanButton.GetComponent<Button>().colors = colorVar;
 
-        if(scanning && scanTime < 0)
+        //scan in process
+        if (scanning)
+        {
+            scanTime -= Time.deltaTime;
+            scanTimeText.GetComponent<TextMeshProUGUI>().text = "Scan Time:" + (int)scanTime + "min";
+        }
+
+        //scan finished
+        if (scanning && scanTime < 0)
         {
             scanning = false;
             scanner.GetComponent<Animator>().SetBool("spin", false);
@@ -119,10 +141,7 @@ public class scanScript : MonoBehaviour
                 displayCanvas.transform.Find("Panel").gameObject.SetActive(false);
             }
         }
-        if(scanning)
-        {
-            scanTime -= Time.deltaTime;
-        }
+
 
         if(resolution == 1)
         {
@@ -210,31 +229,32 @@ public class scanScript : MonoBehaviour
     public void x1Resolution()
     {
         resolution = 1;
-        resolutionCanvas.GetComponent<Canvas>().enabled = false;
+        //resolutionCanvas.SetActive(false);
+        resolutionCanvas.SetActive(false);
         updateTime();
     }
     public void x4Resolution()
     {
         resolution = 4;
-        resolutionCanvas.GetComponent<Canvas>().enabled = false;
+        resolutionCanvas.SetActive(false);
         updateTime();
     }
     public void x8Resolution()
     {
         resolution = 8;
-        resolutionCanvas.GetComponent<Canvas>().enabled = false;
+        resolutionCanvas.SetActive(false);
         updateTime();
     }
     public void x16Resolution()
     {
         resolution = 16;
-        resolutionCanvas.GetComponent<Canvas>().enabled = false;
+        resolutionCanvas.SetActive(false);
         updateTime();
     }
     public void x32Resolution()
     {        
         resolution = 32;
-        resolutionCanvas.GetComponent<Canvas>().enabled = false;
+        resolutionCanvas.SetActive(false);
         updateTime();
     }
 
@@ -242,25 +262,25 @@ public class scanScript : MonoBehaviour
     public void x2Quality()
     {
         quality = 2;
-        qualityCanvas.GetComponent<Canvas>().enabled = false;
+        qualityCanvas.SetActive(false);
         updateTime();
     }
     public void x4Quality()
     {
         quality = 4;
-        qualityCanvas.GetComponent<Canvas>().enabled = false;
+        qualityCanvas.SetActive(false);
         updateTime();
     }
     public void x6Quality()
     {
         quality = 6;
-        qualityCanvas.GetComponent<Canvas>().enabled = false;
+        qualityCanvas.SetActive(false);
         updateTime();
     }
     public void x8Quality()
     {
         quality = 8;
-        qualityCanvas.GetComponent<Canvas>().enabled = false;
+        qualityCanvas.SetActive(false);
         updateTime();
     }
 
@@ -268,37 +288,37 @@ public class scanScript : MonoBehaviour
     public void colorMode()
     {
         color = 1;
-        colorCanvas.GetComponent<Canvas>().enabled = false;
+        colorCanvas.SetActive(false);
     }
     public void grayscaleMode()
     {
         color = 2;
-        colorCanvas.GetComponent<Canvas>().enabled = false;
+        colorCanvas.SetActive(false);
     }
 
     //Functions for profile selection
     public void indoor10Profile()
     {
         profile = 1;
-        profileCanvas.GetComponent<Canvas>().enabled = false;
+        profileCanvas.SetActive(false);
         scannerFieldScale = new Vector3(10.96f, 15.82f, 10.96f);
     }
     public void indoor20Profile()
     {
         profile = 2;
-        profileCanvas.GetComponent<Canvas>().enabled = false;
+        profileCanvas.SetActive(false);
         scannerFieldScale = new Vector3(21.92f, 31.64f, 21.92f);
     }
     public void outdoor10Profile()
     {
         profile = 3;
-        profileCanvas.GetComponent<Canvas>().enabled = false;
+        profileCanvas.SetActive(false);
         scannerFieldScale = new Vector3(10.96f, 15.82f, 10.96f);
     }
     public void outdoor20Profile()
     {
         profile = 4;
-        profileCanvas.GetComponent<Canvas>().enabled = false;
+        profileCanvas.SetActive(false);
         scannerFieldScale = new Vector3(21.92f, 31.64f, 21.92f);
     }
 
@@ -306,7 +326,7 @@ public class scanScript : MonoBehaviour
     public void coverageBack()
     {
         scannerField.GetComponent<Renderer>().enabled = false;        
-        coverageCanvas.GetComponent<Canvas>().enabled = false;
+        coverageCanvas.SetActive(false);
     }
 
     //Functions for getting camera size

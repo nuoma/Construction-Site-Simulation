@@ -15,7 +15,7 @@ using Microsoft.MixedReality.Toolkit.Experimental.Dialog;
 public class MenuManager : MonoBehaviour
 {
     #region Parameters
-
+    [SerializeField] private GameObject ConcurrentSelectionMenu; //LegacyMainMenu
     [SerializeField] private GameObject LegacyMainMenu; //LegacyMainMenu
     [SerializeField] private GameObject IMUReportCanvas;
     [SerializeField] private GameObject GPSReportCanvas;
@@ -101,6 +101,11 @@ public class MenuManager : MonoBehaviour
     public GameObject S_confirm_button;
 
     private int LUT2Index = 0;
+    private int LSConcurrent;
+    private int DConcurrent;
+    private int ConcurrentSelection;
+    public bool ConcurrencySignal;
+    private bool ConcurrencyOccurred;
     #endregion
 
     //----------------------------------------------------------
@@ -136,6 +141,8 @@ public class MenuManager : MonoBehaviour
 
         //activity selection panel
         ActivitySelectionParentPanel.gameObject.SetActive(false);
+
+        ConcurrentSelectionMenu.SetActive(false);
     }
 
 
@@ -215,7 +222,12 @@ public class MenuManager : MonoBehaviour
             PrepareIMUString();
             IMUReportText.GetComponent<TextMeshProUGUI>().text = IMUReportString;
         }
-    }
+
+        //look for concurrency congestion over signal
+        //signal only need to happen once using concurrencysignal
+        //execute residual function
+        if (ConcurrencyOccurred && ActivityManager.GetComponent<ActivityManagerScript>().ConcurencySuspension && !ConcurrencySignal) { ConcurrencySignal = true; ConcurrencyResidualExe(); }
+}
 
     #endregion
 
@@ -226,7 +238,7 @@ public class MenuManager : MonoBehaviour
     private void CreateActivityDropdown()
     {
         ActivityList = new List<string> { "Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
-            "Material Inventory", "Detecting Fall", "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building", "Jobsite Inspection", "Worker Ergonomics."};
+            "Material Inventory", "Detecting Fall", "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building", "Jobsite Inspection", "Worker Ergonomics"};
         foreach (string option in ActivityList)
         {
             Mdropdown1.SetItemTitle(option);
@@ -407,6 +419,11 @@ public class MenuManager : MonoBehaviour
     //10/20/2020 changing implementation due to per sensor resource selection will invalidate previous dictionary based implementation.
     public void Select()
     {
+        bool Drone1 = false;
+        bool Drone2 = false;
+        bool MultiDroneBlock = false;
+
+        ShowComboBool = false;
         //disable canvas that show combo selections
         ComboSelectionCanvas.SetActive(false);
         //ActivityManager.GetComponent<ActivityManagerScript>().sensorSelected();
@@ -420,7 +437,18 @@ public class MenuManager : MonoBehaviour
         }
 
 
-        
+        //***this section check for multi drone selection
+        //11. Old House Drone check
+        if (SelectedActivities[10] == true) { foreach (int key in InterpretLUT2(10)) { if (ExeList[key].Contains("Drone") == true) { Drone1 = true; } } }
+        //12. Jobsite drone check
+        if (SelectedActivities[11] == true) { foreach (int key in InterpretLUT2(11)) { if (ExeList[key].Contains("Drone")) { Drone2 = true; } } }
+        //MultiDroneBlock
+        if (Drone1 && Drone2) { MultiDroneBlock = true; Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "We only have 1 Drone but multiple Drone activity selected.", false); }
+        //***section end
+
+        //***this section check for drone and LS simultaneous selection
+        //***section end
+
         if (SelectedActivities[0] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_1();
         if (SelectedActivities[0] == true)
         {
@@ -534,10 +562,10 @@ public class MenuManager : MonoBehaviour
                 ActivityManager.GetComponent<ActivityManagerScript>().select_7_new();
 
                 //GPS only
-                if (ExeList[key].Contains("GPS")) { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_7_GPS(); }
+                if (ExeList[key].Contains("GPS") && !ExeList[key].Contains("RFID")) { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_7_GPS(); }
 
                 //RFID only, GPS hidden.
-                if (ExeList[key].Contains("RFID")) { ActivityManager.GetComponent<ActivityManagerScript>().select_7_RFID(); }
+                if (ExeList[key].Contains("RFID") && !ExeList[key].Contains("GPS")) { ActivityManager.GetComponent<ActivityManagerScript>().select_7_RFID(); }
 
                 //RFID and GPS
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("RFID"))
@@ -549,8 +577,8 @@ public class MenuManager : MonoBehaviour
 
         //Laser Scan related activities [7,8,9,10]
         //if MultiLaserScan, then cannot proceed
-        if (MultiLaserScan == false) { if (SelectedActivities[7] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_8(); Debug.Log("Execute 8 scan."); }//8.scan part of building
-        if (MultiLaserScan == false) { if (SelectedActivities[8] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_9(); }//9.scan concrete slab
+        if (MultiLaserScan == false) { if (SelectedActivities[7] == true)  LSConcurrent = 7; }//8.scan part of building, ActivityManager.GetComponent<ActivityManagerScript>().select_8();
+        if (MultiLaserScan == false) { if (SelectedActivities[8] == true)  LSConcurrent = 8; }//9.scan concrete slab, ActivityManager.GetComponent<ActivityManagerScript>().select_9();
         if (MultiLaserScan == false)
         {
             if (SelectedActivities[9] == true)
@@ -558,7 +586,7 @@ public class MenuManager : MonoBehaviour
                 foreach (int key in InterpretLUT2(9))
                 {
                     if (ExeList[key].Contains("Laser Scanner") && ExeList[key].Contains("Stockpile 1"))
-                    { ActivityManager.GetComponent<ActivityManagerScript>().select_10A(); }
+                    {  LSConcurrent = 9; } //ActivityManager.GetComponent<ActivityManagerScript>().select_10A();
                 }
             }
         }
@@ -569,12 +597,12 @@ public class MenuManager : MonoBehaviour
                 foreach (int key in InterpretLUT2(9))
                 {
                     if (ExeList[key].Contains("Laser Scanner") && ExeList[key].Contains("Stockpile 2"))
-                    { ActivityManager.GetComponent<ActivityManagerScript>().select_10B(); }
+                    {  LSConcurrent = 10; }//ActivityManager.GetComponent<ActivityManagerScript>().select_10B();
                 }
             }
         }
 
-        //11. Old House LS 
+        //11. Old House LS only
         if (MultiLaserScan == false)
         {
             if (SelectedActivities[10] == true)
@@ -582,18 +610,19 @@ public class MenuManager : MonoBehaviour
                 foreach (int key in InterpretLUT2(10))
                 {
                     if (ExeList[key].Contains("Laser Scanner") && !ExeList[key].Contains("Drone") && ExeList[key].Contains("Old Building"))
-                    { ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser(); }
+                    {  LSConcurrent = 11; }//ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser();
                 }
             }
         }
 
-        //11. Old house drone
+        //11. Old house drone only
         if (SelectedActivities[10] == true)
         {
             foreach (int key in InterpretLUT2(10))
             {
-                if (ExeList[10].Contains("Drone") == true && !ExeList[10].Contains("Laser Scanner") && ExeList[10].Contains("Old Building"))
-                { ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone(); }
+                if (ExeList[key].Contains("Drone") == true && !ExeList[key].Contains("Laser Scanner") && ExeList[key].Contains("Old Building") && !MultiDroneBlock)
+                //{ ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone(); DConcurrent = 10; }
+                {  DConcurrent = 10; }
             }
         }
 
@@ -604,11 +633,12 @@ public class MenuManager : MonoBehaviour
         {
             foreach (int key in InterpretLUT2(10))
             {
-                if (ExeList[10].Contains("Drone") == true && ExeList[10].Contains("Laser Scanner") && ExeList[10].Contains("Old Building"))
+                if (ExeList[key].Contains("Drone") == true && ExeList[key].Contains("Laser Scanner") && ExeList[key].Contains("Old Building") && !MultiDroneBlock)
                 {
-                    OpenChoiceDialogSmall();
-                    if (A11Drone) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
-                    if (A11LS) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser();
+                    //OpenChoiceDialogSmall();
+                    //if (A11Drone) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
+                    //if (A11LS) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser();
+                    LSConcurrent = 11; DConcurrent = 10;
                 }
             }
         }
@@ -618,8 +648,9 @@ public class MenuManager : MonoBehaviour
         {
             foreach (int key in InterpretLUT2(11))
             {
-                if (ExeList[key].Contains("Drone") && ExeList[key].Contains("Jobsite"))
-                { ActivityManager.GetComponent<ActivityManagerScript>().select_12(); }
+                if (ExeList[key].Contains("Drone") && ExeList[key].Contains("Jobsite") && !MultiDroneBlock)
+                //{ ActivityManager.GetComponent<ActivityManagerScript>().select_12(); DConcurrent = 11; }
+                {  DConcurrent = 11; }
             }
         }
 
@@ -646,10 +677,29 @@ public class MenuManager : MonoBehaviour
                 }      
             }
         }
-        
+
+
+        //check for LS and Drone concurrency
+        if (LSConcurrent != 0 && DConcurrent != 0)
+        {
+            //has concurrent seleciton, activate canvas
+            ConcurrentSelectionMenu.SetActive(true);
+            ConcurrencyOccurred = true;
+        }
+        else
+        { //no concurrent selection, execute individually, equal to previous implementation
+            if (LSConcurrent == 7) ActivityManager.GetComponent<ActivityManagerScript>().select_8();
+            if (LSConcurrent == 8) ActivityManager.GetComponent<ActivityManagerScript>().select_9();
+            if (LSConcurrent == 9) ActivityManager.GetComponent<ActivityManagerScript>().select_10A();
+            if (LSConcurrent == 10) ActivityManager.GetComponent<ActivityManagerScript>().select_10B();
+            if (LSConcurrent == 11) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser();
+            if (DConcurrent == 10) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
+            if (DConcurrent == 11) ActivityManager.GetComponent<ActivityManagerScript>().select_12();
+        }
+
         //Acitivity Idrection Indicator
         ActivityIndicator();
-        //SelectButton.SetActive(false);
+        SelectButton.SetActive(false);
         StopButtonObj.SetActive(true);
     }
 
@@ -822,19 +872,21 @@ public class MenuManager : MonoBehaviour
         IMUReportEnable = false;
         IMUReportCanvas.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().A13_stop();
-
+        mainUICollection.SetActive(true);
     }
 
     public void StopRFID()
     {
         RFIDReportEnable = false;
         RFIDReportCanvas.SetActive(false);
+        mainUICollection.SetActive(true);
     }
 
     public void StopGPS()
     {
         GPSReportEnable = false;
         GPSReportCanvas.SetActive(false);
+        mainUICollection.SetActive(true);
     }
 
     private void ActivityIndicator()
@@ -1140,8 +1192,6 @@ public class MenuManager : MonoBehaviour
     //Resources Confirm
     public void R_Confirm()
     {
-        //CheckSensorsResources();
-
         bool pass = false;//Flag to check sensors againest resources.
 
         //Check Sensors Resources.
@@ -1233,7 +1283,6 @@ public class MenuManager : MonoBehaviour
         if (pass)
         {
             //add current combo to execution command list.
-            //TODO
             //Record new Combo command
             UpdateLUT2();
 
@@ -1269,61 +1318,6 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    /*
-    public void CheckSensorsResources()
-    {
-        bool pass = false;
-
-        //Check Sensors Resources.
-        // Which activity, correct sensor (don't need all, already determined in previouys step), correct resources?
-        //A1+GPS[0]+1.dozer
-        if (CurrentActivitySelection == 0 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Dozer")) pass = true;
-        //A2+GPS+2.load
-        if (CurrentActivitySelection == 1 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Load")) pass = true;
-        //A3+GPS+truck
-        if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Truck")) pass = true;
-        //A3+RFID+Rebar
-        if (CurrentActivitySelection == 2 && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "Rebar")) pass = true;
-        //A3+(GPS&&RFID)+(truck&&rebar)
-        if (CurrentActivitySelection == 2 && (SelectedSensors[0] == true && SelectedSensors[1] == true) && (Array.Exists(SelectedResources, element => element == "Truck") && Array.Exists(SelectedResources, element => element == "Rebar"))) pass = true;
-        //A4+GPS/RFID+worker
-        if (CurrentActivitySelection == 3 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && Array.Exists(SelectedResources, element => element == "Worker 1")) pass = true;
-        //A5+GPS+loader/truck
-        if (CurrentActivitySelection == 4 && SelectedSensors[0] == true && (Array.Exists(SelectedResources, element => element == "Loader")) || Array.Exists(SelectedResources, element => element == "Dumptruck")) pass = true;
-        //A6+RFID+WLR
-        if (CurrentActivitySelection == 5 && SelectedSensors[1] == true && (Array.Exists(SelectedResources, element => element == "Wood") || Array.Exists(SelectedResources, element => element == "Log") || Array.Exists(SelectedResources, element => element == "Rebar"))) pass = true;
-        //A7+(GPS||RFID)&&(w1w2w3)
-        if (CurrentActivitySelection == 6 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && (Array.Exists(SelectedResources, element => element == "Worker 1") || Array.Exists(SelectedResources, element => element == "Worker 2") || Array.Exists(SelectedResources, element => element == "Worker 3"))) pass = true;
-        //A8+LS
-        if (CurrentActivitySelection == 7 && SelectedSensors[2] == true ) pass = true;
-        //A9+LS
-        if (CurrentActivitySelection == 8 && SelectedSensors[2] == true ) pass = true;
-        //A10+LS+(only 1 stockpile at a time)
-        if (CurrentActivitySelection == 9 && SelectedSensors[2] == true && (Array.Exists(SelectedResources, element => element == "Stockpile 1") && !Array.Exists(SelectedResources, element => element == "Stockpile 2"))) pass = true;
-        //A11+LS/Drone+old house
-        if (CurrentActivitySelection == 10 && (SelectedSensors[2] == true || SelectedSensors[3] == true) && Array.Exists(SelectedResources, element => element == "Old Building")) pass = true;
-        //A12+drone+jobsite
-        if (CurrentActivitySelection == 11 && SelectedSensors[3] == true && Array.Exists(SelectedResources, element => element == "Jobsite")) pass = true;
-        //A13+IMU+w1w2w3w4
-        if (CurrentActivitySelection == 12 && SelectedSensors[4] == true && (Array.Exists(SelectedResources, element => element == "Painter") || Array.Exists(SelectedResources, element => element == "Laborer") || Array.Exists(SelectedResources, element => element == "Carpenter 1") || Array.Exists(SelectedResources, element => element == "Carpenter 2"))) pass = true;
-
-        if (pass)
-        {
-            //Dropdown 3 active.
-            //Mdropdown3.GetComponent<Button>().interactable = false;
-            //Record current Combo
-
-            //UpdateComboList();
-        }
-        //else
-        //{
-            //dialogue warning
-           // Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning",
-           //     "Wrong resources selected for this sensor, Please correct your selection!", false);
-            //reset selection
-        //}
-    }
-    */
 
     //Find next active activity, or out of bound.
     public void NextActivityButton()
@@ -1349,35 +1343,6 @@ public class MenuManager : MonoBehaviour
             S_confirm_button.SetActive(true);//sensor confirm button enabled
             R_confirm_button.SetActive(true);//Resource confirm button
         }
-
-        
-        
-
-
-        /*
-        //Find next active activity.
-        //If out of bound, exit.
-        for (int i = CurrentActivitySelection + 1 ; i < 14; ++i)
-        {
-            if (i == 13) // 12 is last Activity element. 13 is boundary condition.
-            {
-                SelectButton.SetActive(true);
-                Debug.Log("Finished configuration. Can execute.");
-                CurrentConfigurationBool = false;
-                break;
-            }
-            if (SelectedActivities[i] == true)
-            {
-                CurrentActivitySelection = i;
-                Mdropdown2.GetComponent<Button>().interactable = true;
-                Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(false);
-                break;
-            }
-
-        }
-
-        //NAButton.SetActive(false);
-        */
     }
 
 
@@ -1443,29 +1408,43 @@ public class MenuManager : MonoBehaviour
                 ComboEntry.Add(Mdropdown3.dropdownItems[i].itemName);
             }
         }
-        
-        //test display current activity i
-        //Debug.Log("Current Activity Selection: " + CurrentActivitySelection);
-        
-        //test display combo entry
-        //foreach (var x in ComboEntry)
-        //{
-        //    Debug.Log("ComboEntry List: "+x.ToString());
-        //}
-
         //Add current ComboEntry to completed ComboList
         ComboList.Add(CurrentActivitySelection, ComboEntry);
-
-       
-        //Display current result
-        //for (int j = 0; j < ComboList.Count; j++)
-        //{
-         //   Debug.Log(String.Format("Key: {0}, Value: {1}", ComboList.ElementAt(j).Key, string.Join(", ", ComboList.ElementAt(j).Value)));
-        //}
-
     }
 
+    public void DroneConc()
+    {
+        ConcurrentSelectionMenu.SetActive(false);
+        ConcurrentSelection = 1;
+        if (DConcurrent == 10) ActivityManager.GetComponent<ActivityManagerScript>().select_11Drone();
+        if (DConcurrent == 11) ActivityManager.GetComponent<ActivityManagerScript>().select_12();
+    }
 
+    public void LSConc()
+    {
+        ConcurrentSelectionMenu.SetActive(false);
+        ConcurrentSelection = 2;
+        if (LSConcurrent == 7) ActivityManager.GetComponent<ActivityManagerScript>().select_8();
+        if (LSConcurrent == 8) ActivityManager.GetComponent<ActivityManagerScript>().select_9();
+        if (LSConcurrent == 9) ActivityManager.GetComponent<ActivityManagerScript>().select_10A();
+        if (LSConcurrent == 10) ActivityManager.GetComponent<ActivityManagerScript>().select_10B();
+        if (LSConcurrent == 11) ActivityManager.GetComponent<ActivityManagerScript>().select_11Laser();
+    }
+
+    public void ConcurrencyResidualExe()
+    {
+        if (ConcurrentSelection == 1)
+        {
+            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Reminder",   "You finished using drone, now we switch to Laser Scanner.", false);
+            LSConc();//ConcSelec = 1 means drone conc already executed, now we need to execute residual LSConc()
+        } 
+        else 
+        {
+            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Reminder", "You finished using Laser Scanner, now we switch to Drone.", false);
+            DroneConc();//vice versa
+        }
+
+    }
     #endregion
 
     //----------------------------------------------------------
@@ -1486,7 +1465,7 @@ public class MenuManager : MonoBehaviour
     public void StopButton()
     {
         //reset all sensors
-        ActivityManager.GetComponent<ActivityManagerScript>().sensorSelected();
+        //ActivityManager.GetComponent<ActivityManagerScript>().sensorSelected();
         //stop all activities.
         ActivityManager.GetComponent<ActivityManagerScript>().stopALL();
     }

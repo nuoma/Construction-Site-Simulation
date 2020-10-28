@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Microsoft.MixedReality.Toolkit.UI;
 
 public class droneScript : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class droneScript : MonoBehaviour
     [HideInInspector] public bool motor = false;
 
     // Start is called before the first frame update
-    public void start()
+    public void Start()
     {
         //tasksCanvas.enabled = false;
         //droneCanvas.SetActive(true);
@@ -41,6 +42,7 @@ public class droneScript : MonoBehaviour
         //droneCamera.gameObject.SetActive(false);
         //this.gameObject.SetActive(false);
         //Debug.Log("drone start flag");
+        flyButton.GetComponent<Button>().interactable = false;
     }
 
     // Update is called once per frame
@@ -79,23 +81,31 @@ public class droneScript : MonoBehaviour
     //Start Drone
     public void powerOn()
     {
-        power = true;
+        if (power)
+        { power = false; flyButton.GetComponent<Button>().interactable = false; }
+        else
+        { power = true; }
+
     }
 
     public void enginesOn()
     {
-        if(power)
+        if(motor)
+        { motor = false; }
+        else
+        { motor = true; }
+
+        if (power && motor)
         {
             GetComponent<Animator>().SetBool("fly", true);
-            motor = true;
-
-            
             ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
             colorVar.highlightedColor = new Color32(138, 255, 114, 255);
             colorVar.pressedColor = new Color32(17, 101, 0, 255);
             flyButton.GetComponent<Button>().colors = colorVar;
-            
+            flyButton.GetComponent<Button>().interactable = true;
         }
+        else
+        { flyButton.GetComponent<Button>().interactable = false; }
     }
 
 
@@ -114,6 +124,35 @@ public class droneScript : MonoBehaviour
         }
     }
 
+    public void verticalMoveMRTK(SliderEventData newValue)
+    {
+        float VValuePost = 2 * newValue.NewValue - 1.0f;
+        if (VValuePost > 0.15 || VValuePost < -0.15)
+            verticalMultiplier = VValuePost;
+        else
+            verticalMultiplier = 0;
+    }
+
+    public void horizontalMoveMRTK(SliderEventData newValue)
+    {
+        float HValuePost = 2 * newValue.NewValue - 1.0f;
+        if (HValuePost > 0.15 || HValuePost < -0.15)
+            horizontalMultiplier = HValuePost;
+        else
+            horizontalMultiplier = 0;
+    }
+
+    public void rotationMoveMRTK(SliderEventData newValue)
+    {
+        float RValuePost = 2 * newValue.NewValue - 1.0f;
+        if (RValuePost > 0.15 || RValuePost < -0.15)
+            rotationMultiplier = RValuePost;
+        else
+            rotationMultiplier = 0;
+    }
+
+
+    /*
     public void verticalMove(Slider newValue)
     {
         if(newValue.value > 0.15 || newValue.value < -0.15)
@@ -135,7 +174,7 @@ public class droneScript : MonoBehaviour
         else
             rotationMultiplier = 0;
     }
-
+    */
     public void stop()
     {
         startRot = false;
