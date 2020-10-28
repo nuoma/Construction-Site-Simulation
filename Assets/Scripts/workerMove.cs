@@ -45,6 +45,10 @@ public class workerMove : MonoBehaviour
 
     public void start()
     {
+
+        enable = true;
+        workerAnimator.SetBool("moving", true);
+        /*
         if (enable)
         {
             workerAnimator.SetBool("moving", false);
@@ -55,6 +59,7 @@ public class workerMove : MonoBehaviour
             workerAnimator.SetBool("moving", true);
             enable = true;
         }
+        */
     }
 
     public void stop()

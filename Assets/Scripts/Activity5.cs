@@ -255,7 +255,7 @@ public class Activity5 : MonoBehaviour
             _DumptruckVC.AccelerationInput = 0;
             yield return new WaitForSeconds(3);
 
-            float Step4bDuration = Time.time + 4f;
+            float Step4bDuration = Time.time + 6f;
             while (Time.time < Step4bDuration)
             {
                 _DumptruckController.MoveDumpBed(-1);

@@ -6,7 +6,7 @@ public class Arrow : MonoBehaviour
 {
     private Color m_green = new Color(0f, 1f, 0f, 0.5f);
     public bool rotate = true;
-    public bool bounce = true;
+    public bool bounce = false;
 
     // Start is called before the first frame update
     void Start()

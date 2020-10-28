@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class scanMenuScript : MonoBehaviour
 {
@@ -14,23 +15,30 @@ public class scanMenuScript : MonoBehaviour
     [SerializeField] private GameObject TargetsMenu;
     [SerializeField] private GameObject scanner;
     [SerializeField] private GameObject backButton;
+    [SerializeField] private GameObject resetButton;
     [SerializeField] private GameObject[] targets;
     [SerializeField] private GameObject tripodScripts;
     [SerializeField] private GameObject SelectionPrompt;
     [SerializeField] private float[] scannerMove = new float[3];
+    [SerializeField] public GameObject ScannerInterfaceButton;
 
     string p1;
     string p2;
     string p3;
     string p4;
     bool targetsEnabled = false;
+    bool targetsMoved = false;
     bool tripodLevel = false;
     Renderer[][] targetRenderers = new Renderer[3][];
 
     void Start()
     {
+
+        ScannerInterfaceButton.GetComponent<Button>().interactable = false;
+
         tripodMenu.SetActive(false);
         backButton.SetActive(false);
+        resetButton.SetActive(false);
         tripod.GetComponent<Renderer>().enabled = false;
         scanner.GetComponent<Renderer>().enabled = false;
         //scannerCanvas.GetComponent<Canvas>().enabled = false;
@@ -43,7 +51,7 @@ public class scanMenuScript : MonoBehaviour
                 r.enabled = false;
         }
 
-        scannerMenu.SetActive(false);
+        //scannerMenu.SetActive(false);
     }
 
     public void tripodSelected()
@@ -56,12 +64,13 @@ public class scanMenuScript : MonoBehaviour
         Vector3 newPosition = tripod.transform.position;
         mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
         backButton.SetActive(true);
-        mainMenu.GetComponent<Canvas>().enabled = false;
+        //mainMenu.GetComponent<Canvas>().enabled = false;
         mainMenu.SetActive(false);
     }
     public void levelTripod()
     {
         tripodLevel = true;
+        tripodMenu.SetActive(false);
     }
     public void scannerBodySelected()
     {
@@ -96,28 +105,30 @@ public class scanMenuScript : MonoBehaviour
     public void targetMove()
     {
         //show canvas, move camera to move targets
+        targetsMoved = true;
         TargetsMenu.SetActive(false);
         mainMenu.SetActive(false);
         Vector3 newPosition = tripod.transform.position;
         mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
         backButton.SetActive(true);
-        mainMenu.GetComponent<Canvas>().enabled = false;
+        //mainMenu.GetComponent<Canvas>().enabled = false;
     }
 
     public void scannerInterface()
     {
+        //this condition is now used to change button interactable.
         //if (tripod.GetComponent<Renderer>().enabled == true && scanner.GetComponent<Renderer>().enabled == true && targetsEnabled && tripodLevel)
-        //{
-            backButton.SetActive(true);
-            //scannerCanvas.GetComponent<Canvas>().enabled = true;
-            scannerCanvas.SetActive(true);// substitute above function.
-            
-            Vector3 newPosition = scanner.transform.position;
-            mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
-            
-            mainMenu.GetComponent<Canvas>().enabled = false;
-            scannerMenu.SetActive(false);
-        //}
+  
+        TargetsMenu.SetActive(false);
+        //backButton.SetActive(true);
+        resetButton.SetActive(true);
+        //scannerCanvas.GetComponent<Canvas>().enabled = true;
+        scannerCanvas.SetActive(true);// substitute above function.
+        Vector3 newPosition = scanner.transform.position;
+        mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
+        //mainMenu.GetComponent<Canvas>().enabled = false;
+        scannerMenu.SetActive(false);
+
     }
 
     private void Update()
@@ -132,5 +143,9 @@ public class scanMenuScript : MonoBehaviour
             p4 = "Tripod Levelled. ";
 
         SelectionPrompt.GetComponent<TextMeshProUGUI>().text = "Selected:" +  p1+p2+p3+p4;
+
+        if (tripod.GetComponent<Renderer>().enabled == true && scanner.GetComponent<Renderer>().enabled == true && targetsEnabled && tripodLevel && targetsMoved)
+        { ScannerInterfaceButton.GetComponent<Button>().interactable = true; }
+            
     }
 }
