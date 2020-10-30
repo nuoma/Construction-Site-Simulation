@@ -958,6 +958,8 @@ public class MenuManager : MonoBehaviour
     //Activities Confirm.
     public void A_Confirm()
     {
+        Mdropdown1.ForceClose();
+
         int TempActivityNumber = 0;
         RemainingActivityNumber = SelecedActivityNumber;
 
@@ -973,68 +975,65 @@ public class MenuManager : MonoBehaviour
             //Dropdown 2 active.
             Mdropdown2.GetComponent<Button>().interactable = true;
             Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(false);
-        }
 
-        //Find first active activity number
-        for (int j = 0; j < 13; ++j)
-        {
-            if (SelectedActivities[j] == true)
-            { CurrentActivitySelection = j; TempActivityNumber = j; break; }
-        }
-
-        //Debug.Log("A-confirm activity:" + CurrentActivitySelection);
-        Dropdown1ShowCurrentActivity = true;
-
-        //hide entire big canvas
-        mainUICollection.SetActive(false);
-        //activity selection panel
-        ActivitySelectionParentPanel.gameObject.SetActive(true);
-
-        //Build a array correspond i and activity number, since Activity selection is fixed, this only need to do once.
-        //LUT(Alias, actual activity number); e.g. LUT.Add(1,3);
-
-        //A_confirm button should not be used again.
-        A_confirm_button.SetActive(false);
-    
-        //instantiate activity selection panel
-        for (int i = 0; i < SelecedActivityNumber; i++)
-        {
-            GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3(0, i * -100, 0), Quaternion.identity) as GameObject;
-            string ButtonName = "ActivitySelection" +i;
-            goButton.name = ButtonName;
-            goButton.transform.SetParent(ActivitySelectionParentPanel, false);
-            Button tempButton = goButton.GetComponent<Button>();
-            int tempInt = i;
-            tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
-
-            //correspond alias i with active activity number
-            LUT.Add(i, TempActivityNumber);
-            tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
-
-            //First active activity is CurrentActivitySelection and TempActivityNumber.
-            //It has only been assigned at beginning = 0, then find first active activity.
-            //Because A_confirm button is designed to only press once, this execution order will be only executed once.
-            //After this initial add, TempActivityNumber will be changed to switch to next active activity.
-
-            //Find next active activity.
-            //If out of bound, exit.
-            for (int k = TempActivityNumber + 1; k < 14; ++k)
+            //Find first active activity number
+            for (int j = 0; j < 13; ++j)
             {
-                if (k == 13) // 12 is last Activity element. 13 is boundary condition.
-                {
-                    break;
-                }
-                if (SelectedActivities[k] == true)
-                {
-                    TempActivityNumber = k;
-                    break;
-                }
-
+                if (SelectedActivities[j] == true)
+                { CurrentActivitySelection = j; TempActivityNumber = j; break; }
             }
-            
-           
+
+            //Debug.Log("A-confirm activity:" + CurrentActivitySelection);
+            Dropdown1ShowCurrentActivity = true;
+
+            //hide entire big canvas
+            mainUICollection.SetActive(false);
+            //activity selection panel
+            ActivitySelectionParentPanel.gameObject.SetActive(true);
+
+            //Build a array correspond i and activity number, since Activity selection is fixed, this only need to do once.
+            //LUT(Alias, actual activity number); e.g. LUT.Add(1,3);
+
+            //A_confirm button should not be used again.
+            A_confirm_button.SetActive(false);
+
+            //instantiate activity selection panel
+            for (int i = 0; i < SelecedActivityNumber; i++)
+            {
+                GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3(0, i * -100, 0), Quaternion.identity) as GameObject;
+                string ButtonName = "ActivitySelection" + i;
+                goButton.name = ButtonName;
+                goButton.transform.SetParent(ActivitySelectionParentPanel, false);
+                Button tempButton = goButton.GetComponent<Button>();
+                int tempInt = i;
+                tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
+
+                //correspond alias i with active activity number
+                LUT.Add(i, TempActivityNumber);
+                tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
+
+                //First active activity is CurrentActivitySelection and TempActivityNumber.
+                //It has only been assigned at beginning = 0, then find first active activity.
+                //Because A_confirm button is designed to only press once, this execution order will be only executed once.
+                //After this initial add, TempActivityNumber will be changed to switch to next active activity.
+
+                //Find next active activity.
+                //If out of bound, exit.
+                for (int k = TempActivityNumber + 1; k < 14; ++k)
+                {
+                    if (k == 13) // 12 is last Activity element. 13 is boundary condition.
+                    {
+                        break;
+                    }
+                    if (SelectedActivities[k] == true)
+                    {
+                        TempActivityNumber = k;
+                        break;
+                    }
+                }
+            }
+            GameObject.Destroy(ActivitySelectionPrefabButton);
         }
-        GameObject.Destroy(ActivitySelectionPrefabButton);
     }
 
     //what is performed after click activity selection?
@@ -1221,24 +1220,18 @@ public class MenuManager : MonoBehaviour
         }
         //A3+RFID+truck
         if (CurrentActivitySelection == 2 && SelectedSensors[0] == false && SelectedSensors[1] == true && !Array.Exists(SelectedResources, element => element == "Rebar") && Array.Exists(SelectedResources, element => element == "Truck"))
-        {
-            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
-"Truck cannot be tagged with RFID.", false);
-        }
+        {Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning","Truck cannot be tagged with RFID.", false);}
         //A3+gps+rfid+truck, warning: select a resource for rfid
         if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "Truck") && !Array.Exists(SelectedResources, element => element == "Rebar")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
-       "Select a resource for GPS.", false);
+       "Select a resource for RFID.", false);
         //A3+gps+rfid+rebar, warning: select a resource for gps, vice versa.
         if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && !Array.Exists(SelectedResources, element => element == "Truck") && Array.Exists(SelectedResources, element => element == "Rebar")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
-"Select a resource for RFID.", false);
+"Select a resource for GPS.", false);
         //A3+(GPS&&RFID)+(truck&&rebar)
         if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && Array.Exists(SelectedResources, element => element == "Truck") && Array.Exists(SelectedResources, element => element == "Rebar")) { pass = true; }
         //A3+gps+rfid+none
         if (CurrentActivitySelection == 2 && SelectedSensors[0] == true && SelectedSensors[1] == true && !Array.Exists(SelectedResources, element => element == "Truck") && !Array.Exists(SelectedResources, element => element == "Rebar"))
-        {
-            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
-"Please select at least one resource.", false);
-        }
+        {Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning","Please select at least one resource.", false);}
 
         //A4+GPS/RFID+worker
         if (CurrentActivitySelection == 3 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && Array.Exists(SelectedResources, element => element == "Worker 1")) { pass = true; }
