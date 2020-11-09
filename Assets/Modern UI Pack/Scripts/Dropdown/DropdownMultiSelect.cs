@@ -323,11 +323,14 @@ namespace Michsky.UI.ModernUIPack
 
         public void ForceClose()
         {
+            //Animate();
+            
             if (isOn == true)
             {
                 Animate();
                 isOn = false;
             }
+            
             gameObject.transform.SetParent(currentListParent, true);
             gameObject.transform.SetSiblingIndex(siblingIndex);
             triggerObject.SetActive(false);

@@ -15,6 +15,8 @@ using Microsoft.MixedReality.Toolkit.Experimental.Dialog;
 public class MenuManager : MonoBehaviour
 {
     #region Parameters
+    [SerializeField] private GameObject HideShowButton;
+    [SerializeField] private GameObject ActivityResourcesNode;
     [SerializeField] private GameObject ConcurrentSelectionMenu; //LegacyMainMenu
     [SerializeField] private GameObject LegacyMainMenu; //LegacyMainMenu
     [SerializeField] private GameObject IMUReportCanvas;
@@ -106,6 +108,11 @@ public class MenuManager : MonoBehaviour
     private int ConcurrentSelection;
     public bool ConcurrencySignal;
     private bool ConcurrencyOccurred;
+
+    private bool showhidetoggle = false; //true means hide
+
+    public GameObject SensorParentNode;
+
     #endregion
 
     //----------------------------------------------------------
@@ -115,6 +122,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
 
+        HideShowButton.SetActive(false);
         //create activity list
         CreateActivityDropdown();
         //create sensors list
@@ -359,7 +367,7 @@ public class MenuManager : MonoBehaviour
 
         //Add items according to different activities
         if (SelectedActivities[0] == true) ResourcesList.AddRange(new string[] { "Dozer", "Stockpile" });//1
-        if (SelectedActivities[1] == true) ResourcesList.AddRange(new string[] { "Crane", "Load" });//2
+        if (SelectedActivities[1] == true) ResourcesList.AddRange(new string[] { "Crane", "Steel Beam" });//2
         if (SelectedActivities[2] == true) ResourcesList.AddRange(new string[] { "Truck", "Rebar" });
         if (SelectedActivities[3] == true) ResourcesList.AddRange(new string[] { "Worker 1" });
         if (SelectedActivities[4] == true) ResourcesList.AddRange(new string[] { "Loader", "Dumptruck", "Stockpile" });
@@ -382,7 +390,7 @@ public class MenuManager : MonoBehaviour
 
         //Add items according to different activities
         if (CurrentActivitySelection == 0) ResourcesList.AddRange(new string[] { "Dozer", "Stockpile" });//1
-        if (CurrentActivitySelection == 1) ResourcesList.AddRange(new string[] { "Crane", "Load" });//2
+        if (CurrentActivitySelection == 1) ResourcesList.AddRange(new string[] { "Crane", "Steel Beam" });//2
         if (CurrentActivitySelection == 2) ResourcesList.AddRange(new string[] { "Truck", "Rebar" });
         if (CurrentActivitySelection == 3) ResourcesList.AddRange(new string[] { "Worker 1" });
         if (CurrentActivitySelection == 4) ResourcesList.AddRange(new string[] { "Loader", "Dumptruck", "Stockpile" });
@@ -419,6 +427,8 @@ public class MenuManager : MonoBehaviour
     //10/20/2020 changing implementation due to per sensor resource selection will invalidate previous dictionary based implementation.
     public void Select()
     {
+        HideShowButton.SetActive(true);
+
         bool Drone1 = false;
         bool Drone2 = false;
         bool MultiDroneBlock = false;
@@ -464,7 +474,7 @@ public class MenuManager : MonoBehaviour
         {
             foreach (int key in InterpretLUT2(1))
             {
-                if (ExeList[key].Contains("GPS") && ExeList[key].Contains("Load"))
+                if (ExeList[key].Contains("GPS") && ExeList[key].Contains("Steel Beam"))
                 { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS(); }// 2.Load GPS
             }
         }
@@ -937,7 +947,7 @@ public class MenuManager : MonoBehaviour
     }
 
     // Activate chevron, give location, and keep it active for 5 seconds.
-    IEnumerator ShowAndHide(GameObject go, string name, float delay)
+    public IEnumerator ShowAndHide(GameObject go, string name, float delay)
     {
         go.GetComponent<DirectionalIndicator>().DirectionalTarget = GameObject.Find(name).transform;
         go.SetActive(true);
@@ -970,7 +980,7 @@ public class MenuManager : MonoBehaviour
         if (!MultiLaserScan)
         {
             //Dropdown 1 inactive.
-            Mdropdown1.GetComponent<Button>().interactable = false;
+            //Mdropdown1.GetComponent<Button>().interactable = false;
             //Mdropdown1.transform.Find("DisablePanel").gameObject.SetActive(true);
             //Dropdown 2 active.
             Mdropdown2.GetComponent<Button>().interactable = true;
@@ -987,7 +997,7 @@ public class MenuManager : MonoBehaviour
             Dropdown1ShowCurrentActivity = true;
 
             //hide entire big canvas
-            mainUICollection.SetActive(false);
+            //mainUICollection.SetActive(false);
             //activity selection panel
             ActivitySelectionParentPanel.gameObject.SetActive(true);
 
@@ -1033,6 +1043,12 @@ public class MenuManager : MonoBehaviour
                 }
             }
             GameObject.Destroy(ActivitySelectionPrefabButton);
+
+            //close canvas and disble button
+            //If added, then dropdown does not retract.
+            //mainUICollection.SetActive(false);
+            //Mdropdown1.GetComponent<Button>().interactable = false;
+            
         }
     }
 
@@ -1070,6 +1086,7 @@ public class MenuManager : MonoBehaviour
     //Sensor Confirm.
     public void S_Confirm()
     {
+        Mdropdown2.ForceClose();
         CheckActivitySensors();
 
         //update resources list for CurrentActivitySelection
@@ -1191,6 +1208,7 @@ public class MenuManager : MonoBehaviour
     //Resources Confirm
     public void R_Confirm()
     {
+        Mdropdown3.ForceClose();
         bool pass = false;//Flag to check sensors againest resources.
 
         //Check Sensors Resources.
@@ -1200,7 +1218,7 @@ public class MenuManager : MonoBehaviour
         else { if(CurrentActivitySelection == 0 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Stockpile")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
         "Stockpile cannot be used with GPS", false);}
         //A2+GPS+2.load
-        if (CurrentActivitySelection == 1 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Load") && !Array.Exists(SelectedResources, element => element == "Crane")) { pass = true; }
+        if (CurrentActivitySelection == 1 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Steel Beam") && !Array.Exists(SelectedResources, element => element == "Crane")) { pass = true; }
         else
         {
             if (CurrentActivitySelection == 1 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Crane")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
@@ -1282,7 +1300,9 @@ public class MenuManager : MonoBehaviour
             //find next active sensor. If not, show NA.
             for (int i = CurrentSensorConfig + 1; i < 6; ++i)
             {
-                if (i == 5) // 4 is last sensor, 5 is boundary condition.
+                // 4 is last sensor, 5 is boundary condition.
+                //If selected activity is not 1, show NA button. 
+                if (i == 5 && SelecedActivityNumber != 1) 
                 {
                     R_confirm_button.SetActive(false);
                     ShowComboBool = true;//show combo selection panel
@@ -1291,24 +1311,24 @@ public class MenuManager : MonoBehaviour
                     //Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(true);
                     break;
                 }
+                //If selected activity is 1, don't show NA button, show select button. 
+                if (i == 5 && SelecedActivityNumber == 1)
+                {
+                    R_confirm_button.SetActive(false);
+                    ShowComboBool = true;//show combo selection panel
+                    //NAButton.SetActive(true); //boundary condition show next activity button.      
+                    Mdropdown3.GetComponent<Button>().interactable = false;//Dropdown 3 set inactive.
+                    //Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(true);
+                    SelectButton.SetActive(true);
+                    break;
+                }
                 if (SelectedSensors[i] == true)
                 {
                     CurrentSensorConfig = i; //currently configuring resource for sensor i
                     break;
                 }
-
             }
-
-            //Dropdown 3 active.
-            //Mdropdown3.GetComponent<Button>().interactable = false;
-
-            //Record current Combo
-            //UpdateComboList();
-
-            
         }
-
-
     }
 
 
@@ -1443,6 +1463,63 @@ public class MenuManager : MonoBehaviour
     //----------------------------------------------------------
 
     #region Other small functions
+
+    /// <summary>
+    /// Show and hide button function, true means hide
+    /// </summary>
+    /// 
+    public void ShowHide()
+    {
+        GameObject building = Everything.transform.Find("SceneContent").transform.Find("Construction Site").transform.Find("buildings").transform.Find("building-6").gameObject;
+        GameObject LS = SensorParentNode.transform.Find("laserScanner").gameObject;
+        GameObject MDrone = SensorParentNode.transform.Find("Drone").gameObject;
+
+        if (showhidetoggle)
+        {
+            //already hidden, now show everything.
+            showhidetoggle = false;
+            mainUICollection.SetActive(true);
+            building.SetActive(true);//building 6 special case
+            LS.SetActive(true);
+            MDrone.SetActive(true);
+            foreach (Transform child in ActivityResourcesNode.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            //bool is false, set to true and hide everything
+            showhidetoggle = true;
+            mainUICollection.SetActive(false);
+            building.SetActive(false);
+            LS.SetActive(false);
+            MDrone.SetActive(false);
+            foreach (Transform child in ActivityResourcesNode.transform)
+            {
+                child.gameObject.SetActive(false);
+            }
+
+            if (SelectedActivities[0] == true) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(true); }
+            if (SelectedActivities[1] == true) { ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(true); building.SetActive(true); }
+            if (SelectedActivities[2] == true) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(true); }
+            if (SelectedActivities[3] == true) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(true); building.SetActive(true); }
+            if (SelectedActivities[4] == true) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(true); }
+            if (SelectedActivities[5] == true) { ActivityResourcesNode.transform.Find("Activity6").gameObject.SetActive(true); }
+            if (SelectedActivities[6] == true) { ActivityResourcesNode.transform.Find("Activity7").gameObject.SetActive(true); }
+            if (SelectedActivities[7] == true) { ActivityResourcesNode.transform.Find("Activity8").gameObject.SetActive(true); LS.SetActive(true); }
+            if (SelectedActivities[8] == true) { ActivityResourcesNode.transform.Find("Activity9").gameObject.SetActive(true); building.SetActive(true); LS.SetActive(true); }
+            if (SelectedActivities[9] == true) { ActivityResourcesNode.transform.Find("Activity11A").gameObject.SetActive(true); ActivityResourcesNode.transform.Find("Activity11B").gameObject.SetActive(true); LS.SetActive(true); }
+            if (SelectedActivities[10] == true) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(true); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(true); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(true); LS.SetActive(true); MDrone.SetActive(true); }
+            if (SelectedActivities[11] == true) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(true); MDrone.SetActive(true); }
+            if (SelectedActivities[12] == true) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(true); }
+        }
+        
+        
+    }
+
+
+
     //Activate legacy menu upon selection.
     public void SelectLegacyMenu()
     {

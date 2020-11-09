@@ -29,7 +29,7 @@ public class GenericGPS : MonoBehaviour
     {
         if (GGPSToggle)
         {
-            GGPSConent = "GPS Position of: " + gameObject.name + ", x: " + transform.position.x + " y: " + transform.position.y + " z: " + transform.position.z + "\n";
+            GGPSConent = gameObject.name+ " coordinates: " + " x: " + transform.position.x + ". y: " + transform.position.y + ". z: " + transform.position.z + "\n";
             //Debug.Log(GGPSConent);
         }
 
