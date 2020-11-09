@@ -29,6 +29,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject NAButton;
     public GameObject ActivityManager;
 
+    public GameObject VisualBlock;
     public DropdownMultiSelect Mdropdown1;// single selection activity
     public DropdownMultiSelect Mdropdown2;// sensors
     public DropdownMultiSelect Mdropdown3;// resources
@@ -82,9 +83,9 @@ public class MenuManager : MonoBehaviour
 
     private int CurrentActivitySelection;
 
-    [SerializeField]
-    [Tooltip("Assign DialogSmall_192x96.prefab")]
-    private GameObject dialogPrefabSmall;
+    [SerializeField][Tooltip("Assign DialogSmall_192x96.prefab")] private GameObject dialogPrefabSmall;
+    [SerializeField] [Tooltip("Assign DialogMedium_192x128.prefab")] private GameObject dialogPrefabMedium;
+
 
     private int CurrentSensorConfig;
 
@@ -151,6 +152,7 @@ public class MenuManager : MonoBehaviour
         ActivitySelectionParentPanel.gameObject.SetActive(false);
 
         ConcurrentSelectionMenu.SetActive(false);
+        VisualBlock.SetActive(false);
     }
 
 
@@ -1006,7 +1008,7 @@ public class MenuManager : MonoBehaviour
 
             //A_confirm button should not be used again.
             A_confirm_button.SetActive(false);
-
+            VisualBlock.SetActive(true);
             //instantiate activity selection panel
             for (int i = 0; i < SelecedActivityNumber; i++)
             {
@@ -1043,21 +1045,23 @@ public class MenuManager : MonoBehaviour
                 }
             }
             GameObject.Destroy(ActivitySelectionPrefabButton);
-
+           
             //close canvas and disble button
             //If added, then dropdown does not retract.
             //mainUICollection.SetActive(false);
             //Mdropdown1.GetComponent<Button>().interactable = false;
-            
+
         }
     }
 
+ 
     //what is performed after click activity selection?
     private void ButtonClicked(int buttonNo)
     {
         //Debug.Log("Button clicked = " + buttonNo);
         //which activity is selected, and give value to CurrentActivitySelection.
-
+        VisualBlock.SetActive(false);
+        Mdropdown1.GetComponent<Button>().interactable = false;
         //Activate main menu
         mainUICollection.SetActive(true);
         
@@ -1177,33 +1181,38 @@ public class MenuManager : MonoBehaviour
     }
 
             private void GPSWarning() {
-                Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Please correct your sensor selection!",
+                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
         "GPS: Uses satellite signals to locate tagged objects or people.", false);
             }
 
             private void RFIDWarning()
             {
-                Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Please correct your sensor selection!",
+                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
         "\n\n RFID employs radio waves to collect information on tagged people, equipment or materials through an electronic reader", false);
             }
 
             private void LSWarning()
             {
-                Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Please correct your sensor selection!",
+                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
         "\n\n\n\n Laser scanner: uses deflection of laser beams to capture images of assigned locations.", false);
             }
 
             private void DroneWarning()
             {
-                Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Please correct your sensor selection!g",
+                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!g",
         "\n\n\n\n\n\n Drone: is an unmanned aircraft remote controlled by an operator for capturing images and videos", false);
             }
 
             private void IMUWarning()
             {
-                Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Please correct your sensor selection!",
+                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
         "\n\n\n\n\n\n\n\n IMU: consists of accelerometers and gyroscopes for measuring the rotation and acceleration of different body part.", false);
             }
+
+    private void InstantiateWarningDialog()
+    {
+
+    }
 
     //Resources Confirm
     public void R_Confirm()
@@ -1347,6 +1356,7 @@ public class MenuManager : MonoBehaviour
         else
         {
             //has more activity to show
+            VisualBlock.SetActive(true);
             //show activity selection canvas.
             ActivitySelectionParentPanel.gameObject.SetActive(true);
             //hide itself, and main canvas

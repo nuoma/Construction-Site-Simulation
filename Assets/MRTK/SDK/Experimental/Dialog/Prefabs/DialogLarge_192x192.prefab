@@ -702,7 +702,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8451469530216736246}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4684083f6dff4a1d8a790bccc354fcf4, type: 3}
   m_Name: 
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8451469530216736246}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14c3d8a4208d4b649529822e217623d4, type: 3}
   m_Name: 
@@ -771,7 +771,7 @@ MonoBehaviour:
   smoothing: 1
   lifetime: 0
   orientationType: 0
-  localOffset: {x: 0, y: 0, z: 4}
+  localOffset: {x: 0, y: 0, z: 3}
   worldOffset: {x: 0, y: 0, z: 0}
   useAngleStepping: 0
   tetherAngleSteps: 6

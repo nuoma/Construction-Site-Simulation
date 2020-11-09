@@ -57,7 +57,7 @@ public class Activity3Truck : MonoBehaviour
             // objects in truck should have tagged TruckActivity3
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag("TruckActivity3") as GameObject[];
             int LogNumber = objectsWithTag.Length;
-            A3RFID = "A3 New Material Delivery Truck Carrying:" + LogNumber + " Log.";
+            A3RFID = "RFID Report: \n Material Delivery Truck Carrying: \n" + LogNumber + " Log.";
             //Activity3Report.SetActive(true);
             //Debug.Log("did it output?" + LogNumber);
             //Activity3Report.GetComponent<TextMeshPro>().text = "Truck Carry Log:" + LogNumber;
