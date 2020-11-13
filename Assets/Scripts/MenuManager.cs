@@ -113,6 +113,9 @@ public class MenuManager : MonoBehaviour
     private bool showhidetoggle = false; //true means hide
 
     public GameObject SensorParentNode;
+    public GameObject MiscAssetNode;
+
+    public string SensorWarningString;
 
     #endregion
 
@@ -1119,6 +1122,7 @@ public class MenuManager : MonoBehaviour
             Debug.Log("Selected sensor:" + SelectedSensors[j]);
         }
 
+        SensorWarningString = ""; //Empty
 
         //A1+GPS[0]
         if (CurrentActivitySelection == 0 && SelectedSensors[0] == true && SelectedSensors[1] == false && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
@@ -1171,47 +1175,54 @@ public class MenuManager : MonoBehaviour
             Mdropdown3.GetComponent<Button>().interactable = true;
             Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(false);
         }
+        else
+            InstantiateWarningDialog();
         //else
         //{
-            //dialogue warning
-            //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning",
-             //   "Wrong sensor selected for this activity, Please correct your selection!", false);
-            //reset selection
+        //dialogue warning
+        //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning",
+        //   "Wrong sensor selected for this activity, Please correct your selection!", false);
+        //reset selection
         //}
     }
 
             private void GPSWarning() {
-                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
-        "GPS: Uses satellite signals to locate tagged objects or people.", false);
+        // Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
+        //"GPS: Uses satellite signals to locate tagged objects or people.", false);
+        SensorWarningString = SensorWarningString + "GPS: Uses satellite signals to locate tagged objects or people. \n" ;
             }
 
             private void RFIDWarning()
             {
-                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
-        "\n\n RFID employs radio waves to collect information on tagged people, equipment or materials through an electronic reader", false);
+        //Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
+        // "\n\n RFID employs radio waves to collect information on tagged people, equipment or materials through an electronic reader", false);
+        SensorWarningString = SensorWarningString + "RFID employs radio waves to collect information on tagged people, equipment or materials through an electronic reader. \n";
             }
 
             private void LSWarning()
             {
-                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
-        "\n\n\n\n Laser scanner: uses deflection of laser beams to capture images of assigned locations.", false);
+        //Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
+        // "\n\n\n\n Laser scanner: uses deflection of laser beams to capture images of assigned locations.", false);
+        SensorWarningString = SensorWarningString + "Laser scanner: uses deflection of laser beams to capture images of assigned locations. \n";
             }
 
             private void DroneWarning()
             {
-                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!g",
-        "\n\n\n\n\n\n Drone: is an unmanned aircraft remote controlled by an operator for capturing images and videos", false);
+        //Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!g",
+        // "\n\n\n\n\n\n Drone: is an unmanned aircraft remote controlled by an operator for capturing images and videos", false);
+        SensorWarningString = SensorWarningString + "Drone: is an unmanned aircraft remote controlled by an operator for capturing images and videos. \n";
             }
 
             private void IMUWarning()
             {
-                Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
-        "\n\n\n\n\n\n\n\n IMU: consists of accelerometers and gyroscopes for measuring the rotation and acceleration of different body part.", false);
+        //Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Please correct your sensor selection!",
+        //"\n\n\n\n\n\n\n\n IMU: consists of accelerometers and gyroscopes for measuring the rotation and acceleration of different body part.", false);
+        SensorWarningString = SensorWarningString + "IMU: consists of accelerometers and gyroscopes for measuring the rotation and acceleration of different body part. \n";
             }
 
     private void InstantiateWarningDialog()
     {
-
+            Dialog.Open(dialogPrefabMedium, DialogButtonType.OK, "Wrong sensor selection!", SensorWarningString, false);
     }
 
     //Resources Confirm
@@ -1263,10 +1274,9 @@ public class MenuManager : MonoBehaviour
         //A4+GPS/RFID+worker
         if (CurrentActivitySelection == 3 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && Array.Exists(SelectedResources, element => element == "Worker 1")) { pass = true; }
         //A5+GPS+loader/truck
-        if (CurrentActivitySelection == 4 && SelectedSensors[0] == true && (Array.Exists(SelectedResources, element => element == "Loader")) || Array.Exists(SelectedResources, element => element == "Dumptruck") && !Array.Exists(SelectedResources, element => element == "Stockpile")) { pass = true; }
-        else { if(CurrentActivitySelection == 4 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Stockpile")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
- "GPS cannot be tagged on stockpile.", false);
-        }
+        if (CurrentActivitySelection == 4 && SelectedSensors[0] == true && (Array.Exists(SelectedResources, element => element == "Loader") || Array.Exists(SelectedResources, element => element == "Dumptruck")) && !Array.Exists(SelectedResources, element => element == "Stockpile")) { pass = true; }
+        if(CurrentActivitySelection == 4 && SelectedSensors[0] == true && Array.Exists(SelectedResources, element => element == "Stockpile")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning","GPS cannot be tagged on stockpile.", false);
+        
         //A6+RFID+WLR
         if (CurrentActivitySelection == 5 && SelectedSensors[1] == true && (Array.Exists(SelectedResources, element => element == "Wood") || Array.Exists(SelectedResources, element => element == "Log") || Array.Exists(SelectedResources, element => element == "Rebar"))) { pass = true; }
         else { if(CurrentActivitySelection == 5 && SelectedSensors[1] == true && !Array.Exists(SelectedResources, element => element == "Wood") && !Array.Exists(SelectedResources, element => element == "Log") && !Array.Exists(SelectedResources, element => element == "Rebar")) Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Resources Warning",
@@ -1486,10 +1496,10 @@ public class MenuManager : MonoBehaviour
 
         if (showhidetoggle)
         {
-            //already hidden, now show everything.
+            //Currently in hidden state, now show everything.
             showhidetoggle = false;
             mainUICollection.SetActive(true);
-            building.SetActive(true);//building 6 special case
+            building.SetActive(true);//building-6 special case shared by multiple activities
             LS.SetActive(true);
             MDrone.SetActive(true);
             foreach (Transform child in ActivityResourcesNode.transform)
@@ -1500,29 +1510,46 @@ public class MenuManager : MonoBehaviour
         else
         {
             //bool is false, set to true and hide everything
+            //Switch to hide in-active assets.
             showhidetoggle = true;
             mainUICollection.SetActive(false);
-            building.SetActive(false);
-            LS.SetActive(false);
-            MDrone.SetActive(false);
-            foreach (Transform child in ActivityResourcesNode.transform)
+            MiscAssetNode.SetActive(false);
+            //building.SetActive(false); //building-6 relate to these activities:
+            //LS.SetActive(false);
+            //MDrone.SetActive(false);
+
+
+            //if(false) {turn off;}
+            if (!SelectedActivities[0]) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(false); }
+            if (!SelectedActivities[1]) { ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false); }
+            if (!SelectedActivities[2]) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(false); }
+            if (!SelectedActivities[3]) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(false); }
+            if (!SelectedActivities[4]) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(false); }
+            if (!SelectedActivities[5]) { ActivityResourcesNode.transform.Find("Activity6").gameObject.SetActive(false); }
+            if (!SelectedActivities[6]) { ActivityResourcesNode.transform.Find("Activity7").gameObject.SetActive(false); }
+            if (!SelectedActivities[7]) { ActivityResourcesNode.transform.Find("Activity8").gameObject.SetActive(false); }
+            if (!SelectedActivities[8]) { ActivityResourcesNode.transform.Find("Activity9").gameObject.SetActive(false); }
+            if (!SelectedActivities[9]) { ActivityResourcesNode.transform.Find("Activity11A").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity11B").gameObject.SetActive(false);  }
+            if (!SelectedActivities[10]) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(false);   }
+            if (!SelectedActivities[11]) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(false);  }
+            if (!SelectedActivities[12]) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(false); }
+
+            //building-6 check
+            if (!SelectedActivities[1] && !SelectedActivities[3] && !SelectedActivities[8])
             {
-                child.gameObject.SetActive(false);
+                building.SetActive(false);
             }
 
-            if (SelectedActivities[0] == true) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(true); }
-            if (SelectedActivities[1] == true) { ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(true); building.SetActive(true); }
-            if (SelectedActivities[2] == true) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(true); }
-            if (SelectedActivities[3] == true) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(true); building.SetActive(true); }
-            if (SelectedActivities[4] == true) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(true); }
-            if (SelectedActivities[5] == true) { ActivityResourcesNode.transform.Find("Activity6").gameObject.SetActive(true); }
-            if (SelectedActivities[6] == true) { ActivityResourcesNode.transform.Find("Activity7").gameObject.SetActive(true); }
-            if (SelectedActivities[7] == true) { ActivityResourcesNode.transform.Find("Activity8").gameObject.SetActive(true); LS.SetActive(true); }
-            if (SelectedActivities[8] == true) { ActivityResourcesNode.transform.Find("Activity9").gameObject.SetActive(true); building.SetActive(true); LS.SetActive(true); }
-            if (SelectedActivities[9] == true) { ActivityResourcesNode.transform.Find("Activity11A").gameObject.SetActive(true); ActivityResourcesNode.transform.Find("Activity11B").gameObject.SetActive(true); LS.SetActive(true); }
-            if (SelectedActivities[10] == true) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(true); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(true); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(true); LS.SetActive(true); MDrone.SetActive(true); }
-            if (SelectedActivities[11] == true) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(true); MDrone.SetActive(true); }
-            if (SelectedActivities[12] == true) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(true); }
+            //LS check
+            if (!SelectedActivities[7] && !SelectedActivities[8] && !SelectedActivities[9] && !SelectedActivities[10])
+            {
+                LS.SetActive(false);
+            }
+            //Drone check
+            if (!SelectedActivities[10] && !SelectedActivities[11])
+            {
+                MDrone.SetActive(false);
+            }
         }
         
         

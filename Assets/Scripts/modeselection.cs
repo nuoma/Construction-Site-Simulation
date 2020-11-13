@@ -24,6 +24,8 @@ public class modeselection : MonoBehaviour
     {
         ManualCanvas.SetActive(true);
         gameObject.SetActive(false);
+        ManualCanvas.GetComponent<ManualSelection>().SetInteractablesFalse();
+        ManualCanvas.GetComponent<ManualSelection>().SetCubeFalse();
     }
     // Update is called once per frame
     void Update()

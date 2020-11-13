@@ -1,16 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Microsoft.MixedReality.Toolkit.Experimental.Dialog;
 
 public class ManualClickSelect : MonoBehaviour
 {
     public GameObject ManualSelectionCode;
-    public GameObject A1DozerFlag;
+    public GameObject TagFlag;
+    public bool Taggable;
+    [SerializeField] [Tooltip("Assign DialogSmall_192x96.prefab")] private GameObject DialogPrefabSmall;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        A1DozerFlag.SetActive(false);
+        TagFlag.SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,8 +33,16 @@ public class ManualClickSelect : MonoBehaviour
 
     public void ClickAction()
     {
-        Debug.Log("Clicked on"+gameObject.name);
-        A1DozerFlag.SetActive(true);
-        ManualSelectionCode.GetComponent<ManualSelection>().ResourceTaggedBool = true;
+        if (Taggable)//taggable
+        {
+            Debug.Log("Clicked on" + gameObject.name);
+            TagFlag.SetActive(true);
+            ManualSelectionCode.GetComponent<ManualSelection>().ResourceTaggedBool = true;
+        }
+        else //not taggable
+        {
+            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", false);
+        }
+
     }
 }

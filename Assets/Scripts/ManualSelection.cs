@@ -22,7 +22,6 @@ public class ManualSelection : MonoBehaviour
     private GameObject dialogPrefabSmall;
     [SerializeField] private GameObject PointingChevron;
 
-    public GameObject A1Dozer;
     public GameObject RunButton;
     public GameObject ManualSelectionListPanel;
     public GameObject UIMenuManager;
@@ -41,26 +40,69 @@ public class ManualSelection : MonoBehaviour
 
     private bool onSensorChanged;
     public bool ResourceTaggedBool = false;
+
+    public GameObject A1Dozer;
+    public GameObject A1Stockpile;
+    public GameObject A2Crane;
+    public GameObject A2SteelBeam;
+    public GameObject A3Truck;
+    public GameObject A3Rebar;
+    public GameObject A4Worker1;
+    public GameObject A5Loader;
+    public GameObject A5DumpTruck;
+    public GameObject A5Stockpile;
+    public GameObject A6wood;
+    public GameObject A6log;
+    public GameObject A6rebar;
+    public GameObject A7worker1;
+    public GameObject A7worker2;
+    public GameObject A7worker3;
+
+
+
     #endregion
 
     #region Start Update
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         //create sensors list
         CreateActivityInitialDropdown();
         CreateSensorsDropdown();
+
+        SetInteractablesFalse();
+        SetCubeFalse();
+
         TagButton.SetActive(false);
         ManualSelectionListPanel.SetActive(false);
         RunButton.SetActive(false);
-        //A1Dozer.GetComponent<BoundingBox>().gameObject.SetActive(false);
+
+
+    }
+
+    public void SetInteractablesFalse()
+    {
+        //set interactable to false
+        A1Dozer.GetComponent<Interactable>().IsEnabled = false;
+        A1Stockpile.GetComponent<Interactable>().IsEnabled = false;
+        A2Crane.GetComponent<Interactable>().IsEnabled = false;
+        A2SteelBeam.GetComponent<Interactable>().IsEnabled = false;
+        A4Worker1.GetComponent<Interactable>().IsEnabled = false;
+    }
+
+    public void SetCubeFalse()
+    {
+        //set cube to inactive.
+        A1Dozer.transform.Find("Cube").gameObject.SetActive(false);
+        A1Stockpile.transform.Find("Cube").gameObject.SetActive(false);
+        A2SteelBeam.transform.Find("Cube").gameObject.SetActive(false);
+        A2Crane.transform.Find("Cube").gameObject.SetActive(false);
+        A4Worker1.transform.Find("Cube").gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //UpdateSensorSelected();
-
         if (onSensorChanged)
         {
             UpdateActivityList();
@@ -69,7 +111,6 @@ public class ManualSelection : MonoBehaviour
             onSensorChanged = false;
         }
 
-        //UpdateActivitySelected();
         //after selection is made, activate run button.
         if (ResourceTaggedBool == true)
         { RunButton.SetActive(true); ResourceTaggedBool = false; }
@@ -105,17 +146,14 @@ public class ManualSelection : MonoBehaviour
         //Debug.Log("Dropdown Value Changed : " + dropdown.selectedItemIndex);
         //for (int i = 0; i < 5; ++i){ SelectedSensors[i] = false; }
         //SelectedSensors[dropdown.selectedItemIndex] = true;
-        SelectedSensorIndex = dropdown.selectedItemIndex;
+        SelectedSensorIndex = dropdown.selectedItemIndex - 1;
         onSensorChanged = true;
     }
 
     void DropdownValueChangedActivity(CustomDropdown dropdown)
     {
-        //Debug.Log("Dropdown Value Changed : " + dropdown.selectedItemIndex);
-        //for (int i = 0; i < 12; ++i) { SelectedActivity[i] = false; }
-        //SelectedActivity[dropdown.selectedItemIndex] = true;
-        SelectedActivityIndex = dropdown.selectedItemIndex;
-        Debug.Log("Dropdown 2 value change:"+dropdown.selectedItemIndex);
+        SelectedActivityIndex = dropdown.selectedItemIndex - 1;
+        //Debug.Log("Dropdown 2 value change:"+dropdown.selectedItemIndex);
         TagButton.SetActive(true);
     }
 
@@ -165,11 +203,6 @@ public class ManualSelection : MonoBehaviour
 
     private void CreateActivitiesDropdown()
     {
-        
-         foreach(var human in ActivityList)
-        {
-            Debug.Log(human);
-        }
         //Create using updated ResourcesList
         foreach (string option in ActivityList)
         {
@@ -181,29 +214,45 @@ public class ManualSelection : MonoBehaviour
 
     public void TagButtonAction()
     {
-        Debug.Log("Final selection:");
-
+        //SelectedActivityIndex to ActualActivityNumber.
         LUT();
-        //disable canvas
-        //ERROR: cannot be disabled due to coroutine.
-        //gameObject.SetActive(false);
-
-        //which activity is selected?
-        //SelectedActivityIndex
 
         //pointing arrow
         ActivityIndicator();
 
-        UpdateResourceText();
-       
         //activate canvas that shows a list of resources.
+        UpdateResourceText();
         ManualSelectionListPanel.SetActive(true);
 
-        //activate corresponding resources bbox
-        A1Dozer.GetComponent<BoundingBox>().gameObject.SetActive(true);
+        Debug.Log("Actual Activity Number: "+ActualActivityNumber);
 
-       
-        
+        //Turn on interactable and box according to activity.
+        if (ActualActivityNumber == 1)
+        {
+            A1Dozer.GetComponent<Interactable>().IsEnabled = true;
+            A1Stockpile.GetComponent<Interactable>().IsEnabled = true;
+            A1Dozer.transform.Find("Cube").gameObject.SetActive(true);
+            A1Stockpile.transform.Find("Cube").gameObject.SetActive(true);
+        }
+        if (ActualActivityNumber == 2)
+        {
+            A2Crane.GetComponent<Interactable>().IsEnabled = true;
+            A2SteelBeam.GetComponent<Interactable>().IsEnabled = true;
+            A2Crane.transform.Find("Cube").gameObject.SetActive(true);
+            A2SteelBeam.transform.Find("Cube").gameObject.SetActive(true);
+        }
+        if (ActualActivityNumber == 3)
+        { }
+        if (ActualActivityNumber == 4)
+        {
+            A4Worker1.transform.Find("Cube").gameObject.SetActive(true);
+            A4Worker1.GetComponent<Interactable>().IsEnabled = true;
+        }
+        if (ActualActivityNumber == 5)
+        { }
+
+        //.GetComponent<Interactable>().IsEnabled = true;
+        //.transform.Find("Cube").gameObject.SetActive(true);
     }
 
     //List resources correspond to selected activity.
@@ -237,21 +286,29 @@ public class ManualSelection : MonoBehaviour
         gameObject.SetActive(false);
         ManualSelectionListPanel.SetActive(false);
 
+        //Turn off all interactable
+        SetInteractablesFalse();
+
+        //Turn off all box
+        SetCubeFalse();
+
         //execute command
-        if (ActualActivityNumber == 1) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1();
-        if (ActualActivityNumber == 2) ;
+        if (ActualActivityNumber == 1)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1();
+        }
+
+        if (ActualActivityNumber == 2) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2(); 
+        if (ActualActivityNumber == 3) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3(); 
+        if (ActualActivityNumber == 4) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_4();
+        if (ActualActivityNumber == 5) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5(); 
     }
 
     private void ActivityIndicator()
     {
-
         string name = "A" + ActualActivityNumber + "POS";
-        //TODO: this index is very very wrong!!!! needs LUT.
-
-        //Activate Chevron and live for 5 seconds.
-        //UIMenuManager.GetComponent<MenuManager>().ShowAndHide(PointingChevron, name, 8.0f);
+        //Activate Chevron and live for 10 seconds.
         StartCoroutine(ShowAndHide(PointingChevron, name, 10.0f));
-
     }
 
     // Activate chevron, give location, and keep it active for 5 seconds.
@@ -269,7 +326,6 @@ public class ManualSelection : MonoBehaviour
     private void UpdateActivityList()
     {
         ActivityList.Clear();
-        Debug.Log("Activity list updated");
         //Activity correspond to GPS
         if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Activities","Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
              "Detecting Fall" }); }
@@ -285,8 +341,6 @@ public class ManualSelection : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
-
-    //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Confirmation Dialog, Small, Far", "This is an example of a small dialog with only one button, placed at near interaction range", false);
-
+    
     #endregion
 }

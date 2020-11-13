@@ -469,6 +469,7 @@ public class ActivityManagerScript : MonoBehaviour
         //switchTag(Activity12Laser); //Activate laser position arrow
         //Activity12Canvas.SetActive(false);
         //sensorSelected();
+        mainCamera.transform.position = Activity12_MDroneCameraLocator.transform.position;//4, move camera.
         MainUI.SetActive(false);
         Vector3 ScannerPosition = Activity12Laser.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
@@ -481,6 +482,7 @@ public class ActivityManagerScript : MonoBehaviour
         //switchTag(Activity12Drone);
         //Activity12Canvas.SetActive(false);
         //sensorSelected();
+        mainCamera.transform.position = Activity12_MDroneCameraLocator.transform.position;//4, move camera.
         MainUI.SetActive(false);
         Activity12_DroneCanvas.SetActive(true);
         //Start the drone and automatically fly around building
@@ -606,7 +608,7 @@ public class ActivityManagerScript : MonoBehaviour
         Activity12_DroneCanvas.SetActive(false);
         drone.SetActive(true);//2, activate drone.
         drone.transform.position = Activity12_DroneLocator.transform.position; //3, move drone to locator position.
-        //mainCamera.transform.position = Activity12_MDroneCameraLocator.transform.position;//4, move camera.
+        mainCamera.transform.position = Activity12_MDroneCameraLocator.transform.position;//4, move camera.
         //GetComponent<Canvas>().enabled = false; //1, Disable main menu canvas.
         ManualDroneBackButton.SetActive(true);//Backbutton active
         droneCanvas.SetActive(true);//Drone canvas active
