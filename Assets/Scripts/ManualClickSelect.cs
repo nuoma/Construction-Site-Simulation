@@ -8,6 +8,7 @@ public class ManualClickSelect : MonoBehaviour
     public GameObject ManualSelectionCode;
     public GameObject TagFlag;
     public bool Taggable;
+    public bool TagStatus = false;
     [SerializeField] [Tooltip("Assign DialogSmall_192x96.prefab")] private GameObject DialogPrefabSmall;
 
 
@@ -35,9 +36,23 @@ public class ManualClickSelect : MonoBehaviour
     {
         if (Taggable)//taggable
         {
-            Debug.Log("Clicked on" + gameObject.name);
-            TagFlag.SetActive(true);
-            ManualSelectionCode.GetComponent<ManualSelection>().ResourceTaggedBool = true;
+            if (TagStatus)
+            {
+                //Already tagged, toggle off
+                Debug.Log("Cancel selection on: " + gameObject.name);
+                TagFlag.SetActive(false);
+                //ManualSelectionCode.GetComponent<ManualSelection>().ResourceTaggedBool = false;
+                TagStatus = false;
+            }
+            else
+            {
+                //Not tagged, toggle on
+                Debug.Log("Clicked on: " + gameObject.name);
+                TagFlag.SetActive(true);
+                ManualSelectionCode.GetComponent<ManualSelection>().ResourceTaggedBool = true;
+                TagStatus = true;
+            }
+            
         }
         else //not taggable
         {

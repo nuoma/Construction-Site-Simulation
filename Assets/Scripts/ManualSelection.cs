@@ -63,7 +63,18 @@ public class ManualSelection : MonoBehaviour
     public GameObject A13Carpenter;
     public GameObject A13Carpenter2;
 
-
+    private bool RFIDReportEnable;
+    private bool GPSReportEnable;
+    private bool IMUReportEnable;
+    private string GPSReportString;
+    private string RFIDReportString;
+    private string IMUReportString;
+    public TextMeshProUGUI GPSReportText;
+    public TextMeshProUGUI RFIDReportText;
+    public TextMeshProUGUI IMUReportText;
+    [SerializeField] private GameObject IMUReportCanvas;
+    [SerializeField] private GameObject GPSReportCanvas;
+    [SerializeField] private GameObject RFIDReportCanvas;
     #endregion
 
     #region Start Update
@@ -148,12 +159,74 @@ public class ManualSelection : MonoBehaviour
         //after selection is made, activate run button.
         if (ResourceTaggedBool == true)
         { RunButton.SetActive(true); ResourceTaggedBool = false; }
+        //if (ResourceTaggedBool == false)
+        //{ RunButton.SetActive(false);}
+
+        //display results
+        //Display Report Panels
+        if (GPSReportEnable)
+        {
+            GPSReportCanvas.SetActive(true);
+            //GPS reporting function
+            PrepareGPSString();
+            GPSReportText.GetComponent<TextMeshProUGUI>().text = GPSReportString;
+        }
+
+
+        if (RFIDReportEnable)
+        {
+            RFIDReportCanvas.SetActive(true);
+            //RFID reporting function
+            PrepareRFIDString();
+            RFIDReportText.GetComponent<TextMeshProUGUI>().text = RFIDReportString;
+        }
+
+        if (IMUReportEnable)
+        {
+            //IMU reporting function
+            IMUReportCanvas.SetActive(true);
+            PrepareIMUString();
+            IMUReportText.GetComponent<TextMeshProUGUI>().text = IMUReportString;
+        }
     }
     #endregion
 
 
     #region supporting functions
+    private void PrepareGPSString()
+    {
+        // Debug.Log("TEST PASS PARAM"+ ActivityManager.GetComponent<ActivityManagerScript>().A1_Dozer_GPS);
+        GPSReportString = "";
+        GPSReportString = ActivityManagerScript.GetComponent<ActivityManagerScript>().A1_Dozer_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A2_Load_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A3_Truck_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A5_Loader_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A5_Dumptruck_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A4_worker_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w1_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w2_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w3_GPS;
+    }
 
+    //this is mainly for A6, original RFID
+    private void PrepareRFIDString()
+    {
+        RFIDReportString = "";
+        RFIDReportString = ActivityManagerScript.GetComponent<ActivityManagerScript>().A6_Wood_RFID
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A6_Log_RFID
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A6_Rebar_RFID
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A3RFID;
+    }
+
+    //A13 IMU
+    private void PrepareIMUString()
+    {
+        IMUReportString = "";
+        IMUReportString = ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_c1_report
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_c2_report
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_l_report
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_p_report;
+    }
     private void CreateSensorsDropdown()//Dropdown 1
     {
         SensorsList = new List<string> { "Sensors","GPS", "RFID", "Laser Scanner", "Drone", "IMU" };
@@ -376,16 +449,122 @@ public class ManualSelection : MonoBehaviour
         SetCubeFalse();
 
         //execute command
-        if (ActualActivityNumber == 1)
+        ExecuteActivity();
+        
+    }
+
+    private void ExecuteActivity()
+    {
+        
+        //A1 + GPS
+        if (SelectedSensorIndex == 0 && ActualActivityNumber == 1)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1();
+            GPSReportEnable = true; 
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1_Dozer_GPS(); 
         }
 
-        if (ActualActivityNumber == 2) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2(); 
-        if (ActualActivityNumber == 3) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3(); 
-        if (ActualActivityNumber == 4) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_4();
-        if (ActualActivityNumber == 5) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5(); 
+        //A2 + GPS
+        if (ActualActivityNumber == 2 && SelectedSensorIndex == 0)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2();
+            GPSReportEnable = true;
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS();
+        }
+
+        //A3 + GPS/RFID
+        if (ActualActivityNumber == 3)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3();
+            if(A3Truck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 0)
+            { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3_truck_GPS(); }
+            if (A3Truck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
+            { RFIDReportEnable = true; }// 3.Rebar RFID
+        } 
+
+        //A4
+        if (ActualActivityNumber == 4)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_4(); 
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2(); //Crane move
+            //GPS
+            if(A4Worker1.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 0)
+            { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_4worker_gps(); }
+            //RFID
+            if (A4Worker1.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }
+        } 
+
+        //A5 Load and haul
+        if (ActualActivityNumber == 5)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5();
+            if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true) 
+            { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_dumptruck_GPS(); }
+            if(A5Loader.GetComponent<ManualClickSelect>().TagStatus == true) 
+            { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }
+        }
+        
+        //A6. RFID
+        if (ActualActivityNumber == 6)
+        {
+            if (A6wood.GetComponent<ManualClickSelect>().TagStatus == true) ActivityManagerScript.GetComponent<ActivityManagerScript>().A6_wood_flag = true;
+            if (A6log.GetComponent<ManualClickSelect>().TagStatus == true) ActivityManagerScript.GetComponent<ActivityManagerScript>().A6_log_flag = true;
+            if (A6rebar.GetComponent<ManualClickSelect>().TagStatus == true) ActivityManagerScript.GetComponent<ActivityManagerScript>().A6_rebar_flag = true;
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().A6_RFID();
+            RFIDReportEnable = true;
+        }
+
+            //A7.Workers on top floor + RFID / GPS
+            if (ActualActivityNumber == 7)
+        {
+            if (A7worker1.GetComponent<ManualClickSelect>().TagStatus == true) ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w1_flag = true;
+            if (A7worker2.GetComponent<ManualClickSelect>().TagStatus == true) ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w2_flag = true;
+            if (A7worker3.GetComponent<ManualClickSelect>().TagStatus == true) ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w3_flag = true;
+            //Run basic activity: danger zone red box. Based on worker selection bool.
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_7_new();
+            //GPS only
+            if (SelectedSensorIndex == 0) { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_7_GPS(); }
+            //RFID only
+            if (SelectedSensorIndex == 1) { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_7_RFID(); }
+        }
+
+        //A8 scan part of building
+        if (ActualActivityNumber == 8) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_8();
+
+        //A9 scan concrete slab
+        if (ActualActivityNumber == 9) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_9();
+
+        //A10 scan stockpile, random pick between 10A 10B.
+        if (ActualActivityNumber == 10) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_10A();
+
+        //A11 old bldg LS
+        if (ActualActivityNumber == 11 && SelectedSensorIndex == 2) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_11Laser();
+
+        //A11 old bldg drone
+        if (ActualActivityNumber == 11 && SelectedSensorIndex == 3) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_11Drone();
+
+        //A12 drone
+        if (ActualActivityNumber == 12 && SelectedSensorIndex == 3) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_12(); 
+
+        //A13 IMU, dont need to specify sensor, because A13 is only reachable by selecting IMU in the first place.
+        if (ActualActivityNumber == 13 && SelectedSensorIndex == 4)
+        {
+            if (A13Painter.GetComponent<ManualClickSelect>().TagStatus == true)
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_painter = true; }
+            if (A13Laborer.GetComponent<ManualClickSelect>().TagStatus == true)
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_laborer = true; }
+            if (A13Carpenter.GetComponent<ManualClickSelect>().TagStatus == true)
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_c1 = true; }
+            if (A13Carpenter2.GetComponent<ManualClickSelect>().TagStatus == true)
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_c2 = true; }
+            //With given worker bool, get IMU string, handle finish file write use backselected()
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_13_new();
+            //display IMU
+            IMUReportEnable = true;
+        }
     }
+
 
     private void ActivityIndicator()
     {
