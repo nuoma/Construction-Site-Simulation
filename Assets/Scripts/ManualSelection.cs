@@ -27,6 +27,7 @@ public class ManualSelection : MonoBehaviour
     public GameObject UIMenuManager;
     public GameObject ActivityManagerScript;
     public GameObject TagButton;
+    public GameObject ResetButton;
 
     public CustomDropdown Dropdown1;
     public CustomDropdown Dropdown2;
@@ -57,7 +58,10 @@ public class ManualSelection : MonoBehaviour
     public GameObject A7worker1;
     public GameObject A7worker2;
     public GameObject A7worker3;
-
+    public GameObject A13Painter;
+    public GameObject A13Laborer;
+    public GameObject A13Carpenter;
+    public GameObject A13Carpenter2;
 
 
     #endregion
@@ -76,7 +80,7 @@ public class ManualSelection : MonoBehaviour
         TagButton.SetActive(false);
         ManualSelectionListPanel.SetActive(false);
         RunButton.SetActive(false);
-
+        ResetButton.SetActive(false);
 
     }
 
@@ -87,7 +91,22 @@ public class ManualSelection : MonoBehaviour
         A1Stockpile.GetComponent<Interactable>().IsEnabled = false;
         A2Crane.GetComponent<Interactable>().IsEnabled = false;
         A2SteelBeam.GetComponent<Interactable>().IsEnabled = false;
+        A3Truck.GetComponent<Interactable>().IsEnabled = false;
+        A3Rebar.GetComponent<Interactable>().IsEnabled = false;
         A4Worker1.GetComponent<Interactable>().IsEnabled = false;
+        A5Stockpile.GetComponent<Interactable>().IsEnabled = false;
+        A5Loader.GetComponent<Interactable>().IsEnabled = false;
+        A5DumpTruck.GetComponent<Interactable>().IsEnabled = false;
+        A6log.GetComponent<Interactable>().IsEnabled = false;
+        A6rebar.GetComponent<Interactable>().IsEnabled = false;
+        A6wood.GetComponent<Interactable>().IsEnabled = false;
+        A7worker1.GetComponent<Interactable>().IsEnabled = false;
+        A7worker2.GetComponent<Interactable>().IsEnabled = false;
+        A7worker3.GetComponent<Interactable>().IsEnabled = false;
+        A13Painter.GetComponent<Interactable>().IsEnabled = false;
+        A13Laborer.GetComponent<Interactable>().IsEnabled = false;
+        A13Carpenter.GetComponent<Interactable>().IsEnabled = false;
+        A13Carpenter2.GetComponent<Interactable>().IsEnabled = false;
     }
 
     public void SetCubeFalse()
@@ -97,7 +116,22 @@ public class ManualSelection : MonoBehaviour
         A1Stockpile.transform.Find("Cube").gameObject.SetActive(false);
         A2SteelBeam.transform.Find("Cube").gameObject.SetActive(false);
         A2Crane.transform.Find("Cube").gameObject.SetActive(false);
+        A3Rebar.transform.Find("Cube").gameObject.SetActive(false);
+        A3Truck.transform.Find("Cube").gameObject.SetActive(false);
         A4Worker1.transform.Find("Cube").gameObject.SetActive(false);
+        A5DumpTruck.transform.Find("Cube").gameObject.SetActive(false);
+        A5Loader.transform.Find("Cube").gameObject.SetActive(false);
+        A5Stockpile.transform.Find("Cube").gameObject.SetActive(false);
+        A6wood.transform.Find("Cube").gameObject.SetActive(false);
+        A6rebar.transform.Find("Cube").gameObject.SetActive(false);
+        A6log.transform.Find("Cube").gameObject.SetActive(false);
+        A7worker1.transform.Find("Cube").gameObject.SetActive(false);
+        A7worker2.transform.Find("Cube").gameObject.SetActive(false);
+        A7worker3.transform.Find("Cube").gameObject.SetActive(false);
+        A13Painter.transform.Find("Cube").gameObject.SetActive(false);
+        A13Laborer.transform.Find("Cube").gameObject.SetActive(false);
+        A13Carpenter.transform.Find("Cube").gameObject.SetActive(false);
+        A13Carpenter2.transform.Find("Cube").gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -242,17 +276,64 @@ public class ManualSelection : MonoBehaviour
             A2SteelBeam.transform.Find("Cube").gameObject.SetActive(true);
         }
         if (ActualActivityNumber == 3)
-        { }
+        { 
+            A3Rebar.transform.Find("Cube").gameObject.SetActive(true);
+            A3Rebar.GetComponent<Interactable>().IsEnabled = true;
+            A3Truck.transform.Find("Cube").gameObject.SetActive(true);
+            A3Truck.GetComponent<Interactable>().IsEnabled = true;
+        }
         if (ActualActivityNumber == 4)
         {
             A4Worker1.transform.Find("Cube").gameObject.SetActive(true);
             A4Worker1.GetComponent<Interactable>().IsEnabled = true;
         }
         if (ActualActivityNumber == 5)
-        { }
+        { 
+            A5DumpTruck.GetComponent<Interactable>().IsEnabled = true;
+            A5DumpTruck.transform.Find("Cube").gameObject.SetActive(true);
+            A5Loader.GetComponent<Interactable>().IsEnabled = true;
+            A5Loader.transform.Find("Cube").gameObject.SetActive(true);
+            A5Stockpile.GetComponent<Interactable>().IsEnabled = true;
+            A5Stockpile.transform.Find("Cube").gameObject.SetActive(true);
+        }
+        if (ActualActivityNumber == 6)
+        {
+            A6log.GetComponent<Interactable>().IsEnabled = true;
+            A6log.transform.Find("Cube").gameObject.SetActive(true);
+            A6rebar.GetComponent<Interactable>().IsEnabled = true;
+            A6rebar.transform.Find("Cube").gameObject.SetActive(true);
+            A6wood.GetComponent<Interactable>().IsEnabled = true;
+            A6wood.transform.Find("Cube").gameObject.SetActive(true);
+        }
+        if (ActualActivityNumber == 7)
+        { 
+            A7worker1.GetComponent<Interactable>().IsEnabled = true;
+            A7worker1.transform.Find("Cube").gameObject.SetActive(true);
+            A7worker2.GetComponent<Interactable>().IsEnabled = true;
+            A7worker2.transform.Find("Cube").gameObject.SetActive(true);
+            A7worker3.GetComponent<Interactable>().IsEnabled = true;
+            A7worker3.transform.Find("Cube").gameObject.SetActive(true);
+        }
 
-        //.GetComponent<Interactable>().IsEnabled = true;
-        //.transform.Find("Cube").gameObject.SetActive(true);
+        //Skip for LS and Drone
+        if (ActualActivityNumber == 8) RunButton.SetActive(true);
+        if (ActualActivityNumber == 9) RunButton.SetActive(true);
+        if (ActualActivityNumber == 10) RunButton.SetActive(true);
+        if (ActualActivityNumber == 11) RunButton.SetActive(true);
+        if (ActualActivityNumber == 12) RunButton.SetActive(true);
+
+        //Worker IMU
+        if (ActualActivityNumber == 13)
+        {
+            A13Painter.GetComponent<Interactable>().IsEnabled = true;
+            A13Painter.transform.Find("Cube").gameObject.SetActive(true);
+            A13Laborer.GetComponent<Interactable>().IsEnabled = true;
+            A13Laborer.transform.Find("Cube").gameObject.SetActive(true);
+            A13Carpenter.GetComponent<Interactable>().IsEnabled = true;
+            A13Carpenter.transform.Find("Cube").gameObject.SetActive(true);
+            A13Carpenter2.GetComponent<Interactable>().IsEnabled = true;
+            A13Carpenter2.transform.Find("Cube").gameObject.SetActive(true);
+        }
     }
 
     //List resources correspond to selected activity.
@@ -285,6 +366,8 @@ public class ManualSelection : MonoBehaviour
         //disable canvas
         gameObject.SetActive(false);
         ManualSelectionListPanel.SetActive(false);
+        //enable reset button
+        ResetButton.SetActive(true);
 
         //Turn off all interactable
         SetInteractablesFalse();

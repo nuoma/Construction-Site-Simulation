@@ -383,7 +383,7 @@ public class MenuManager : MonoBehaviour
         if (SelectedActivities[9] == true) ResourcesList.AddRange(new string[] { "Stockpile 1", "Stockpile 2" });//11
         if (SelectedActivities[10] == true) ResourcesList.AddRange(new string[] { "Old Building" });//12
         if (SelectedActivities[11] == true) ResourcesList.AddRange(new string[] { "Jobsite" });//13
-        if (SelectedActivities[12] == true) ResourcesList.AddRange(new string[] { "Painter", "Laborer", "arpenter 1", "Carpenter 2" });//14
+        if (SelectedActivities[12] == true) ResourcesList.AddRange(new string[] { "Painter", "Laborer", "Carpenter 1", "Carpenter 2" });//14
 
     }
 

@@ -10,14 +10,14 @@ public class Activity3Truck : MonoBehaviour
     [SerializeField] private float speed; //default 0.1
     [SerializeField] private float precision; //default 0.1
     [SerializeField] private Transform[] moveSpots;
-    [SerializeField] private GameObject Activity3Report;
 
     private bool enable = false;
     private int arrayPosition = 0;
-    public GameObject Truck; //manually fill in truck asset
+    public GameObject TruckParent; //manually fill in truck asset
+    public GameObject TruckArrow;
     private bool DisplayResults = false;
-    public string A3RFID;
 
+    [HideInInspector] public string A3RFID;
     [HideInInspector] public bool tagged = true;
     [HideInInspector] public int lapCount;
     #endregion
@@ -29,13 +29,13 @@ public class Activity3Truck : MonoBehaviour
         if (enable)
         {
             A3RFID = "Wait for truck to arrive.";
-            transform.position = Vector3.MoveTowards(transform.position, moveSpots[arrayPosition].position, speed * Time.deltaTime);
+            TruckParent.transform.position = Vector3.MoveTowards(TruckParent.transform.position, moveSpots[arrayPosition].position, speed * Time.deltaTime);
             //transform.position += transform.forward * Time.deltaTime * speed;
 
-            Quaternion lookDirection = Quaternion.LookRotation(transform.position - moveSpots[arrayPosition].position);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, lookDirection, 30* Time.deltaTime);
+            Quaternion lookDirection = Quaternion.LookRotation(moveSpots[arrayPosition].position - TruckParent.transform.position);
+            TruckParent.transform.rotation = Quaternion.RotateTowards(TruckParent.transform.rotation, lookDirection, 30* Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, moveSpots[arrayPosition].position) < precision)
+            if (Vector3.Distance(TruckParent.transform.position, moveSpots[arrayPosition].position) < precision)
             {
                 if (arrayPosition < moveSpots.Length - 1)
                 {
@@ -77,7 +77,7 @@ public class Activity3Truck : MonoBehaviour
             enable = true;
         }
 
-        Truck.transform.Find("Arrow").gameObject.SetActive(true);
+        TruckArrow.SetActive(true);
 
     }
 
@@ -85,7 +85,7 @@ public class Activity3Truck : MonoBehaviour
 
     public void stop_3()
     {
-        Truck.transform.Find("Arrow").gameObject.SetActive(false);
+        TruckArrow.SetActive(false);
     }
 
 }
