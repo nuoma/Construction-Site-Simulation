@@ -29,7 +29,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject NAButton;
     public GameObject ActivityManager;
 
-    public GameObject VisualBlock;
+    //public GameObject VisualBlock;
     public DropdownMultiSelect Mdropdown1;// single selection activity
     public DropdownMultiSelect Mdropdown2;// sensors
     public DropdownMultiSelect Mdropdown3;// resources
@@ -155,7 +155,7 @@ public class MenuManager : MonoBehaviour
         ActivitySelectionParentPanel.gameObject.SetActive(false);
 
         ConcurrentSelectionMenu.SetActive(false);
-        VisualBlock.SetActive(false);
+       // VisualBlock.SetActive(false);
     }
 
 
@@ -198,6 +198,7 @@ public class MenuManager : MonoBehaviour
 
         //Show current sensor configuration in dropdown 1.
         if (Dropdown2ShowCurrentSensor) Dropdown2Title.GetComponent<TextMeshProUGUI>().text = Mdropdown2.dropdownItems[CurrentSensorConfig].itemName;
+        else Dropdown2Title.GetComponent<TextMeshProUGUI>().text = "Sensors";
 
 
 
@@ -269,6 +270,13 @@ public class MenuManager : MonoBehaviour
             Mdropdown2.CreateNewItem();
         }
         Mdropdown2.SetupDropdown();
+    }
+
+    private void ResetSensorDropdown()
+    {
+        Mdropdown2.dropdownItems.Clear();
+        Mdropdown2.SetupDropdown();
+        CreateSensorsDropdown();
     }
 
     private void ClearResourcesDropdown()
@@ -1011,22 +1019,55 @@ public class MenuManager : MonoBehaviour
 
             //A_confirm button should not be used again.
             A_confirm_button.SetActive(false);
-            VisualBlock.SetActive(true);
+            //VisualBlock.SetActive(true);
             //instantiate activity selection panel
             for (int i = 0; i < SelecedActivityNumber; i++)
             {
-                GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3(0, i * -100, 0), Quaternion.identity) as GameObject;
+                int RoundedNum = Mathf.RoundToInt(SelecedActivityNumber / 2);
+                //instantiate row 1
+                
+                if (i < RoundedNum)
+                {
+                    GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3((i + 1) * 500, 0, -30), Quaternion.identity) as GameObject;
+                    string ButtonName = "ActivitySelection" + i;
+                    goButton.name = ButtonName;
+                    goButton.transform.SetParent(ActivitySelectionParentPanel, false);
+                    Button tempButton = goButton.GetComponent<Button>();
+                    int tempInt = i;
+                    tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
+                    //correspond alias i with active activity number
+                    LUT.Add(i, TempActivityNumber);
+                    tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
+                }
+                
+                //instantiate row 2
+                
+                else
+                {
+                    GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3((i - RoundedNum + 1) * 500, -100, -30), Quaternion.identity) as GameObject;
+                    string ButtonName = "ActivitySelection" + i;
+                    goButton.name = ButtonName;
+                    goButton.transform.SetParent(ActivitySelectionParentPanel, false);
+                    Button tempButton = goButton.GetComponent<Button>();
+                    int tempInt = i;
+                    tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
+                    //correspond alias i with active activity number
+                    LUT.Add(i, TempActivityNumber);
+                    tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
+                }
+                
+                /* Original method
+                GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3(i * 500, 0, -10), Quaternion.identity) as GameObject;
                 string ButtonName = "ActivitySelection" + i;
                 goButton.name = ButtonName;
                 goButton.transform.SetParent(ActivitySelectionParentPanel, false);
                 Button tempButton = goButton.GetComponent<Button>();
                 int tempInt = i;
                 tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
-
                 //correspond alias i with active activity number
                 LUT.Add(i, TempActivityNumber);
                 tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
-
+                */
                 //First active activity is CurrentActivitySelection and TempActivityNumber.
                 //It has only been assigned at beginning = 0, then find first active activity.
                 //Because A_confirm button is designed to only press once, this execution order will be only executed once.
@@ -1057,13 +1098,14 @@ public class MenuManager : MonoBehaviour
         }
     }
 
- 
+
+
     //what is performed after click activity selection?
     private void ButtonClicked(int buttonNo)
     {
         //Debug.Log("Button clicked = " + buttonNo);
         //which activity is selected, and give value to CurrentActivitySelection.
-        VisualBlock.SetActive(false);
+        //VisualBlock.SetActive(false);
         Mdropdown1.GetComponent<Button>().interactable = false;
         //Activate main menu
         mainUICollection.SetActive(true);
@@ -1354,7 +1396,7 @@ public class MenuManager : MonoBehaviour
     //Find next active activity, or out of bound.
     public void NextActivityButton()
     {
-        //new version
+        
         //if reaches final activity, then show run button. If not, show activity selection canvas, also hide itself and main canvas.
         if (RemainingActivityNumber == 0)
         {
@@ -1366,9 +1408,11 @@ public class MenuManager : MonoBehaviour
         else
         {
             //has more activity to show
-            VisualBlock.SetActive(true);
+            //VisualBlock.SetActive(true);
             //show activity selection canvas.
             ActivitySelectionParentPanel.gameObject.SetActive(true);
+            //ResetSensorDropdown();
+            Dropdown2ShowCurrentSensor = false;
             //hide itself, and main canvas
             NAButton.SetActive(false);
             mainUICollection.SetActive(false);
@@ -1566,7 +1610,8 @@ public class MenuManager : MonoBehaviour
     public void ReloadSceneButton()
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("MenuHub",LoadSceneMode.Single);
-        ActivityManager.GetComponent<ActivityManagerScript>().resetScene();
+        //ActivityManager.GetComponent<ActivityManagerScript>().resetScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     public void StopButton()

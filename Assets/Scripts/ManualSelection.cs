@@ -24,7 +24,8 @@ public class ManualSelection : MonoBehaviour
 
     public GameObject RunButton;
     public GameObject ManualSelectionListPanel;
-    public GameObject UIMenuManager;
+    //public GameObject UIMenuManager;
+    public GameObject ManualSelectionMenuSelf;
     public GameObject ActivityManagerScript;
     public GameObject TagButton;
     public GameObject ResetButton;
@@ -183,6 +184,7 @@ public class ManualSelection : MonoBehaviour
 
         if (IMUReportEnable)
         {
+            Debug.Log("IMU report inside Update().");
             //IMU reporting function
             IMUReportCanvas.SetActive(true);
             PrepareIMUString();
@@ -421,11 +423,11 @@ public class ManualSelection : MonoBehaviour
         if (ActualActivityNumber == 5) Text = "Loaser \n Dumptruck \n Stockpile \n";
         if (ActualActivityNumber == 6) Text = "Wood \n Log \n Rebar \n";
         if (ActualActivityNumber == 7) Text = "Worker 1 \n Worker 2 \n Worker 3 \n";
-        if (ActualActivityNumber == 8) Text = "8? \n";
-        if (ActualActivityNumber == 9) Text = "9? \n";
+        if (ActualActivityNumber == 8) Text = "Scan Building. \n";
+        if (ActualActivityNumber == 9) Text = "Scan Floor. \n";
         if (ActualActivityNumber == 10) Text = "Stockpile 1 \n Stockpile 2 \n";
         if (ActualActivityNumber == 11) Text = "Old Building \n";
-        if (ActualActivityNumber == 12) Text = "12? \n";
+        if (ActualActivityNumber == 12) Text = "Entire Jobsite. \n";
         if (ActualActivityNumber == 13) Text = " Painter \n Laborer \n Carpenter 1 \n Carpenter 2 \n";
 
         ManualSelectionListPanel.transform.Find("ResourceList").GetComponent<TextMeshProUGUI>().text = Text;
@@ -437,8 +439,9 @@ public class ManualSelection : MonoBehaviour
         Debug.Log("Confirm selection and execute.");
 
         //disable canvas
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         ManualSelectionListPanel.SetActive(false);
+        //ManualSelectionMenuSelf.SetActive(false);
         //enable reset button
         ResetButton.SetActive(true);
 
@@ -562,6 +565,7 @@ public class ManualSelection : MonoBehaviour
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_13_new();
             //display IMU
             IMUReportEnable = true;
+            Debug.Log("IMU report enabled");
         }
     }
 
