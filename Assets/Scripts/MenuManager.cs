@@ -117,6 +117,8 @@ public class MenuManager : MonoBehaviour
 
     public string SensorWarningString;
 
+    public GameObject ManualSelectionParent;
+
     #endregion
 
     //----------------------------------------------------------
@@ -890,26 +892,29 @@ public class MenuManager : MonoBehaviour
 
 
 
-    public void A13_stop()
+    public void A13_stop() //AKA IMU stop button
     {
         IMUReportEnable = false;
         IMUReportCanvas.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().A13_stop();
-        mainUICollection.SetActive(true);
+        //mainUICollection.SetActive(true);
+        ManualSelectionParent.GetComponent<ManualSelection>().IMUReportEnable = false;
     }
 
     public void StopRFID()
     {
         RFIDReportEnable = false;
         RFIDReportCanvas.SetActive(false);
-        mainUICollection.SetActive(true);
+        //mainUICollection.SetActive(true);
+        ManualSelectionParent.GetComponent<ManualSelection>().RFIDReportEnable = false;
     }
 
     public void StopGPS()
     {
         GPSReportEnable = false;
         GPSReportCanvas.SetActive(false);
-        mainUICollection.SetActive(true);
+        //mainUICollection.SetActive(true);
+        ManualSelectionParent.GetComponent<ManualSelection>().GPSReportEnable = false;
     }
 
     private void ActivityIndicator()

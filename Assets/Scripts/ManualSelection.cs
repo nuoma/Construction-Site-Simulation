@@ -64,9 +64,9 @@ public class ManualSelection : MonoBehaviour
     public GameObject A13Carpenter;
     public GameObject A13Carpenter2;
 
-    private bool RFIDReportEnable;
-    private bool GPSReportEnable;
-    private bool IMUReportEnable;
+    public bool RFIDReportEnable;
+    public bool GPSReportEnable;
+    public bool IMUReportEnable;
     private string GPSReportString;
     private string RFIDReportString;
     private string IMUReportString;
@@ -172,7 +172,8 @@ public class ManualSelection : MonoBehaviour
             PrepareGPSString();
             GPSReportText.GetComponent<TextMeshProUGUI>().text = GPSReportString;
         }
-
+        else
+            GPSReportCanvas.SetActive(false);
 
         if (RFIDReportEnable)
         {
@@ -181,15 +182,20 @@ public class ManualSelection : MonoBehaviour
             PrepareRFIDString();
             RFIDReportText.GetComponent<TextMeshProUGUI>().text = RFIDReportString;
         }
+        else
+            RFIDReportCanvas.SetActive(false);
+
 
         if (IMUReportEnable)
         {
-            Debug.Log("IMU report inside Update().");
+            //Debug.Log("IMU report inside Update().");
             //IMU reporting function
             IMUReportCanvas.SetActive(true);
             PrepareIMUString();
             IMUReportText.GetComponent<TextMeshProUGUI>().text = IMUReportString;
         }
+        else
+            IMUReportCanvas.SetActive(false);
     }
     #endregion
 
