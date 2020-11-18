@@ -272,7 +272,7 @@ public class ManualSelection : MonoBehaviour
         TagButton.SetActive(true);
     }
 
-    private void LUT()
+    private void LUT() //check this part with shared excel list.
     {
         if (SelectedSensorIndex == 0)//GPS
         {
@@ -580,7 +580,7 @@ public class ManualSelection : MonoBehaviour
     {
         string name = "A" + ActualActivityNumber + "POS";
         //Activate Chevron and live for 10 seconds.
-        StartCoroutine(ShowAndHide(PointingChevron, name, 10.0f));
+        StartCoroutine(ShowAndHide(PointingChevron, name, 8.0f));
     }
 
     // Activate chevron, give location, and keep it active for 5 seconds.

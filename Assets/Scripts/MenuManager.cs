@@ -144,11 +144,15 @@ public class MenuManager : MonoBehaviour
         StopButtonObj.SetActive(false);
         NAButton.SetActive(false);
 
-        Mdropdown1.transform.Find("DisablePanel").gameObject.SetActive(false);
+        A_confirm_button.SetActive(true);
+        S_confirm_button.SetActive(false);
+        R_confirm_button.SetActive(false);
+
+        //Mdropdown1.transform.Find("DisablePanel").gameObject.SetActive(false);
         Mdropdown2.GetComponent<Button>().interactable = false;
-        Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(true);
+        //Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(true);
         Mdropdown3.GetComponent<Button>().interactable = false;
-        Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(true);
+        //Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(true);
         SelectButton.SetActive(false);
 
         CurrentActivitySelection = 0;
@@ -165,12 +169,7 @@ public class MenuManager : MonoBehaviour
     {
         //update selected activity for each frame
         UpdateActivitySelected();
-
         UpdateSensorSelected();
-
-        //Check if multiple laser scan activity selected
-        //MultiLaserScanCheck();
-
         //When press confirm sensors button, update resources dropdown.
         if (ChangeResourcesBool)//transform.hasChanged
         {
@@ -181,19 +180,7 @@ public class MenuManager : MonoBehaviour
             CreateResourcesDropdown();
             ChangeResourcesBool = false;
         }
-
         UpdateResourcesSelected();
-        //if multiple selected, then prompt.
-        //if (MultiLaserScan)
-        //{
-        //DisplayWarning.GetComponent<TextMeshProUGUI>().text = "We only have 1 Laser Scanner, Please only select 1 Laser Scanner Activity."; 
-        //    Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "We only have 1 Laser Scanner, Please only select 1 Laser Scanner Activity.", false);
-        //}
-
-
-        //Display results that fit filter condition
-        //DisplayResults.GetComponent<TextMeshProUGUI>().text = "Old String Selected" + SelectedString;
-        //int ActivityDisplayNumber = CurrentActivitySelection + 1;
 
         //Show current configuration in dropdown 1, after press activity confirm button.
         if (Dropdown1ShowCurrentActivity) Dropdown1Title.GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[CurrentActivitySelection].itemName;
@@ -201,8 +188,6 @@ public class MenuManager : MonoBehaviour
         //Show current sensor configuration in dropdown 1.
         if (Dropdown2ShowCurrentSensor) Dropdown2Title.GetComponent<TextMeshProUGUI>().text = Mdropdown2.dropdownItems[CurrentSensorConfig].itemName;
         else Dropdown2Title.GetComponent<TextMeshProUGUI>().text = "Sensors";
-
-
 
         //Show all configured combo in panel.
         if (ShowComboBool)
@@ -212,7 +197,6 @@ public class MenuManager : MonoBehaviour
             ShowSelectionText.GetComponent<TextMeshProUGUI>().text = ComboDisplayString;
         }
 
-
         //Display Report Panels
         if (GPSReportEnable)
         {
@@ -221,8 +205,6 @@ public class MenuManager : MonoBehaviour
             PrepareGPSString();
             GPSReportText.GetComponent<TextMeshProUGUI>().text = GPSReportString;
         }
-
-
         if (RFIDReportEnable)
         {
             RFIDReportCanvas.SetActive(true);
@@ -230,7 +212,6 @@ public class MenuManager : MonoBehaviour
             PrepareRFIDString();
             RFIDReportText.GetComponent<TextMeshProUGUI>().text = RFIDReportString;
         }
-
         if (IMUReportEnable)
         {
             //IMU reporting function
@@ -299,7 +280,6 @@ public class MenuManager : MonoBehaviour
         Mdropdown3.SetupDropdown();
     }
 
-
     private void UpdateActivitySelected()
     {
         //Verify if value changed since last iteration
@@ -330,8 +310,6 @@ public class MenuManager : MonoBehaviour
                     onActivityChanged = true;
                 }
             }
-
-
         }
     }
 
@@ -373,13 +351,11 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-
     //update resources list accroding to dropdown 1's selection
     public void UpdateResourcesList()
     {
         //Initialize as empty list
         ResourcesList.Clear();
-
         //Add items according to different activities
         if (SelectedActivities[0] == true) ResourcesList.AddRange(new string[] { "Dozer", "Stockpile" });//1
         if (SelectedActivities[1] == true) ResourcesList.AddRange(new string[] { "Crane", "Steel Beam" });//2
@@ -394,7 +370,6 @@ public class MenuManager : MonoBehaviour
         if (SelectedActivities[10] == true) ResourcesList.AddRange(new string[] { "Old Building" });//12
         if (SelectedActivities[11] == true) ResourcesList.AddRange(new string[] { "Jobsite" });//13
         if (SelectedActivities[12] == true) ResourcesList.AddRange(new string[] { "Painter", "Laborer", "Carpenter 1", "Carpenter 2" });//14
-
     }
 
     //update resources list accroding to new ui button
@@ -1001,8 +976,9 @@ public class MenuManager : MonoBehaviour
             //Mdropdown1.GetComponent<Button>().interactable = false;
             //Mdropdown1.transform.Find("DisablePanel").gameObject.SetActive(true);
             //Dropdown 2 active.
+            S_confirm_button.SetActive(true);
             Mdropdown2.GetComponent<Button>().interactable = true;
-            Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(false);
+            //Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(false);
 
             //Find first active activity number
             for (int j = 0; j < 13; ++j)
@@ -1024,7 +1000,7 @@ public class MenuManager : MonoBehaviour
 
             //A_confirm button should not be used again.
             A_confirm_button.SetActive(false);
-            //VisualBlock.SetActive(true);
+
             //instantiate activity selection panel
             for (int i = 0; i < SelecedActivityNumber; i++)
             {
@@ -1142,7 +1118,10 @@ public class MenuManager : MonoBehaviour
     {
         Mdropdown2.ForceClose();
         CheckActivitySensors();
-
+        //S_confirm_button.SetActive(false);
+        //R_confirm_button.SetActive(true);
+        //Mdropdown2.GetComponent<Button>().interactable = false;
+        //Mdropdown3.GetComponent<Button>().interactable = true;
         //update resources list for CurrentActivitySelection
         ChangeResourcesBool = true;
 
@@ -1217,10 +1196,11 @@ public class MenuManager : MonoBehaviour
             Mdropdown2.GetComponent<Button>().interactable = false;
             //disable until next activity configure, which is in NA button.
             S_confirm_button.SetActive(false);
+            R_confirm_button.SetActive(true);
             //Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(true);
             //Dropdown 3 active.
             Mdropdown3.GetComponent<Button>().interactable = true;
-            Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(false);
+            //Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(false);
         }
         else
             InstantiateWarningDialog();
@@ -1400,9 +1380,7 @@ public class MenuManager : MonoBehaviour
 
     //Find next active activity, or out of bound.
     public void NextActivityButton()
-    {
-        
-        //if reaches final activity, then show run button. If not, show activity selection canvas, also hide itself and main canvas.
+    { //if reaches final activity, then show run button. 
         if (RemainingActivityNumber == 0)
         {
             //reached final activity
@@ -1411,19 +1389,15 @@ public class MenuManager : MonoBehaviour
             Debug.Log("Finished configuration. Can execute.");
         }
         else
-        {
-            //has more activity to show
-            //VisualBlock.SetActive(true);
-            //show activity selection canvas.
+        {   //has more activity to show, show activity selection canvas, also hide itself and main canvas..
             ActivitySelectionParentPanel.gameObject.SetActive(true);
-            //ResetSensorDropdown();
             Dropdown2ShowCurrentSensor = false;
             //hide itself, and main canvas
             NAButton.SetActive(false);
             mainUICollection.SetActive(false);
             Mdropdown2.GetComponent<Button>().interactable = true; //sensor dropdown enabled
             S_confirm_button.SetActive(true);//sensor confirm button enabled
-            R_confirm_button.SetActive(true);//Resource confirm button
+            //R_confirm_button.SetActive(true);//Resource confirm button
         }
     }
 
