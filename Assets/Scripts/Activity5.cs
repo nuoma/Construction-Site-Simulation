@@ -94,7 +94,7 @@ public class Activity5 : MonoBehaviour
     IEnumerator ActionSequence()
     {
         //move camera to new location
-        mainCamera.transform.position = CameraSite2Position[0].transform.position;
+        //mainCamera.transform.position = CameraSite2Position[0].transform.position;
 
         //Necessary for stone and backhoe front bucket initialize correctly.
         yield return new WaitForSeconds(1);
@@ -298,7 +298,7 @@ public class Activity5 : MonoBehaviour
             }
 
             //reset main camera position
-            mainCamera.transform.position = MainCameraResetPosition;
+            //mainCamera.transform.position = MainCameraResetPosition;
 
             step7 = false;
             yield return null;

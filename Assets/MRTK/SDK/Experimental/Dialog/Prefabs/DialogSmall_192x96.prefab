@@ -12,6 +12,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -4298106040071967345, guid: 478732197b53dee4694480aac1a7c98c,
+        type: 3}
+      propertyPath: minViewDegrees
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -4298106040071967345, guid: 478732197b53dee4694480aac1a7c98c,
+        type: 3}
+      propertyPath: maxViewDegrees
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: -4298106040071967345, guid: 478732197b53dee4694480aac1a7c98c,
+        type: 3}
+      propertyPath: referenceDirection
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 312563113387518926, guid: 478732197b53dee4694480aac1a7c98c,
         type: 3}
       propertyPath: localOffset.z
@@ -418,5 +433,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 312563113387518926, guid: 478732197b53dee4694480aac1a7c98c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 478732197b53dee4694480aac1a7c98c, type: 3}

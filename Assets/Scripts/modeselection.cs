@@ -6,6 +6,8 @@ public class modeselection : MonoBehaviour
 {
     public GameObject AutoCanvas;
     public GameObject ManualCanvas;
+    public bool Auto;
+    public bool Manual;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,8 @@ public class modeselection : MonoBehaviour
     {
         AutoCanvas.SetActive(true);
         gameObject.SetActive(false);
+        Auto = true;
+        Manual = false;
     }
 
     public void manual()
@@ -26,6 +30,8 @@ public class modeselection : MonoBehaviour
         gameObject.SetActive(false);
         ManualCanvas.GetComponent<ManualSelection>().SetInteractablesFalse();
         ManualCanvas.GetComponent<ManualSelection>().SetCubeFalse();
+        Manual = true;
+        Auto = false;
     }
     // Update is called once per frame
     void Update()

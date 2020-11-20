@@ -63,15 +63,15 @@ public class workerScript : MonoBehaviour
             {
                 timeCount++;
                 timer = 0;
-                ReportString = "IMU of: " + gameObject.name + ", Time: " + System.DateTime.UtcNow.ToLocalTime() + ". ";
+                ReportString = gameObject.name + ", Time: " + System.DateTime.UtcNow.ToLocalTime() + ". ";
                 if (shoulderBool)
                 {
                     shoulderContent += "Time: " + timeCount.ToString() + " seconds ";
-                    ReportString = ReportString + "Shoulder:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.00")+" , ";
+                    ReportString = ReportString + "Shoulder:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.0")+" , ";
                     //shoulderText.GetComponent<TextMeshProUGUI>().text = "Shoulder:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.00");
-                    shoulderContent += "  x:" + shoulder.transform.eulerAngles.x.ToString("#.00") +
-                        "  y:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.00") +
-                        "  z:" + shoulder.transform.eulerAngles.z.ToString("#.00") + "\n";
+                    shoulderContent += "  x:" + shoulder.transform.eulerAngles.x.ToString("#.0") +
+                        "  y:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.0") +
+                        "  z:" + shoulder.transform.eulerAngles.z.ToString("#.0") + "\n";
                 }
                 //else
                 //shoulderText.GetComponent<TextMeshProUGUI>().text = "";

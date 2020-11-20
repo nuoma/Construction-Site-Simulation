@@ -11,6 +11,7 @@ using System;
 using UnityEngine.SceneManagement;
 using Microsoft.MixedReality.Toolkit.Experimental.Utilities;
 using Microsoft.MixedReality.Toolkit.Experimental.Dialog;
+using Microsoft.MixedReality.Toolkit.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -926,9 +927,9 @@ public class MenuManager : MonoBehaviour
                 }
             }
 
-            string name = "A" + j + "POS";
+            //string name = "A" + j + "POS";
             //Activate Chevron and live for 5 seconds.
-            StartCoroutine(ShowAndHide(PointingChevron, name, 5.0f));
+            StartCoroutine(ActivityPointer(PointingChevron, j, 5.0f));
 
         }
 
@@ -940,12 +941,24 @@ public class MenuManager : MonoBehaviour
     }
 
     // Activate chevron, give location, and keep it active for 5 seconds.
-    public IEnumerator ShowAndHide(GameObject go, string name, float delay)
+    public IEnumerator ActivityPointer(GameObject go, int j, float delay)
     {
-        go.GetComponent<DirectionalIndicator>().DirectionalTarget = GameObject.Find(name).transform;
-        go.SetActive(true);
-        yield return new WaitForSeconds(delay);
-        go.SetActive(false);
+        if (j == 8 || j == 9 || j == 10 || j == 11)
+        {//for LS is different 8,9,10,11,
+            go.GetComponent<DirectionalIndicator>().DirectionalTarget = GameObject.Find("scanner").transform;
+            go.SetActive(true);
+            yield return new WaitForSeconds(60f);
+            go.SetActive(false);
+        }
+        else
+        {//normal activities
+            string name = "A" + j + "POS";
+            go.GetComponent<DirectionalIndicator>().DirectionalTarget = GameObject.Find(name).transform;
+            go.SetActive(true);
+            yield return new WaitForSeconds(delay);
+            go.SetActive(false);
+        }
+
     }
 
     #endregion
@@ -1009,34 +1022,42 @@ public class MenuManager : MonoBehaviour
                 
                 if (i < RoundedNum)
                 {
-                    GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3((i + 1) * 500, 0, -30), Quaternion.identity) as GameObject;
+                    GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3((i + 1) * 500, 50, -50), Quaternion.identity) as GameObject;
                     string ButtonName = "ActivitySelection" + i;
                     goButton.name = ButtonName;
                     goButton.transform.SetParent(ActivitySelectionParentPanel, false);
-                    Button tempButton = goButton.GetComponent<Button>();
+                    //Button tempButton = goButton.GetComponent<Button>();
                     int tempInt = i;
-                    tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
+                    //tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
                     //correspond alias i with active activity number
                     LUT.Add(i, TempActivityNumber);
-                    tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
+                    //tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
+
+                    //test for hololens button
+                    goButton.GetComponent<Interactable>().OnClick.AddListener(() => ButtonClicked(tempInt));
+                    goButton.transform.Find("IconAndText").transform.Find("TextMeshPro").GetComponent<TextMeshPro>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;
                 }
                 
                 //instantiate row 2
                 
                 else
                 {
-                    GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3((i - RoundedNum + 1) * 500, -100, -30), Quaternion.identity) as GameObject;
+                    GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3((i - RoundedNum + 1) * 500, -100, -50), Quaternion.identity) as GameObject;
                     string ButtonName = "ActivitySelection" + i;
                     goButton.name = ButtonName;
                     goButton.transform.SetParent(ActivitySelectionParentPanel, false);
-                    Button tempButton = goButton.GetComponent<Button>();
+                    //Button tempButton = goButton.GetComponent<Button>();
                     int tempInt = i;
-                    tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
+                    //tempButton.onClick.AddListener(() => ButtonClicked(tempInt));
                     //correspond alias i with active activity number
                     LUT.Add(i, TempActivityNumber);
-                    tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
+                    //tempButton.transform.Find("ButtonText").GetComponent<TextMeshProUGUI>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;//given button names with activity names.
+                                
+                    //test for hololens button
+                    goButton.GetComponent<Interactable>().OnClick.AddListener(() => ButtonClicked(tempInt));
+                    goButton.transform.Find("IconAndText").transform.Find("TextMeshPro").GetComponent<TextMeshPro>().text = Mdropdown1.dropdownItems[TempActivityNumber].itemName;
                 }
-                
+
                 /* Original method
                 GameObject goButton = Instantiate(ActivitySelectionPrefabButton, new Vector3(i * 500, 0, -10), Quaternion.identity) as GameObject;
                 string ButtonName = "ActivitySelection" + i;

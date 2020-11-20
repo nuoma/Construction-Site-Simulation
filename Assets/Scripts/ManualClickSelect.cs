@@ -10,7 +10,8 @@ public class ManualClickSelect : MonoBehaviour
     public bool Taggable;
     public bool TagStatus = false;
     [SerializeField] [Tooltip("Assign DialogSmall_192x96.prefab")] private GameObject DialogPrefabSmall;
-
+    private bool WarningBool;
+    private Dialog myDialog;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,11 @@ public class ManualClickSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (WarningBool && (myDialog == null))
+        {
+            myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", false);
+            WarningBool = false;
+        }
     }
 
     private void switchTag(GameObject Tag)
@@ -54,9 +59,10 @@ public class ManualClickSelect : MonoBehaviour
             }
             
         }
-        else //not taggable
+        else //not taggable object, show warning
         {
-            Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", false);
+            //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", true);
+            WarningBool = true;
         }
 
     }

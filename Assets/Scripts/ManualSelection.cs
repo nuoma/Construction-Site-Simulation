@@ -28,6 +28,7 @@ public class ManualSelection : MonoBehaviour
     public GameObject ManualSelectionMenuSelf;
     public GameObject ActivityManagerScript;
     public GameObject TagButton;
+    public GameObject LSConfirmButton;
     public GameObject ResetButton;
 
     public CustomDropdown Dropdown1;
@@ -76,6 +77,14 @@ public class ManualSelection : MonoBehaviour
     [SerializeField] private GameObject IMUReportCanvas;
     [SerializeField] private GameObject GPSReportCanvas;
     [SerializeField] private GameObject RFIDReportCanvas;
+
+    private bool showhidetoggle = false; //true means hide
+    public GameObject SensorParentNode;
+    public GameObject MiscAssetNode;
+    public GameObject Everything;
+    public GameObject mainUICollection;
+    public GameObject ActivityResourcesNode;
+    public GameObject ShowHideButton;
     #endregion
 
     #region Start Update
@@ -89,11 +98,12 @@ public class ManualSelection : MonoBehaviour
         SetInteractablesFalse();
         SetCubeFalse();
 
+        LSConfirmButton.SetActive(false);
         TagButton.SetActive(false);
         ManualSelectionListPanel.SetActive(false);
         RunButton.SetActive(false);
         ResetButton.SetActive(false);
-
+        ShowHideButton.SetActive(false);
     }
 
     public void SetInteractablesFalse()
@@ -149,6 +159,7 @@ public class ManualSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        LUT();
         if (onSensorChanged)
         {
             UpdateActivityList();
@@ -269,7 +280,32 @@ public class ManualSelection : MonoBehaviour
     {
         SelectedActivityIndex = dropdown.selectedItemIndex - 1;
         //Debug.Log("Dropdown 2 value change:"+dropdown.selectedItemIndex);
-        TagButton.SetActive(true);
+        //If LS or Drone, directly show run button.
+        if (ActualActivityNumber == 8 || ActualActivityNumber == 9 || ActualActivityNumber == 10 || ActualActivityNumber == 11 || ActualActivityNumber == 12)//LS 8 9 10 11 Drone 11 12
+        {
+            Debug.Log("LS Drone selected.");
+            LSConfirmButton.SetActive(true);
+            TagButton.SetActive(false);
+        }
+        else
+        {
+            TagButton.SetActive(true);
+            LSConfirmButton.SetActive(false);
+        }
+        
+    }
+
+    public void SkipConfirmButton()
+    {
+        ActivityIndicator();
+        //Turn off all interactable
+        SetInteractablesFalse();
+        //Turn off all box
+        SetCubeFalse();
+        //execute command
+        ExecuteActivity();
+        //hide canvas
+        ManualSelectionMenuSelf.SetActive(false);
     }
 
     private void LUT() //check this part with shared excel list.
@@ -422,19 +458,19 @@ public class ManualSelection : MonoBehaviour
     {
         string Text = "Dummy test resource for A1. \n A1R2. \n A1R3.";
 
-        if (ActualActivityNumber == 1) Text = "Dozer \n Stockpile \n";
-        if (ActualActivityNumber == 2) Text = "Crane \n Steel Beam \n";
-        if (ActualActivityNumber == 3) Text = "Truck \n Rebar \n";
+        if (ActualActivityNumber == 1) Text = "Dozer \nStockpile \n";
+        if (ActualActivityNumber == 2) Text = "Crane \nSteel Beam \n";
+        if (ActualActivityNumber == 3) Text = "Truck \nRebar \n";
         if (ActualActivityNumber == 4) Text = "Worker 1 \n";
-        if (ActualActivityNumber == 5) Text = "Loaser \n Dumptruck \n Stockpile \n";
-        if (ActualActivityNumber == 6) Text = "Wood \n Log \n Rebar \n";
-        if (ActualActivityNumber == 7) Text = "Worker 1 \n Worker 2 \n Worker 3 \n";
+        if (ActualActivityNumber == 5) Text = "Loader \nDumptruck \nStockpile \n";
+        if (ActualActivityNumber == 6) Text = "Wood \nLog \nRebar \n";
+        if (ActualActivityNumber == 7) Text = "Worker 1 \nWorker 2 \nWorker 3 \n";
         if (ActualActivityNumber == 8) Text = "Scan Building. \n";
         if (ActualActivityNumber == 9) Text = "Scan Floor. \n";
-        if (ActualActivityNumber == 10) Text = "Stockpile 1 \n Stockpile 2 \n";
+        if (ActualActivityNumber == 10) Text = "Stockpile 1 \nStockpile 2 \n";
         if (ActualActivityNumber == 11) Text = "Old Building \n";
         if (ActualActivityNumber == 12) Text = "Entire Jobsite. \n";
-        if (ActualActivityNumber == 13) Text = " Painter \n Laborer \n Carpenter 1 \n Carpenter 2 \n";
+        if (ActualActivityNumber == 13) Text = "Painter \nLaborer \nCarpenter 1 \nCarpenter 2 \n";
 
         ManualSelectionListPanel.transform.Find("ResourceList").GetComponent<TextMeshProUGUI>().text = Text;
 
@@ -449,7 +485,7 @@ public class ManualSelection : MonoBehaviour
         ManualSelectionListPanel.SetActive(false);
         //ManualSelectionMenuSelf.SetActive(false);
         //enable reset button
-        ResetButton.SetActive(true);
+        //ResetButton.SetActive(true);
 
         //Turn off all interactable
         SetInteractablesFalse();
@@ -464,6 +500,11 @@ public class ManualSelection : MonoBehaviour
 
     private void ExecuteActivity()
     {
+        //Show hide button will mess with LS activity.
+        if (ActualActivityNumber != 8 && ActualActivityNumber != 9 && ActualActivityNumber != 10 && ActualActivityNumber != 11)
+        {
+            ShowHideButton.SetActive(true);
+        }
         
         //A1 + GPS
         if (SelectedSensorIndex == 0 && ActualActivityNumber == 1)
@@ -613,6 +654,73 @@ public class ManualSelection : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
+
+    public void ShowHideManual()
+    {
+        //below is from menumanager.cs
+        GameObject building = Everything.transform.Find("SceneContent").transform.Find("Construction Site").transform.Find("buildings").transform.Find("building-6").gameObject;
+        GameObject LS = SensorParentNode.transform.Find("laserScanner").gameObject;
+        GameObject MDrone = SensorParentNode.transform.Find("Drone").gameObject;
+
+        if (showhidetoggle)
+        {
+            //Currently in hidden state, now show everything.
+            showhidetoggle = false;
+            mainUICollection.SetActive(true);
+            building.SetActive(true);//building-6 special case shared by multiple activities
+            LS.SetActive(true);
+            MDrone.SetActive(true);
+            foreach (Transform child in ActivityResourcesNode.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            //bool is false, set to true and hide everything
+            //Switch to hide in-active assets.
+            showhidetoggle = true;
+            mainUICollection.SetActive(false);
+            MiscAssetNode.SetActive(false);
+            //building.SetActive(false); //building-6 relate to these activities:
+            //LS.SetActive(false);
+            //MDrone.SetActive(false);
+
+
+            //if(false) {turn off;}
+            if (! (ActualActivityNumber == 1)) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 2)) { ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 3)) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 4)) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 5)) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 6)) { ActivityResourcesNode.transform.Find("Activity6").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 7)) { ActivityResourcesNode.transform.Find("Activity7").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 8)) { ActivityResourcesNode.transform.Find("Activity8").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 9)) { ActivityResourcesNode.transform.Find("Activity9").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 10)) { ActivityResourcesNode.transform.Find("Activity11A").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity11B").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 11)) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 12)) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(false); }
+            if (! (ActualActivityNumber == 13)) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(false); }
+
+            //building-6 check
+            if (! (ActualActivityNumber == 2) && ! (ActualActivityNumber == 4) && ! (ActualActivityNumber == 9))
+            {
+                building.SetActive(false);
+            }
+
+            //LS check
+            if (! (ActualActivityNumber == 8) && ! (ActualActivityNumber == 8) && ! (ActualActivityNumber == 10) && ! (ActualActivityNumber == 11))
+            {
+                LS.SetActive(false);
+            }
+            //Drone check
+            if (! (ActualActivityNumber == 11) && ! (ActualActivityNumber == 12))
+            {
+                MDrone.SetActive(false);
+            }
+        }
+        //MenuManager Finish
+    }
     
     #endregion
 }

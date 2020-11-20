@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Microsoft.MixedReality.Toolkit.Input;
+using Microsoft.MixedReality.Toolkit.UI;
 
 public class scanMenuScript : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class scanMenuScript : MonoBehaviour
     bool targetsMoved = false;
     bool tripodLevel = false;
     Renderer[][] targetRenderers = new Renderer[3][];
-
+     public GameObject TripodParentNode;
     void Start()
     {
 
@@ -71,6 +73,8 @@ public class scanMenuScript : MonoBehaviour
     {
         tripodLevel = true;
         tripodMenu.SetActive(false);
+        TripodParentNode.GetComponent<NearInteractionGrabbable>().enabled = false;
+        TripodParentNode.GetComponent<ObjectManipulator>().enabled = false;
     }
     public void scannerBodySelected()
     {
@@ -129,6 +133,13 @@ public class scanMenuScript : MonoBehaviour
         //mainMenu.GetComponent<Canvas>().enabled = false;
         scannerMenu.SetActive(false);
 
+        //targets cannot move
+        for (int i = 0; i < targets.Length; i++)
+        {
+            //targets[i].GetComponent<NearInteractionGrabbable>().gameObject.SetActive(false);
+            targets[i].GetComponent<NearInteractionGrabbable>().enabled = false;
+            targets[i].GetComponent<ObjectManipulator>().enabled = false;
+        }
     }
 
     private void Update()
