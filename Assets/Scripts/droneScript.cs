@@ -86,10 +86,21 @@ public class droneScript : MonoBehaviour
     public void powerOn()
     {
         if (power)
-        { power = false; flyButton.GetComponent<Button>().interactable = false; }
+        { power = false;  }
         else
         { power = true; }
 
+        if (power && motor)
+        {
+            GetComponent<Animator>().SetBool("fly", true);
+            //ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
+            //colorVar.highlightedColor = new Color32(138, 255, 114, 255);
+            //colorVar.pressedColor = new Color32(17, 101, 0, 255);
+            //flyButton.GetComponent<Button>().colors = colorVar;
+            flyButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        { flyButton.GetComponent<Button>().interactable = false; }
     }
 
     public void enginesOn()
@@ -102,10 +113,10 @@ public class droneScript : MonoBehaviour
         if (power && motor)
         {
             GetComponent<Animator>().SetBool("fly", true);
-            ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
-            colorVar.highlightedColor = new Color32(138, 255, 114, 255);
-            colorVar.pressedColor = new Color32(17, 101, 0, 255);
-            flyButton.GetComponent<Button>().colors = colorVar;
+            //ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
+            //colorVar.highlightedColor = new Color32(138, 255, 114, 255);
+            //colorVar.pressedColor = new Color32(17, 101, 0, 255);
+            //flyButton.GetComponent<Button>().colors = colorVar;
             flyButton.GetComponent<Button>().interactable = true;
         }
         else

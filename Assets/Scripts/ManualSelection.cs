@@ -323,10 +323,13 @@ public class ManualSelection : MonoBehaviour
         }
         if (SelectedSensorIndex == 1)//RFID
         {
-            if (SelectedActivityIndex == 0) ActualActivityNumber = 3;
-            if (SelectedActivityIndex == 1) ActualActivityNumber = 4;
-            if (SelectedActivityIndex == 2) ActualActivityNumber = 6;
-            if (SelectedActivityIndex == 3) ActualActivityNumber = 7;
+            if (SelectedActivityIndex == 0) ActualActivityNumber = 1;
+            if (SelectedActivityIndex == 1) ActualActivityNumber = 2;
+            if (SelectedActivityIndex == 2) ActualActivityNumber = 3;
+            if (SelectedActivityIndex == 3) ActualActivityNumber = 4;
+            if (SelectedActivityIndex == 4) ActualActivityNumber = 5;
+            if (SelectedActivityIndex == 5) ActualActivityNumber = 6;
+            if (SelectedActivityIndex == 6) ActualActivityNumber = 7;
         }
         if (SelectedSensorIndex == 2)//LS
         {
@@ -516,6 +519,12 @@ public class ManualSelection : MonoBehaviour
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1_Dozer_GPS(); 
         }
 
+        //A1+RFID
+        if (SelectedSensorIndex == 1 && ActualActivityNumber == 1)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1_Dozer_RFID();
+        }
+
         //A2 + GPS
         if (ActualActivityNumber == 2 && SelectedSensorIndex == 0)
         {
@@ -524,14 +533,21 @@ public class ManualSelection : MonoBehaviour
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS();
         }
 
-        //A3 + GPS/RFID
-        if (ActualActivityNumber == 3)
+        //A2RFID
+        if (ActualActivityNumber == 2 && SelectedSensorIndex == 1)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2_crane_RFID();
+        }
+
+            //A3 + GPS/RFID
+            if (ActualActivityNumber == 3)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3();
             if(A3Truck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 0)
             { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3_truck_GPS(); }
             if (A3Truck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
-            { RFIDReportEnable = true; }// 3.Rebar RFID
+            { RFIDReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3_truck_RFID(); }// 3.Rebar RFID
+
         } 
 
         //A4
@@ -548,7 +564,7 @@ public class ManualSelection : MonoBehaviour
         } 
 
         //A5 Load and haul
-        if (ActualActivityNumber == 5)
+        if (ActualActivityNumber == 5 && SelectedSensorIndex == 0)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5();
             if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true) 
@@ -556,7 +572,17 @@ public class ManualSelection : MonoBehaviour
             if(A5Loader.GetComponent<ManualClickSelect>().TagStatus == true) 
             { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }
         }
-        
+
+        //A5 RFID
+        if (ActualActivityNumber == 5 && SelectedSensorIndex == 1)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5();
+            if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true)
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_dumptruck_RFID(); }
+            if (A5Loader.GetComponent<ManualClickSelect>().TagStatus == true)
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_backhoe_RFID(); }
+        }
+
         //A6. RFID
         if (ActualActivityNumber == 6)
         {
@@ -644,7 +670,7 @@ public class ManualSelection : MonoBehaviour
         //Activity correspond to GPS
         if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Activities","Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
              "Detecting Fall" }); }
-        if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Activities","Material Delivery", "Worker's Close Call", 
+        if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Activities","Dozer backfilling", "Crane Loading","Material Delivery", "Worker's Close Call", "Load & Haul",
             "Material Inventory", "Detecting Fall" }); }
         if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] { "Activities", "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building" }); }
         if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] { "Activities", "Scan Old Building", "Jobsite Inspection" }); }

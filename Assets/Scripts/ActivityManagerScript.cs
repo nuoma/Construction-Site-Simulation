@@ -83,45 +83,51 @@ public class ActivityManagerScript : MonoBehaviour
     bool move = false;
     bool sensors = false;
 
-    public string A1_Dozer_GPS;
-    public string A2_Load_GPS;
-    public string A3_Truck_GPS;
-    public string A5_Loader_GPS;
-    public string A5_Dumptruck_GPS;
-    public string A4_worker_GPS;
-    public string A6_Wood_RFID;
-    public string A6_Log_RFID;
-    public string A6_Rebar_RFID;
-    public bool A6_wood_flag;
-    public bool A6_log_flag;
-    public bool A6_rebar_flag;
-    public string A3RFID;
-    public bool A14_laborer;
-    public bool A14_painter;
-    public bool A14_c1;
-    public bool A14_c2;
-    public bool A4_worker_GPSRFID;
-    public bool A7_worker_GPSRFID;
-    public string A14_l_report;
-    public string A14_p_report;
-    public string A14_c1_report;
-    public string A14_c2_report;
+    [HideInInspector] public string A1_Dozer_GPS;
+    [HideInInspector] public string A2_Load_GPS;
+    [HideInInspector] public string A3_Truck_GPS;
+    [HideInInspector] public string A5_Loader_GPS;
+    [HideInInspector] public string A5_Dumptruck_GPS;
+    [HideInInspector] public string A4_worker_GPS;
+    [HideInInspector] public string A6_Wood_RFID;
+    [HideInInspector] public string A6_Log_RFID;
+    [HideInInspector] public string A6_Rebar_RFID;
+    [HideInInspector] public bool A6_wood_flag;
+    [HideInInspector] public bool A6_log_flag;
+    [HideInInspector] public bool A6_rebar_flag;
+    [HideInInspector] public string A3RFID;
+    [HideInInspector] public bool A14_laborer;
+    [HideInInspector] public bool A14_painter;
+    [HideInInspector] public bool A14_c1;
+    [HideInInspector] public bool A14_c2;
+    [HideInInspector] public bool A4_worker_GPSRFID;
+    [HideInInspector] public bool A7_worker_GPSRFID;
+    [HideInInspector] public string A14_l_report;
+    [HideInInspector] public string A14_p_report;
+    [HideInInspector] public string A14_c1_report;
+    [HideInInspector] public string A14_c2_report;
     private bool A4_worker_GPSdisplay;
-    public bool A7_w1_flag;
-    public bool A7_w2_flag;
-    public bool A7_w3_flag;
-    public string A7_w1_GPS;
-    public string A7_w2_GPS;
-    public string A7_w3_GPS;
-    public bool A7_w1_GPSdisplay;
-    public bool A7_w2_GPSdisplay;
-    public bool A7_w3_GPSdisplay;
+    [HideInInspector] public bool A7_w1_flag;
+    [HideInInspector] public bool A7_w2_flag;
+    [HideInInspector] public bool A7_w3_flag;
+    [HideInInspector] public string A7_w1_GPS;
+    [HideInInspector] public string A7_w2_GPS;
+    [HideInInspector] public string A7_w3_GPS;
+    [HideInInspector] public bool A7_w1_GPSdisplay;
+    [HideInInspector] public bool A7_w2_GPSdisplay;
+    [HideInInspector] public bool A7_w3_GPSdisplay;
 
     public GameObject LSConstraint;
     public GameObject AutoUI;
     public GameObject ManualUI;
 
-    public bool ConcurencySuspension = false;
+    [HideInInspector] public bool ConcurencySuspension = false;
+
+    public GameObject A5BackhoeRFID;
+    public GameObject A5TruckRFID;
+    public GameObject A1DozerRFID;
+    public GameObject A2CraneRFID;
+    public GameObject A3TruckRFID;
     #endregion
 
     #region main menu functionalities
@@ -146,7 +152,16 @@ public class ActivityManagerScript : MonoBehaviour
         A7Worker3.transform.Find("Canvas").gameObject.SetActive(false);
         //A7w3_GPSTMP.SetActive(false);
 
-    }
+        //Addition vehicle RFID
+        A1DozerRFID.SetActive(false);
+        A2CraneRFID.SetActive(false);
+        A3TruckRFID.SetActive(false);
+        A5TruckRFID.SetActive(false);
+        A5BackhoeRFID.SetActive(false);
+
+    
+
+}
 
     private void Update()
     {
@@ -239,6 +254,10 @@ public class ActivityManagerScript : MonoBehaviour
         Activity1Bulldozer.GetComponent<GenericGPS>().start();
     }
 
+    public void select_1_Dozer_RFID()
+    {
+        A1DozerRFID.SetActive(true);
+    }
 
     public void stop_1()
     {
@@ -249,6 +268,11 @@ public class ActivityManagerScript : MonoBehaviour
     public void select_2()
     {
         Activity2Crane.GetComponent<Crane>().start();
+    }
+
+    public void select_2_crane_RFID()
+    {
+        A2CraneRFID.SetActive(true);
     }
 
     public void select_2_CraneLoad_GPS()
@@ -265,6 +289,11 @@ public class ActivityManagerScript : MonoBehaviour
     public void select_3()
     {
         Activity3Truck.GetComponent<Activity3Truck>().start();
+    }
+
+    public void select_3_truck_RFID()
+    {
+        A3TruckRFID.SetActive(true);
     }
 
     public void select_3_truck_GPS()
@@ -321,6 +350,14 @@ public class ActivityManagerScript : MonoBehaviour
         Activity5dumptruck.GetComponent<GenericGPS>().start();
     }
 
+    public void select_5_dumptruck_RFID()
+    {
+        A5TruckRFID.SetActive(true);
+    }
+    public void select_5_backhoe_RFID()
+    {
+        A5BackhoeRFID.SetActive(false);
+    }
 
     public void stop_5()
     {
