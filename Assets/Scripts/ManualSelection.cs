@@ -511,43 +511,53 @@ public class ManualSelection : MonoBehaviour
             ShowHideButton.SetActive(true);
         }
         
-        //A1 + GPS
-        if (SelectedSensorIndex == 0 && ActualActivityNumber == 1)
+        //A1
+        if (ActualActivityNumber == 1)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1();
-            GPSReportEnable = true; 
-            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1_Dozer_GPS(); 
+            //GPS
+            if (SelectedSensorIndex == 0 && A1Dozer.GetComponent<ManualClickSelect>().TagStatus == true)
+            { 
+                GPSReportEnable = true; 
+                ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1_Dozer_GPS();
+            }
+            //RFID
+            if (SelectedSensorIndex == 1 && A1Dozer.GetComponent<ManualClickSelect>().TagStatus == true)
+            {
+                ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1_Dozer_RFID();
+            }
         }
 
-        //A1+RFID
-        if (SelectedSensorIndex == 1 && ActualActivityNumber == 1)
-        {
-            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_1_Dozer_RFID();
-        }
-
-        //A2 + GPS
-        if (ActualActivityNumber == 2 && SelectedSensorIndex == 0)
+        //A2
+        if (ActualActivityNumber == 2)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2();
-            GPSReportEnable = true;
-            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS();
+            // SteelBeam GPS
+            if (SelectedSensorIndex == 0 && A2SteelBeam.GetComponent<ManualClickSelect>().TagStatus == true)
+            {
+                GPSReportEnable = true;
+                ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS();
+            }
+            // Crane RFID
+            if (SelectedSensorIndex == 1 && A2Crane.GetComponent<ManualClickSelect>().TagStatus == true)
+            {
+                ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2_crane_RFID();
+            }
         }
 
-        //A2RFID
-        if (ActualActivityNumber == 2 && SelectedSensorIndex == 1)
-        {
-            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_2_crane_RFID();
-        }
 
-            //A3 + GPS/RFID
-            if (ActualActivityNumber == 3)
+        //A3
+        if (ActualActivityNumber == 3)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3();
+            //Truck GPS
             if(A3Truck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 0)
             { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3_truck_GPS(); }
+            //Truck RFID
             if (A3Truck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
-            { RFIDReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3_truck_RFID(); }// 3.Rebar RFID
-
+            { RFIDReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_3_truck_RFID(); }
+            //Rebar RFID
+            if (A3Rebar.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1) RFIDReportEnable = true;
         } 
 
         //A4
@@ -567,21 +577,20 @@ public class ManualSelection : MonoBehaviour
         if (ActualActivityNumber == 5 && SelectedSensorIndex == 0)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5();
-            if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true) 
+            //dumptruck GPS
+            if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 0) 
             { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_dumptruck_GPS(); }
-            if(A5Loader.GetComponent<ManualClickSelect>().TagStatus == true) 
+            //backhoe gps
+            if(A5Loader.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 0) 
             { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }
-        }
-
-        //A5 RFID
-        if (ActualActivityNumber == 5 && SelectedSensorIndex == 1)
-        {
-            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5();
-            if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true)
+            //dumptruck RFID
+            if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
             { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_dumptruck_RFID(); }
-            if (A5Loader.GetComponent<ManualClickSelect>().TagStatus == true)
+            //backhoe RFID
+            if (A5Loader.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
             { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_backhoe_RFID(); }
         }
+
 
         //A6. RFID
         if (ActualActivityNumber == 6)

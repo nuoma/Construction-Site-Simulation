@@ -458,19 +458,16 @@ public class MenuManager : MonoBehaviour
 
         //Execute Activities
         //A1 Dozer Backfilling
-        if (SelectedActivities[0] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_1();
         if (SelectedActivities[0] == true)
         {
+            ActivityManager.GetComponent<ActivityManagerScript>().select_1();
+            //Dozer GPS
             foreach (int key in InterpretLUT2(0))
             {
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("Dozer"))
                 { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_1_Dozer_GPS(); }// 1.Dozer GPS
             }
-        }
-
-        //A1 RFID Dozer
-        if (SelectedActivities[0] == true)
-        {
+            //Dozer RFID
             foreach (int key in InterpretLUT2(0))
             {
                 if (ExeList[key].Contains("RFID") && ExeList[key].Contains("Dozer"))
@@ -478,125 +475,105 @@ public class MenuManager : MonoBehaviour
             }
         }
 
-
         //A2 Crane Loading
-        if (SelectedActivities[1] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_2();
         if (SelectedActivities[1] == true)
         {
+            ActivityManager.GetComponent<ActivityManagerScript>().select_2();
+            //Steelbeam GPS
             foreach (int key in InterpretLUT2(1))
             {
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("Steel Beam"))
                 { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_2_CraneLoad_GPS(); }// 2.Load GPS
             }
-        }
-
-        //A2 crane rfid
-        if (SelectedActivities[1] == true)
-        {
+            //A2 Crane rfid
             foreach (int key in InterpretLUT2(1))
             {
                 if (ExeList[key].Contains("RFID") && ExeList[key].Contains("Crane"))
                 { ActivityManager.GetComponent<ActivityManagerScript>().select_2_crane_RFID(); }
             }
-        }
+        } 
 
         //A3 Material delivery
         if (SelectedActivities[2] == true)
-            ActivityManager.GetComponent<ActivityManagerScript>().select_3();
-        if (SelectedActivities[2] == true)
         {
+            ActivityManager.GetComponent<ActivityManagerScript>().select_3();
+            //3.Truck GPS
             foreach (int key in InterpretLUT2(2))
             {
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("Truck"))
-                { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_3_truck_GPS(); }// 3.Truck GPS
+                { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_3_truck_GPS(); }
             }
-        }
-        if (SelectedActivities[2] == true)
-        {
+            //3.Rebar RFID
             foreach (int key in InterpretLUT2(2))
             {
                 if (ExeList[key].Contains("RFID") && ExeList[key].Contains("Rebar"))
-                { RFIDReportEnable = true; }// 3.Rebar RFID
+                { RFIDReportEnable = true; }
             }
-        }
-
-        //A3 RFID truck
-        if (SelectedActivities[2] == true)
-        {
+            //A3 RFID truck
             foreach (int key in InterpretLUT2(2))
             {
                 if (ExeList[key].Contains("RFID") && ExeList[key].Contains("Truck"))
                 { ActivityManager.GetComponent<ActivityManagerScript>().select_3_truck_RFID(); }
             }
         }
-
-        //A4 WOrker Close Call
-        if (SelectedActivities[3] == true) { ActivityManager.GetComponent<ActivityManagerScript>().select_4(); ActivityManager.GetComponent<ActivityManagerScript>().select_2(); }
-            if (SelectedActivities[3] == true)
-        {
+           
+        //A4 Worker Close Call
+        if (SelectedActivities[3] == true) 
+        { 
+            ActivityManager.GetComponent<ActivityManagerScript>().select_4(); 
+            ActivityManager.GetComponent<ActivityManagerScript>().select_2();
+            //worker GPS
             foreach (int key in InterpretLUT2(3))
             {
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("Worker 1"))
                 { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_gps(); }// 4.Worker GPS
             }
-        }
-        if (SelectedActivities[3] == true)
-        {
+            //Worker RFID. Since we are using panel above worker, so no RFID panel needed.
             foreach (int key in InterpretLUT2(3))
             {
                 if (ExeList[key].Contains("RFID") && ExeList[key].Contains("Worker 1"))
-                { ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }// 4.Worker RFID. Since we are using panel above worker, so no RFID panel needed.
+                { ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }
             }
-        }
-        if (SelectedActivities[3] == true)
-        {
+            //Worker GPS&RFID.
             foreach (int key in InterpretLUT2(3))
             {
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("RFID") && ExeList[key].Contains("Worker 1"))
-                { ActivityManager.GetComponent<ActivityManagerScript>().A4_worker_GPSRFID = true; ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }// 4.Worker GPS&RFID.
+                { ActivityManager.GetComponent<ActivityManagerScript>().A4_worker_GPSRFID = true; ActivityManager.GetComponent<ActivityManagerScript>().select_4worker_RFID(); }
             }
         }
 
         //A5 Load And Haul
-        if (SelectedActivities[4] == true) ActivityManager.GetComponent<ActivityManagerScript>().select_5();
         if (SelectedActivities[4] == true)
         {
+            ActivityManager.GetComponent<ActivityManagerScript>().select_5();
+            // 5.Loader GPS.
             foreach (int key in InterpretLUT2(4))
             {
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("Loader"))
-                { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }// 5.Loader GPS.
+                { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }
             }
-        }
-        if (SelectedActivities[4] == true)
-        {
+            // 5.DumpTruck GPS.
             foreach (int key in InterpretLUT2(4))
             {
                 if (ExeList[key].Contains("GPS") && ExeList[key].Contains("DumpTruck"))
-                { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_dumptruck_GPS(); }// 5.DumpTruck GPS.
+                { GPSReportEnable = true; ActivityManager.GetComponent<ActivityManagerScript>().select_5_dumptruck_GPS(); }
             }
-        }
-        //5.Loader RFID
-        if (SelectedActivities[4] == true)
-        {
+            //5.Loader RFID
             foreach (int key in InterpretLUT2(4))
             {
                 if (ExeList[key].Contains("RFID") && ExeList[key].Contains("Loader"))
                 { ActivityManager.GetComponent<ActivityManagerScript>().select_5_backhoe_RFID(); }
             }
-        }
-        //5.Dumptruck Rfid
-        if (SelectedActivities[4] == true)
-        {
+            //5.Dumptruck Rfid
             foreach (int key in InterpretLUT2(4))
             {
                 if (ExeList[key].Contains("RFID") && ExeList[key].Contains("DumpTruck"))
-                {  ActivityManager.GetComponent<ActivityManagerScript>().select_5_dumptruck_RFID(); }
+                { ActivityManager.GetComponent<ActivityManagerScript>().select_5_dumptruck_RFID(); }
             }
         }
-        
 
-        //6. RFID & rebar, wood and log.
-        //exception, because only 1 sensor can be selected
+
+        //A6 RFID & rebar, wood and log. Because only 1 sensor can be selected
         if (SelectedActivities[5] == true)
         {
             foreach (int key in InterpretLUT2(5))
@@ -612,7 +589,7 @@ public class MenuManager : MonoBehaviour
             }
         }
 
-        //7. Workers on top floor
+        //A7. Workers on top floor
         if (SelectedActivities[6] == true)
         {
             foreach (int key in InterpretLUT2(6))
