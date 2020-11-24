@@ -16,7 +16,7 @@ public class droneScript : MonoBehaviour
     [SerializeField] private GameObject Backbutton;
 
     private int FrmCount = 0;
-    public bool startRot;
+    [HideInInspector] public bool startRot;
 
     private float zMax = 7.8f;
     private float zMin = -6f;
@@ -32,6 +32,10 @@ public class droneScript : MonoBehaviour
     [HideInInspector] public bool taskSelected = false;
     [HideInInspector] public bool power = false;
     [HideInInspector] public bool motor = false;
+
+    public GameObject FlightCanvasBackButton;
+    public GameObject FlightCanvasManualBackButton;
+    public GameObject ModeSelection;
 
     // Start is called before the first frame update
     public void Start()
@@ -121,6 +125,19 @@ public class droneScript : MonoBehaviour
             //droneCamera.gameObject.SetActive(true);
             startRot = true;
             Backbutton.SetActive(false);
+
+            //if auto selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Auto == true)
+            {
+                FlightCanvasBackButton.SetActive(true);
+                FlightCanvasManualBackButton.SetActive(false);
+            }
+            //if manual selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Manual == true)
+            {
+                FlightCanvasManualBackButton.SetActive(true);
+                FlightCanvasBackButton.SetActive(false);
+            }      
         }
     }
 

@@ -42,12 +42,14 @@ public class MenuManager : MonoBehaviour
 
     private string ComboDisplayString;
     private string SelectedString;
+    private string CostBenefitString;
 
 
     public TextMeshProUGUI GPSReportText;
     public TextMeshProUGUI RFIDReportText;
     public TextMeshProUGUI IMUReportText;
     public TextMeshProUGUI ShowSelectionText;
+    public TextMeshProUGUI CostBenefitText;
 
     private bool[] SelectedActivities = new bool[16];
     private bool[] SelectedSensors = new bool[5];
@@ -119,7 +121,7 @@ public class MenuManager : MonoBehaviour
     public string SensorWarningString;
 
     public GameObject ManualSelectionParent;
-
+    public GameObject CostBenefitPanel;
     #endregion
 
     //----------------------------------------------------------
@@ -142,6 +144,7 @@ public class MenuManager : MonoBehaviour
         RFIDReportCanvas.SetActive(false);
         PointingChevron.SetActive(false);
         ComboSelectionCanvas.SetActive(false);
+        CostBenefitPanel.SetActive(false);
         StopButtonObj.SetActive(false);
         NAButton.SetActive(false);
 
@@ -196,6 +199,10 @@ public class MenuManager : MonoBehaviour
             ComboSelectionCanvas.SetActive(true);
             PrepareComboDisplayString();
             ShowSelectionText.GetComponent<TextMeshProUGUI>().text = ComboDisplayString;
+
+            CostBenefitPanel.SetActive(true);
+            PrepareCostBenefitString();
+            CostBenefitText.GetComponent<TextMeshProUGUI>().text = CostBenefitString;
         }
 
         //Display Report Panels
@@ -427,6 +434,7 @@ public class MenuManager : MonoBehaviour
         ShowComboBool = false;
         //disable canvas that show combo selections
         ComboSelectionCanvas.SetActive(false);
+        CostBenefitPanel.SetActive(false);
         //ActivityManager.GetComponent<ActivityManagerScript>().sensorSelected();
 
         //Interpret ComboList(i,selections)
@@ -750,6 +758,13 @@ public class MenuManager : MonoBehaviour
             + ActivityManager.GetComponent<ActivityManagerScript>().A14_c2_report
             + ActivityManager.GetComponent<ActivityManagerScript>().A14_l_report
             + ActivityManager.GetComponent<ActivityManagerScript>().A14_p_report;
+    }
+
+    private void PrepareCostBenefitString()
+    {
+        CostBenefitString = "Cost Benefit Filler? \n line \t two with tab";
+
+        //
     }
 
     private void PrepareComboDisplayString()
@@ -1170,13 +1185,16 @@ public class MenuManager : MonoBehaviour
         }
 
         SensorWarningString = ""; //Empty
+        //20201123 Add RFID for A1,2,3,5(0,1,2,4)
 
         //A1+GPS[0]
-        if (CurrentActivitySelection == 0 && SelectedSensors[0] == true && SelectedSensors[1] == false && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
-        else { if (CurrentActivitySelection == 0 && SelectedSensors[1] == true) RFIDWarning(); if (CurrentActivitySelection == 0 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 0 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 0 && SelectedSensors[4] == true) IMUWarning(); }
+        if (CurrentActivitySelection == 0 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
+        else { if (CurrentActivitySelection == 0 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 0 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 0 && SelectedSensors[4] == true) IMUWarning(); }
+        //if (CurrentActivitySelection == 0 && SelectedSensors[1] == true) RFIDWarning();
         //A2+GPS
-        if (CurrentActivitySelection == 1 && SelectedSensors[0] == true && SelectedSensors[1] == false && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
-        else { if (CurrentActivitySelection == 1 && SelectedSensors[1] == true) RFIDWarning(); if (CurrentActivitySelection == 1 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 1 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 1 && SelectedSensors[4] == true) IMUWarning(); }
+        if (CurrentActivitySelection == 1 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
+        else {  if (CurrentActivitySelection == 1 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 1 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 1 && SelectedSensors[4] == true) IMUWarning(); }
+        //if (CurrentActivitySelection == 1 && SelectedSensors[1] == true) RFIDWarning();
         //A3+GPS/RFID
         if (CurrentActivitySelection == 2 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
         else {  if (CurrentActivitySelection == 2 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 2 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 2 && SelectedSensors[4] == true) IMUWarning(); }
@@ -1184,8 +1202,9 @@ public class MenuManager : MonoBehaviour
         if (CurrentActivitySelection == 3 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
         else {  if (CurrentActivitySelection == 3 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 3 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 3 && SelectedSensors[4] == true) IMUWarning(); }
         //A5+GPS
-        if (CurrentActivitySelection == 4 && SelectedSensors[0] == true && SelectedSensors[1] == false && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
-        else { if (CurrentActivitySelection == 4 && SelectedSensors[1] == true) RFIDWarning(); if (CurrentActivitySelection == 4 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 4 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 4 && SelectedSensors[4] == true) IMUWarning(); }
+        if (CurrentActivitySelection == 4 && (SelectedSensors[0] == true || SelectedSensors[1] == true) && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
+        else { if (CurrentActivitySelection == 4 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 4 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 4 && SelectedSensors[4] == true) IMUWarning(); }
+        //if (CurrentActivitySelection == 4 && SelectedSensors[1] == true) RFIDWarning();
         //A6+RFID
         if (CurrentActivitySelection == 5 && SelectedSensors[0] == false && SelectedSensors[1] == true && SelectedSensors[2] == false && SelectedSensors[3] == false && SelectedSensors[4] == false) { pass = true; }
         else { if (CurrentActivitySelection == 5 && SelectedSensors[0] == true) GPSWarning(); if (CurrentActivitySelection == 5 && SelectedSensors[2] == true) LSWarning(); if (CurrentActivitySelection == 5 && SelectedSensors[3] == true) DroneWarning(); if (CurrentActivitySelection == 5 && SelectedSensors[4] == true) IMUWarning(); }

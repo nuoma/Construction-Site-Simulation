@@ -61,6 +61,8 @@ public class ActivityManagerScript : MonoBehaviour
     [SerializeField] private GameObject imuMenu;
     [SerializeField] private GameObject rfidMenu;
     [SerializeField] private GameObject droneCanvas;
+    [SerializeField] private GameObject MDroneFlightCanvas;
+    [SerializeField] private GameObject MDroneParentCanvas;
     [SerializeField] private GameObject Activity11Canvas;
     [SerializeField] private GameObject Activity12Canvas;
     [SerializeField] private GameObject Activity12_DroneCanvas;
@@ -613,6 +615,16 @@ public class ActivityManagerScript : MonoBehaviour
         //GetComponent<Canvas>().enabled = false; //1, Disable main menu canvas.
         ManualDroneBackButton.SetActive(true);//Backbutton active
         droneCanvas.SetActive(true);//Drone canvas active
+
+        //drone canvas move location and rotate
+        //droneCanvas.transform.eulerAngles = new Vector3(droneCanvas.transform.eulerAngles.x, droneCanvas.transform.eulerAngles.y + 50, droneCanvas.transform.eulerAngles.z);
+        //move flight canvas as well
+        //MDroneFlightCanvas.transform.eulerAngles = new Vector3(MDroneFlightCanvas.transform.eulerAngles.x, MDroneFlightCanvas.transform.eulerAngles.y + 50, MDroneFlightCanvas.transform.eulerAngles.z); ;
+
+        //Move Drone Parent Node
+        MDroneParentCanvas.transform.position = Activity12_MDroneCameraLocator.transform.position;
+        MDroneParentCanvas.transform.eulerAngles = new Vector3(MDroneParentCanvas.transform.eulerAngles.x, MDroneParentCanvas.transform.eulerAngles.y + 50, MDroneParentCanvas.transform.eulerAngles.z);
+
         drone.transform.Find("Arrow").gameObject.SetActive(true);
         //drone.GetComponent<droneScript>().start();
     }
@@ -636,6 +648,24 @@ public class ActivityManagerScript : MonoBehaviour
         LaserScannerBackButton.SetActive(false);
     }
 
+    public void ManualDroneManualModeBackButton()
+    {
+        resetMainCam();
+        LaserScannerBackButton.SetActive(false);
+        ManualDroneBackButton.SetActive(false);
+        GetComponent<Canvas>().enabled = true;
+        gameObject.SetActive(true);
+        resetScanner();
+        resetDrone();
+        Activity12_DroneCanvas.SetActive(false);
+        Activity13_DroneCanvas.SetActive(false);
+        SensorReset();
+        AutoUI.SetActive(false);
+        ManualUI.SetActive(true);
+        LSResetButton.SetActive(false);
+        ConcurencySuspension = true;
+        LaserScannerBackButton.SetActive(false);
+    }
 
     public void LSBackButton()
     {
@@ -732,6 +762,15 @@ public class ActivityManagerScript : MonoBehaviour
         resetScanner();
         resetMainCam();
         AutoUI.SetActive(true);
+        ConcurencySuspension = true;
+    }
+
+    public void ResetForLSManualMode()
+    {
+        resetScanner();
+        resetMainCam();
+        AutoUI.SetActive(false);
+        ManualUI.SetActive(true);
         ConcurencySuspension = true;
     }
     #endregion

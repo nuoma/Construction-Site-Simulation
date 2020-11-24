@@ -57,6 +57,10 @@ public class scanScript : MonoBehaviour
     float cameraHeight;
 
     ColorBlock colorVar;
+
+    public GameObject ResultExitButton;
+    public GameObject ResultManualExitButton;
+    public GameObject ModeSelection;
     #endregion
 
     // Start is called before the first frame update
@@ -130,7 +134,21 @@ public class scanScript : MonoBehaviour
             scanner.GetComponent<Animator>().SetBool("spin", false);
             displayCanvas.SetActive(true);
             ScanStatusText.GetComponent<TextMeshProUGUI>().text = "Scan Finished";
-            if(camera360)
+
+            //if auto selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Auto == true)
+            {
+                ResultExitButton.SetActive(true);
+                ResultManualExitButton.SetActive(false);
+            }
+            //if manual selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Manual == true)
+            {
+                ResultManualExitButton.SetActive(true);
+                ResultExitButton.SetActive(false);
+            }
+
+            if (camera360)
             {
                 displayCanvas.transform.Find("Panel").gameObject.SetActive(false);
                 displayCanvas.transform.Find("Panel").gameObject.SetActive(true);

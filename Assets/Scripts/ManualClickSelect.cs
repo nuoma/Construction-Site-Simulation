@@ -12,6 +12,7 @@ public class ManualClickSelect : MonoBehaviour
     [SerializeField] [Tooltip("Assign DialogSmall_192x96.prefab")] private GameObject DialogPrefabSmall;
     private bool WarningBool;
     private Dialog myDialog;
+    private string DialogWarningString;
 
     // Start is called before the first frame update
     void Start()
@@ -24,7 +25,7 @@ public class ManualClickSelect : MonoBehaviour
     {
         if (WarningBool && (myDialog == null))
         {
-            myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", false);
+            myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", DialogWarningString, true);
             WarningBool = false;
         }
     }
@@ -63,6 +64,7 @@ public class ManualClickSelect : MonoBehaviour
         {
             //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", true);
             WarningBool = true;
+            DialogWarningString = gameObject.name + " cannot be tagged with " + ManualSelectionCode.GetComponent<ManualSelection>().CurrentSensor;
         }
 
     }

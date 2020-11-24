@@ -43,6 +43,7 @@ public class ManualSelection : MonoBehaviour
 
     private bool onSensorChanged;
     public bool ResourceTaggedBool = false;
+    public string CurrentSensor;
 
     public GameObject A1Dozer;
     public GameObject A1Stockpile;
@@ -165,6 +166,7 @@ public class ManualSelection : MonoBehaviour
             UpdateActivityList();
             ClearActivitiesDropdown();
             CreateActivitiesDropdown();
+            UpdateSensorString();
             onSensorChanged = false;
         }
 
@@ -647,6 +649,15 @@ public class ManualSelection : MonoBehaviour
         if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] { "Activities", "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building" }); }
         if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] { "Activities", "Scan Old Building", "Jobsite Inspection" }); }
         if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] { "Activities", "Worker Ergonomics" }); }
+    }
+
+    private void UpdateSensorString()
+    {
+        if (SelectedSensorIndex == 0) CurrentSensor = "GPS";
+        if (SelectedSensorIndex == 1) CurrentSensor = "RFID";
+        if (SelectedSensorIndex == 2) CurrentSensor = "Laser Scanner";
+        if (SelectedSensorIndex == 3) CurrentSensor = "Drone";
+        if (SelectedSensorIndex == 4) CurrentSensor = "IMU";
     }
 
     public void ReloadSceneButton()
