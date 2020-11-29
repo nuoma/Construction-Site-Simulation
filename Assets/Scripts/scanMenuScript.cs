@@ -17,7 +17,9 @@ public class scanMenuScript : MonoBehaviour
     [SerializeField] private GameObject TargetsMenu;
     [SerializeField] private GameObject scanner;
     [SerializeField] private GameObject backButton;
-    [SerializeField] private GameObject resetButton;
+    [SerializeField] private GameObject AutoResetButton;
+    [SerializeField] private GameObject ManualResetButton;
+    [SerializeField] private GameObject ModeSelection;
     [SerializeField] private GameObject[] targets;
     [SerializeField] private GameObject tripodScripts;
     [SerializeField] private GameObject SelectionPrompt;
@@ -40,7 +42,8 @@ public class scanMenuScript : MonoBehaviour
 
         tripodMenu.SetActive(false);
         backButton.SetActive(false);
-        resetButton.SetActive(false);
+        ManualResetButton.SetActive(false);
+        AutoResetButton.SetActive(false);
         tripod.GetComponent<Renderer>().enabled = false;
         scanner.GetComponent<Renderer>().enabled = false;
         //scannerCanvas.GetComponent<Canvas>().enabled = false;
@@ -125,7 +128,19 @@ public class scanMenuScript : MonoBehaviour
   
         TargetsMenu.SetActive(false);
         //backButton.SetActive(true);
-        resetButton.SetActive(true);
+        //if auto selection menu mode
+        if (ModeSelection.GetComponent<modeselection>().Auto == true)
+        {
+            AutoResetButton.SetActive(true);
+            ManualResetButton.SetActive(false);
+        }
+        //if manual selection menu mode
+        if (ModeSelection.GetComponent<modeselection>().Manual == true)
+        {
+            AutoResetButton.SetActive(false);
+            ManualResetButton.SetActive(true);
+        }
+        
         //scannerCanvas.GetComponent<Canvas>().enabled = true;
         scannerCanvas.SetActive(true);// substitute above function.
         Vector3 newPosition = scanner.transform.position;

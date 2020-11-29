@@ -128,6 +128,9 @@ public class ActivityManagerScript : MonoBehaviour
     public GameObject A1DozerRFID;
     public GameObject A2CraneRFID;
     public GameObject A3TruckRFID;
+
+    public GameObject LSAreset;
+    public GameObject LSMreset;
     #endregion
 
     #region main menu functionalities
@@ -356,7 +359,7 @@ public class ActivityManagerScript : MonoBehaviour
     }
     public void select_5_backhoe_RFID()
     {
-        A5BackhoeRFID.SetActive(false);
+        A5BackhoeRFID.SetActive(true);
     }
 
     public void stop_5()
@@ -809,6 +812,24 @@ public class ActivityManagerScript : MonoBehaviour
         AutoUI.SetActive(false);
         ManualUI.SetActive(true);
         ConcurencySuspension = true;
+    }
+
+    public void Auto_LS_Reset()
+    {
+        resetScanner();
+        resetMainCam();
+        AutoUI.SetActive(true);
+        ManualUI.SetActive(false);
+        LSAreset.SetActive(false);
+    }
+
+    public void Manual_LS_Reset()
+    {
+        resetScanner();
+        resetMainCam();
+        AutoUI.SetActive(false);
+        ManualUI.SetActive(true);
+        LSMreset.SetActive(false);
     }
     #endregion
 

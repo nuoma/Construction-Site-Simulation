@@ -38,8 +38,8 @@ public class ManualSelection : MonoBehaviour
     List<string> SensorsList;
 
     private int SelectedActivityIndex;
-    private int SelectedSensorIndex;
-    private int ActualActivityNumber;
+    [HideInInspector] public int SelectedSensorIndex;
+    [HideInInspector] public int ActualActivityNumber;
 
     private bool onSensorChanged;
     public bool ResourceTaggedBool = false;
@@ -392,10 +392,11 @@ public class ManualSelection : MonoBehaviour
         }
         if (ActualActivityNumber == 2)
         {
-            A2Crane.GetComponent<Interactable>().IsEnabled = true;
-            A2SteelBeam.GetComponent<Interactable>().IsEnabled = true;
             A2Crane.transform.Find("Cube").gameObject.SetActive(true);
+            A2Crane.GetComponent<Interactable>().IsEnabled = true;
+
             A2SteelBeam.transform.Find("Cube").gameObject.SetActive(true);
+            A2SteelBeam.GetComponent<Interactable>().IsEnabled = true;
         }
         if (ActualActivityNumber == 3)
         { 
@@ -406,7 +407,7 @@ public class ManualSelection : MonoBehaviour
         }
         if (ActualActivityNumber == 4)
         {
-            A4Worker1.transform.Find("Cube").gameObject.SetActive(true);
+            //A4Worker1.transform.Find("Cube").gameObject.SetActive(true);
             A4Worker1.GetComponent<Interactable>().IsEnabled = true;
         }
         if (ActualActivityNumber == 5)
@@ -430,11 +431,11 @@ public class ManualSelection : MonoBehaviour
         if (ActualActivityNumber == 7)
         { 
             A7worker1.GetComponent<Interactable>().IsEnabled = true;
-            A7worker1.transform.Find("Cube").gameObject.SetActive(true);
+            //A7worker1.transform.Find("Cube").gameObject.SetActive(true);
             A7worker2.GetComponent<Interactable>().IsEnabled = true;
-            A7worker2.transform.Find("Cube").gameObject.SetActive(true);
+            //A7worker2.transform.Find("Cube").gameObject.SetActive(true);
             A7worker3.GetComponent<Interactable>().IsEnabled = true;
-            A7worker3.transform.Find("Cube").gameObject.SetActive(true);
+           // A7worker3.transform.Find("Cube").gameObject.SetActive(true);
         }
 
         //Skip for LS and Drone
@@ -574,7 +575,7 @@ public class ManualSelection : MonoBehaviour
         } 
 
         //A5 Load and haul
-        if (ActualActivityNumber == 5 && SelectedSensorIndex == 0)
+        if (ActualActivityNumber == 5)
         {
             ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5();
             //dumptruck GPS
@@ -585,10 +586,10 @@ public class ManualSelection : MonoBehaviour
             { GPSReportEnable = true; ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_Loader_GPS(); }
             //dumptruck RFID
             if (A5DumpTruck.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
-            { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_dumptruck_RFID(); }
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_dumptruck_RFID(); Debug.Log("A5DT rfid selected."); }
             //backhoe RFID
             if (A5Loader.GetComponent<ManualClickSelect>().TagStatus == true && SelectedSensorIndex == 1)
-            { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_backhoe_RFID(); }
+            { ActivityManagerScript.GetComponent<ActivityManagerScript>().select_5_backhoe_RFID(); Debug.Log("A5backhoe rfid selected."); }
         }
 
 

@@ -98,14 +98,24 @@ public class scanScript : MonoBehaviour
         //prompt interface
         if (resolution != 0)
             p1 = "Resolution Selected. \n";
+        else
+            p1 = "";
         if (quality != 0)
             p2 = "Quality Selected. \n";
+        else
+            p2 = "";
         if (color != 0)
             p3 = "Color Selected. \n";
+        else
+            p3 = "";
         if (profile != 0)
             p4 = "Profile Selected. \n";
+        else
+            p4 = "";
         if (coverage)
             p5 = "Coverage Selected.\n";
+        else
+            p5 = "";
         SelectionPrompt.GetComponent<TextMeshProUGUI>().text = "Selected:" + p1 + p2 + p3 + p4 +p5;
 
         //Scan condition filter check

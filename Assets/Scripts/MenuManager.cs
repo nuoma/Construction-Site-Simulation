@@ -122,6 +122,8 @@ public class MenuManager : MonoBehaviour
 
     public GameObject ManualSelectionParent;
     public GameObject CostBenefitPanel;
+
+    private bool AConfirmButtonSelected = false;
     #endregion
 
     //----------------------------------------------------------
@@ -148,7 +150,7 @@ public class MenuManager : MonoBehaviour
         StopButtonObj.SetActive(false);
         NAButton.SetActive(false);
 
-        A_confirm_button.SetActive(true);
+        A_confirm_button.SetActive(false);
         S_confirm_button.SetActive(false);
         R_confirm_button.SetActive(false);
 
@@ -319,6 +321,11 @@ public class MenuManager : MonoBehaviour
                 }
             }
         }
+
+        if (SelecedActivityNumber != 0 && AConfirmButtonSelected == false)
+            A_confirm_button.SetActive(true);
+        else
+            A_confirm_button.SetActive(false);
     }
 
     private void UpdateSensorSelected()
@@ -1058,7 +1065,8 @@ public class MenuManager : MonoBehaviour
             //LUT(Alias, actual activity number); e.g. LUT.Add(1,3);
 
             //A_confirm button should not be used again.
-            A_confirm_button.SetActive(false);
+            //A_confirm_button.SetActive(false);
+            AConfirmButtonSelected = true;
 
             //instantiate activity selection panel
             for (int i = 0; i < SelecedActivityNumber; i++)

@@ -8,7 +8,7 @@ public class ManualClickSelect : MonoBehaviour
     public GameObject ManualSelectionCode;
     public GameObject TagFlag;
     public bool Taggable;
-    public bool TagStatus = false;
+    [HideInInspector] public bool TagStatus = false;
     [SerializeField] [Tooltip("Assign DialogSmall_192x96.prefab")] private GameObject DialogPrefabSmall;
     private bool WarningBool;
     private Dialog myDialog;
@@ -28,14 +28,25 @@ public class ManualClickSelect : MonoBehaviour
             myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", DialogWarningString, true);
             WarningBool = false;
         }
-    }
 
-    private void switchTag(GameObject Tag)
-    {
-        if (Tag.transform.GetChild(0).gameObject.activeSelf)
-            Tag.transform.GetChild(0).gameObject.SetActive(false);
-        else
-            Tag.transform.GetChild(0).gameObject.SetActive(true);
+        //currently configuring as A2 crane activity + GPS
+        if (ManualSelectionCode.GetComponent<ManualSelection>().ActualActivityNumber == 2 && ManualSelectionCode.GetComponent<ManualSelection>().SelectedSensorIndex == 0)
+        {
+            //identify self by name
+            if (gameObject.name == "Steel Beam")
+            { Taggable = true; }
+            if (gameObject.name == "Crane")
+            { Taggable = false; }
+        }
+        //currently configuring as A2 crane activity + RFID
+        if (ManualSelectionCode.GetComponent<ManualSelection>().ActualActivityNumber == 2 && ManualSelectionCode.GetComponent<ManualSelection>().SelectedSensorIndex == 1)
+        {
+            //identify self by name
+            if (gameObject.name == "Steel Beam")
+            { Taggable = false; }
+            if (gameObject.name == "Crane")
+            { Taggable = true; }
+        }
     }
 
     public void ClickAction()
