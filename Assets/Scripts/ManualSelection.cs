@@ -373,6 +373,10 @@ public class ManualSelection : MonoBehaviour
         //SelectedActivityIndex to ActualActivityNumber.
         LUT();
 
+        //disable dropdown menus
+        Dropdown1.GetComponent<Button>().interactable = false;
+        Dropdown2.GetComponent<Button>().interactable = false;
+
         //pointing arrow
         ActivityIndicator();
 
@@ -407,7 +411,7 @@ public class ManualSelection : MonoBehaviour
         }
         if (ActualActivityNumber == 4)
         {
-            //A4Worker1.transform.Find("Cube").gameObject.SetActive(true);
+            A4Worker1.transform.Find("Cube").gameObject.SetActive(true);
             A4Worker1.GetComponent<Interactable>().IsEnabled = true;
         }
         if (ActualActivityNumber == 5)
@@ -431,11 +435,11 @@ public class ManualSelection : MonoBehaviour
         if (ActualActivityNumber == 7)
         { 
             A7worker1.GetComponent<Interactable>().IsEnabled = true;
-            //A7worker1.transform.Find("Cube").gameObject.SetActive(true);
+            A7worker1.transform.Find("Cube").gameObject.SetActive(true);
             A7worker2.GetComponent<Interactable>().IsEnabled = true;
-            //A7worker2.transform.Find("Cube").gameObject.SetActive(true);
+            A7worker2.transform.Find("Cube").gameObject.SetActive(true);
             A7worker3.GetComponent<Interactable>().IsEnabled = true;
-           // A7worker3.transform.Find("Cube").gameObject.SetActive(true);
+            A7worker3.transform.Find("Cube").gameObject.SetActive(true);
         }
 
         //Skip for LS and Drone
@@ -734,9 +738,13 @@ public class ManualSelection : MonoBehaviour
             //MDrone.SetActive(false);
 
 
-            //if(false) {turn off;}
+            //if(Activity not active) {turn off;}
             if (! (ActualActivityNumber == 1)) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(false); }
-            if (! (ActualActivityNumber == 2)) { ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false); }
+            if (!(ActualActivityNumber == 2)) 
+            {
+                if(!(ActualActivityNumber == 4))
+                ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false); 
+            }
             if (! (ActualActivityNumber == 3)) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(false); }
             if (! (ActualActivityNumber == 4)) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(false); }
             if (! (ActualActivityNumber == 5)) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(false); }

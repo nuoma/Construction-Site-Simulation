@@ -1621,9 +1621,13 @@ public class MenuManager : MonoBehaviour
             //MDrone.SetActive(false);
 
 
-            //if(false) {turn off;}
+            //if(Activity not active) {turn off;}
             if (!SelectedActivities[0]) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(false); }
-            if (!SelectedActivities[1]) { ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false); }
+            if (!SelectedActivities[1]) 
+            {
+                if(!SelectedActivities[3])
+                ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false); 
+            }
             if (!SelectedActivities[2]) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(false); }
             if (!SelectedActivities[3]) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(false); }
             if (!SelectedActivities[4]) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(false); }

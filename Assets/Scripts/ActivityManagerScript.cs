@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ActivityManagerScript : MonoBehaviour
@@ -162,9 +159,9 @@ public class ActivityManagerScript : MonoBehaviour
         A5TruckRFID.SetActive(false);
         A5BackhoeRFID.SetActive(false);
 
-    
 
-}
+
+    }
 
     private void Update()
     {
@@ -327,7 +324,7 @@ public class ActivityManagerScript : MonoBehaviour
             //activate GPS report function
             //Activity4Worker_GPSTMP.SetActive(true);
             //A4_worker_GPSdisplay = true;
-            
+
         }
     }
 
@@ -375,19 +372,19 @@ public class ActivityManagerScript : MonoBehaviour
 
     public void A6_RFID()
     {
-        if(A6_wood_flag) Activity6.GetComponent<A6_RFID>().WoodFlag = true;
-        if(A6_log_flag) Activity6.GetComponent<A6_RFID>().LogFlag = true;
-        if(A6_rebar_flag) Activity6.GetComponent<A6_RFID>().RebarFlag = true;
+        if (A6_wood_flag) Activity6.GetComponent<A6_RFID>().WoodFlag = true;
+        if (A6_log_flag) Activity6.GetComponent<A6_RFID>().LogFlag = true;
+        if (A6_rebar_flag) Activity6.GetComponent<A6_RFID>().RebarFlag = true;
 
         Activity6.GetComponent<A6_RFID>().start();
     }
 
     public void select_7()
     {
-           A7Worker1.GetComponent<workerMove>().start();
-           A7Worker2.GetComponent<workerMove>().start();
-           A7Worker3.GetComponent<workerMove>().start();
-           Activity7Arrow.transform.Find("Arrow").gameObject.SetActive(true);
+        A7Worker1.GetComponent<workerMove>().start();
+        A7Worker2.GetComponent<workerMove>().start();
+        A7Worker3.GetComponent<workerMove>().start();
+        Activity7Arrow.transform.Find("Arrow").gameObject.SetActive(true);
     }
 
     public void select_7_new()
@@ -434,13 +431,13 @@ public class ActivityManagerScript : MonoBehaviour
         //Activity8.transform.Find("Arrow").gameObject.SetActive(true);
         //sensorSelected();
         AutoUI.SetActive(false);
-        
+
         scannerMenu.SetActive(true);
         //Vector3 ScannerPosition= Activity8.transform.position;
         //scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         scannerParentNode.transform.position = Activity8.transform.position;
         //LSConstraint.GetComponent<LSConstraint>().BeginSignal();
-        
+
         //AutoUI.SetActive(false);
     }
 
@@ -551,16 +548,15 @@ public class ActivityManagerScript : MonoBehaviour
 
     //public void select_12Drone() //for manual drone purpose, close canvas for auto drone.
     //{
-        //sensorSelected();
+    //sensorSelected();
     //    Activity13_DroneCanvas.SetActive(false);
-        //need to get rid of all canvas
-   // }
+    //need to get rid of all canvas
+    // }
 
     public void stop_12_a()
     {
         Activity13Drone.GetComponent<Drone13>().stop();
     }
-
 
     public void select_13()
     {
@@ -591,30 +587,8 @@ public class ActivityManagerScript : MonoBehaviour
     }
     #endregion
 
-    #region Legacy Sensor Functions
-    //Sensor Functions
-    /*
-    public void gpsSelected()
-    {
-        sensorSelected();
-        resourceMenu.SetActive(true);
-    }
-    public void laserScannerSelected()
-    {
-        sensorSelected();
-        scannerMenu.SetActive(true);
-    }
-    public void imuSelected()
-    {
-        sensorSelected();
-        imuMenu.SetActive(true);
-    }
-    public void rfidSelected()
-    {
-        sensorSelected();
-        rfidMenu.SetActive(true);
-    }
-    */
+    #region Sensor Related Functions
+
 
     //Legacy method to use manually controlled drone
     public void droneSelected()
@@ -672,7 +646,7 @@ public class ActivityManagerScript : MonoBehaviour
     public void GenericBackButton() //currently for all Back menus.
     {
         resetMainCam();
-        LaserScannerBackButton.SetActive(false); 
+        LaserScannerBackButton.SetActive(false);
         ManualDroneBackButton.SetActive(false);
         GetComponent<Canvas>().enabled = true;
         gameObject.SetActive(true);
@@ -725,7 +699,7 @@ public class ActivityManagerScript : MonoBehaviour
 
     private void resetScanner()
     {
-        scannerCanvas.SetActive(false); 
+        scannerCanvas.SetActive(false);
         scannerCanvas.GetComponent<scanScript>().resolution = 0;
         scannerCanvas.GetComponent<scanScript>().quality = 0;
         scannerCanvas.GetComponent<scanScript>().color = 0;
@@ -757,18 +731,18 @@ public class ActivityManagerScript : MonoBehaviour
         mainCamera.transform.position = MainCameraResetPosition;
         mainCamera.transform.rotation = MainCameraResetRotation;
     }
-        //Function to select worker
-        public void workerFunction()
+    //Function to select worker
+    public void workerFunction()
     {
-        if(move)
+        if (move)
         {
             worker.GetComponent<workerMove>().start();
         }
 
-        if(sensors)
+        if (sensors)
         {
-                switchTag(worker);
-                //worker.GetComponent<workerMove>().switchTag();
+            switchTag(worker);
+            //worker.GetComponent<workerMove>().switchTag();
         }
     }
 
