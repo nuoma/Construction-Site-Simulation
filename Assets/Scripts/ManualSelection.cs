@@ -702,7 +702,7 @@ public class ManualSelection : MonoBehaviour
 
     public void ReloadSceneButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(3);
     }
 
 

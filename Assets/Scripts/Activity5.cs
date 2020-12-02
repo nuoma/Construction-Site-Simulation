@@ -156,7 +156,7 @@ public class Activity5 : MonoBehaviour
             _BackhoeVC.BrakesInput = 0;
             _BackhoeVC.SteeringInput = 0; //-1 to 1
             _BackhoeVC.AccelerationInput = 0.001f;
-            yield return new WaitForSeconds(3.35f);
+            yield return new WaitForSeconds(4f);
 
             //Stop and brake
             _BackhoeVC.BrakesInput = 1;

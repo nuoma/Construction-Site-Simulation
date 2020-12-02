@@ -201,10 +201,11 @@ public class MenuManager : MonoBehaviour
             ComboSelectionCanvas.SetActive(true);
             PrepareComboDisplayString();
             ShowSelectionText.GetComponent<TextMeshProUGUI>().text = ComboDisplayString;
-
-            CostBenefitPanel.SetActive(true);
-            PrepareCostBenefitString();
-            CostBenefitText.GetComponent<TextMeshProUGUI>().text = CostBenefitString;
+            
+            //20201130 redesign cost benefit in another scene.
+            //CostBenefitPanel.SetActive(true);
+            //PrepareCostBenefitString();
+            //CostBenefitText.GetComponent<TextMeshProUGUI>().text = CostBenefitString;
         }
 
         //Display Report Panels
@@ -1673,7 +1674,14 @@ public class MenuManager : MonoBehaviour
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("MenuHub",LoadSceneMode.Single);
         //ActivityManager.GetComponent<ActivityManagerScript>().resetScene();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+    }
+
+    public void TutorialModeReloadSceneButton()
+    {
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("MenuHub",LoadSceneMode.Single);
+        //ActivityManager.GetComponent<ActivityManagerScript>().resetScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(2);
     }
 
     public void StopButton()

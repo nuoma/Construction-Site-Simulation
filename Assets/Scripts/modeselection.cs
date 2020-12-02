@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class modeselection : MonoBehaviour
 {
@@ -8,12 +9,15 @@ public class modeselection : MonoBehaviour
     public GameObject ManualCanvas;
     public bool Auto;
     public bool Manual;
+    public GameObject manualselection;
     // Start is called before the first frame update
     void Start()
     {
         gameObject.SetActive(true);
         AutoCanvas.SetActive(false);
         ManualCanvas.SetActive(false);
+        manualselection.GetComponent<ManualSelection>().SetInteractablesFalse();
+        manualselection.GetComponent<ManualSelection>().SetCubeFalse();
     }
 
     public void auto()
@@ -32,6 +36,11 @@ public class modeselection : MonoBehaviour
         ManualCanvas.GetComponent<ManualSelection>().SetCubeFalse();
         Manual = true;
         Auto = false;
+    }
+
+    public void exitbutton()
+    {
+        SceneManager.LoadScene(0);
     }
     // Update is called once per frame
     void Update()

@@ -46,7 +46,7 @@ public class scanMenuScript : MonoBehaviour
         AutoResetButton.SetActive(false);
         tripod.GetComponent<Renderer>().enabled = false;
         scanner.GetComponent<Renderer>().enabled = false;
-        //scannerCanvas.GetComponent<Canvas>().enabled = false;
+
 
         for (int i = 0; i < targets.Length; i++)
         {

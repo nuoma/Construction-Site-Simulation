@@ -249,6 +249,12 @@ public class ActivityManagerScript : MonoBehaviour
         Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
     }
 
+    public void TutorialGPS()
+    {
+        //Activity1Bulldozer.transform.Find("Arrow").gameObject.SetActive(true);
+        Activity1Bulldozer.GetComponent<BullldozerActivity1>().start();
+        Activity1Bulldozer.GetComponent<GenericGPS>().start();
+    }
     public void select_1_Dozer_GPS()
     {
         Activity1Bulldozer.GetComponent<GenericGPS>().start();
@@ -581,6 +587,13 @@ public class ActivityManagerScript : MonoBehaviour
         Activity14.GetComponent<A14>().done();
     }
 
+    public void TutorialIMU()
+    {
+        Activity14.GetComponent<A14>().Start();
+        Activity14.GetComponent<A14>().carpenter1Select();
+        Activity14.GetComponent<A14>().done();
+    }
+
     public void A13_stop()
     {
         Activity14.GetComponent<A14>().backSelected();
@@ -643,6 +656,24 @@ public class ActivityManagerScript : MonoBehaviour
         //drone.GetComponent<droneScript>().start();
     }
 
+    public void TutorialDrone()
+    {
+        Debug.Log("Tutorial drone executed");
+        drone.SetActive(true);//activate drone.
+        //drone.transform.position = Activity12_DroneLocator.transform.position; //3, move drone to locator position.
+        ManualDroneBackButton.SetActive(true);//Backbutton active
+        droneCanvas.SetActive(true);//Drone canvas active
+        //Move Drone Parent Node
+        //MDroneParentCanvas.transform.position = Activity12_MDroneCameraLocator.transform.position;
+        //MDroneParentCanvas.transform.eulerAngles = new Vector3(MDroneParentCanvas.transform.eulerAngles.x, MDroneParentCanvas.transform.eulerAngles.y + 50, MDroneParentCanvas.transform.eulerAngles.z);
+        drone.transform.Find("Arrow").gameObject.SetActive(true);
+    }
+
+    public void TutorialLS()
+    {
+            LSConstraint.GetComponent<LSConstraint>().BeginSignal();
+            scannerMenu.SetActive(true);     
+    }
     public void GenericBackButton() //currently for all Back menus.
     {
         resetMainCam();

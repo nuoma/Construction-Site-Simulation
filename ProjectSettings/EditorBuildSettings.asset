@@ -6,17 +6,26 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/0.unity
+    guid: fcd8e12f79afd4f42bf81c8aca9b8eb3
+  - enabled: 1
+    path: Assets/1_ExploreJobsite.unity
+    guid: 2021374ecb60ee04689a9c4c6fef702d
+  - enabled: 1
+    path: Assets/2_Sensor.unity
+    guid: c51f41f74d2789a4f93ca3200472ee11
+  - enabled: 1
+    path: Assets/3_Implementation.unity
+    guid: 2223f7ff988126542919e7f08169c93c
+  - enabled: 1
+    path: Assets/4_CostBenefit.unity
+    guid: 978dcd1c87b0a954bb02af37699ca8fb
+  - enabled: 0
     path: Assets/tabletopScene.unity
     guid: a2bd46d94b236c34da0e6812f83657c0
   - enabled: 0
-    path: Assets/menu.unity
-    guid: 34550203d84c6834bb6eb236b06f1b60
-  - enabled: 0
     path: Assets/immersiveScene.unity
     guid: 721c070f6ab4ef4499dcf323902a4331
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/MRTK/Examples/Experimental/ExamplesHub/Scenes/MRTKExamplesHubMainMenu.unity
     guid: 63a00118e809c754f9c7911bb85d635f
