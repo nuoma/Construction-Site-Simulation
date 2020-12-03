@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ExploreManager : MonoBehaviour
 {
     #region parameters
+    /*
     public GameObject button1;
     public GameObject button2;
     public GameObject button3;
@@ -20,41 +21,54 @@ public class ExploreManager : MonoBehaviour
     public GameObject button11;
     public GameObject button12;
     public GameObject button13;
-    public GameObject ButtonsParent;
+    */
+    public GameObject RadioButtonsParent;
     //public GameObject button14;
     public GameObject ConfirmButton;
     public GameObject ExploreLandingCanvas;
     public GameObject ActivityManager;
     public GameObject ResetButton;
     private bool[] SelectedActivities = new bool[16];
+    public int SelectedActivityNum;
+    public GameObject NearMenuIsolate;
 
-    public GameObject A1Parent;
+    public GameObject A1Tooltip;
+    public GameObject A2Tooltip;
+    public GameObject A3Tooltip;
+    public GameObject A4Tooltip;
+    public GameObject A5Tooltip;
+    public GameObject A6Tooltip;
+    public GameObject A7Tooltip;
+    public GameObject A8Tooltip;
+    public GameObject A9Tooltip;
+    public GameObject A10Tooltip;
+    public GameObject A11Tooltip;
+    public GameObject A12Tooltip;
+    public GameObject A13Tooltip;
 
-    public GameObject A5Panel;
-    public GameObject A6Panel;
-    public GameObject A7Panel;
-    public GameObject A8Panel;
-    public GameObject A9Panel;
-    public GameObject A10Panel;
-    public GameObject A11Panel;
-    public GameObject A12Panel;
-    public GameObject A13Panel;
-
+    private bool showhidetoggle = false;
+    public GameObject Building6;
+    public GameObject ActivityResourcesNode;
     #endregion
 
     #region Start Update
     // Start is called before the first frame update
     void Start()
     {
-        A5Panel.SetActive(false);
-        A6Panel.SetActive(false);
-        A7Panel.SetActive(false);
-        A8Panel.SetActive(false);
-        A9Panel.SetActive(false);
-        A10Panel.SetActive(false);
-        A11Panel.SetActive(false);
-        A12Panel.SetActive(false);
-        A13Panel.SetActive(false);
+        A1Tooltip.SetActive(false);
+        A2Tooltip.SetActive(false);
+        A3Tooltip.SetActive(false);
+        A4Tooltip.SetActive(false);
+        A5Tooltip.SetActive(false);
+        A6Tooltip.SetActive(false);
+        A7Tooltip.SetActive(false);
+        A8Tooltip.SetActive(false);
+        A9Tooltip.SetActive(false);
+        A10Tooltip.SetActive(false);
+        A11Tooltip.SetActive(false);
+        A12Tooltip.SetActive(false);
+        A13Tooltip.SetActive(false);
+        NearMenuIsolate.SetActive(false);
     }
 
     // Update is called once per frame
@@ -68,6 +82,7 @@ public class ExploreManager : MonoBehaviour
 
     private void UpdateSelected()
     {
+        /*
         if (button1.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[0] = true; } else { SelectedActivities[0] = false; }
         if (button2.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[1] = true; } else { SelectedActivities[1] = false; }
         if (button3.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[2] = true; } else { SelectedActivities[2] = false; }
@@ -81,116 +96,96 @@ public class ExploreManager : MonoBehaviour
         if (button11.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[10] = true; } else { SelectedActivities[10] = false; }
         if (button12.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[11] = true; } else { SelectedActivities[11] = false; }
         if (button13.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[12] = true; } else { SelectedActivities[12] = false; }
+    */
+        SelectedActivityNum = RadioButtonsParent.GetComponent<InteractableToggleCollection>().CurrentIndex;
+        Debug.Log("Selected:" + SelectedActivityNum);
     }
 
     public void Confirm()
     {
-        for (int i = 0; i < 13; ++i)
-        {
-            if (SelectedActivities[i] == true) Debug.Log(i + "Activated");
-        }
-
         ExploreLandingCanvas.SetActive(false);
-
         ExecuteActivity();
     }
 
     private void ExecuteActivity()
     {
-        ResetButton.SetActive(true);
-
+        //ResetButton.SetActive(true);
+        NearMenuIsolate.SetActive(true);
         //A1 bulldozer move
-        if (SelectedActivities[0] == true)
+        if (SelectedActivityNum == 0)
         {
+            A1Tooltip.SetActive(true);
             ActivityManager.GetComponent<ActivityManagerScript>().select_1();
         }
         //A2 crane move
-        if (SelectedActivities[1] == true)
+        if (SelectedActivityNum == 1)
         {
+            A2Tooltip.SetActive(true);
             ActivityManager.GetComponent<ActivityManagerScript>().select_2();
         }
         //A3 material delivery
-        if (SelectedActivities[2] == true)
+        if (SelectedActivityNum == 2)
         {
+            A3Tooltip.SetActive(true);
             ActivityManager.GetComponent<ActivityManagerScript>().select_3();
         }
         //A4 worekr close call
-        if (SelectedActivities[3] == true)
+        if (SelectedActivityNum == 3)
         {
+            A4Tooltip.SetActive(true);
             ActivityManager.GetComponent<ActivityManagerScript>().select_4();
             ActivityManager.GetComponent<ActivityManagerScript>().select_2();
         }
         //A5 load haul
-        if (SelectedActivities[4] == true)
+        if (SelectedActivityNum == 4)
         {
-            A5Panel.SetActive(true);
+            A5Tooltip.SetActive(true);
             ActivityManager.GetComponent<ActivityManagerScript>().select_5();
         }
         //A6 material inventory
-        if (SelectedActivities[5] == true)
+        if (SelectedActivityNum == 5)
         {
-            A6Panel.SetActive(true);
+            A6Tooltip.SetActive(true);
         }
         //A7 detecting fall
-        if (SelectedActivities[6] == true)
+        if (SelectedActivityNum == 6)
         {
-            A7Panel.SetActive(true);
+            A7Tooltip.SetActive(true);
         }
         //A8 scan building
-        if (SelectedActivities[7] == true)
+        if (SelectedActivityNum == 7)
         {
-            A8Panel.SetActive(true);
+            A8Tooltip.SetActive(true);
         }
         //A9 scan floor
-        if (SelectedActivities[8] == true)
+        if (SelectedActivityNum == 8)
         {
-            A9Panel.SetActive(true);
+            A9Tooltip.SetActive(true);
         }
         //A10 scan stockpile
-        if (SelectedActivities[9] == true)
+        if (SelectedActivityNum == 9)
         {
-            A10Panel.SetActive(true);
+            A10Tooltip.SetActive(true);
         }
         //A11 scan old building
-        if (SelectedActivities[10] == true)
+        if (SelectedActivityNum == 10)
         {
-            A11Panel.SetActive(true);
+            A11Tooltip.SetActive(true);
         }
         //A12 jobsite inspection
-        if (SelectedActivities[11] == true)
+        if (SelectedActivityNum == 11)
         {
-            A12Panel.SetActive(true);
+            A12Tooltip.SetActive(true);
         }
         //A13 IMU
-        if (SelectedActivities[12] == true)
+        if (SelectedActivityNum == 12)
         {
-            A13Panel.SetActive(true);
+            A13Tooltip.SetActive(true);
         }
 
     }
 
-    //All show hide buttons.
-    //A1
-    public void showhide5()
-    {
-        bool flag = false;
-        Renderer[] renderers = A1Parent.GetComponentsInChildren<Renderer>();
-        foreach (var r in renderers)
-        {
-            // Do something with the renderer here...
-            if (flag)
-            {
-                r.enabled = false; // like disable it for example. 
-                flag = false;
-                Debug.Log("Render off");
-            }
-            else
-            {
-                r.enabled = true; // like disable it for example. 
-                flag = true;
-            }
-        }
-    }
+
 
     public void ExitButtonFunction()
     {
@@ -200,6 +195,84 @@ public class ExploreManager : MonoBehaviour
     public void ResetButtonFunction()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void AllActivities()
+    {
+        //ControlPanel.SetActive(true);
+        A1Tooltip.SetActive(true);
+        ActivityManager.GetComponent<ActivityManagerScript>().select_1();
+        A2Tooltip.SetActive(true);
+        ActivityManager.GetComponent<ActivityManagerScript>().select_2();
+        A3Tooltip.SetActive(true);
+        ActivityManager.GetComponent<ActivityManagerScript>().select_3();
+        A4Tooltip.SetActive(true);
+        ActivityManager.GetComponent<ActivityManagerScript>().select_4();
+        A5Tooltip.SetActive(true);
+        ActivityManager.GetComponent<ActivityManagerScript>().select_5();
+        A6Tooltip.SetActive(true);
+        A7Tooltip.SetActive(true);
+        A8Tooltip.SetActive(true);
+        A9Tooltip.SetActive(true);
+        A10Tooltip.SetActive(true);
+        A11Tooltip.SetActive(true);
+        A12Tooltip.SetActive(true);
+        A13Tooltip.SetActive(true);
+    }
+
+    public void ShowHide()
+    {
+        //below is from menumanager.cs
+        //GameObject building = Everything.transform.Find("SceneContent").transform.Find("Construction Site").transform.Find("buildings").transform.Find("building-6").gameObject;
+        if (showhidetoggle)
+        {
+            //Currently in hidden state, now show everything.
+            showhidetoggle = false;
+            Building6.SetActive(true);//building-6 special case shared by multiple activities
+            foreach (Transform child in ActivityResourcesNode.transform)
+            {
+                child.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            //bool is false, set to true and hide everything
+            //Switch to hide in-active assets.
+            showhidetoggle = true;
+            //mainUICollection.SetActive(false);
+            //MiscAssetNode.SetActive(false);
+            //building.SetActive(false); //building-6 relate to these activities:
+            //LS.SetActive(false);
+            //MDrone.SetActive(false);
+
+
+            //if(Activity not active) {turn off;}
+            if (!(SelectedActivityNum == 1)) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 2))
+            {
+                if (!(SelectedActivityNum == 4))
+                    ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false);
+            }
+            if (!(SelectedActivityNum == 3)) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 4)) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 5)) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 6)) { ActivityResourcesNode.transform.Find("Activity6").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 7)) { ActivityResourcesNode.transform.Find("Activity7").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 8)) { ActivityResourcesNode.transform.Find("Activity8").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 9)) { ActivityResourcesNode.transform.Find("Activity9").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 10)) { ActivityResourcesNode.transform.Find("Activity11A").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity11B").gameObject.SetActive(false); }
+            //11.Oldhouse
+            if (!(SelectedActivityNum == 11)) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 12)) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 13)) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(false); }
+
+            //building-6 check
+            if (!(SelectedActivityNum == 2) && !(SelectedActivityNum == 4) && !(SelectedActivityNum == 9))
+            {
+                Building6.SetActive(false);
+            }
+
+        }
     }
     #endregion
 }

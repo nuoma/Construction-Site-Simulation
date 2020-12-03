@@ -14,8 +14,8 @@ public class modeselection : MonoBehaviour
     void Start()
     {
         gameObject.SetActive(true);
-        AutoCanvas.SetActive(false);
-        ManualCanvas.SetActive(false);
+        //AutoCanvas.SetActive(false);
+        //ManualCanvas.SetActive(false);
         manualselection.GetComponent<ManualSelection>().SetInteractablesFalse();
         manualselection.GetComponent<ManualSelection>().SetCubeFalse();
         Debug.Log("SceneName:" + SceneManager.GetActiveScene().name);

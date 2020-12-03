@@ -7736,7 +7736,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -339}
-  m_SizeDelta: {x: 2000, y: 1000}
+  m_SizeDelta: {x: 2500, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &995918425
 MonoBehaviour:
@@ -7757,7 +7757,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Which menu would you like to use?
+  m_text: How would you tag resources with sensors?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f17e8bb3967fe14093d5fec798fffd9, type: 2}
   m_sharedMaterial: {fileID: 21700449227511232, guid: 2f17e8bb3967fe14093d5fec798fffd9,
@@ -7827,7 +7827,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 995918425}
-    characterCount: 33
+    characterCount: 41
     spriteCount: 0
     spaceCount: 6
     wordCount: 7
@@ -10509,7 +10509,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Auto
+  m_text: Automatically
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
   m_sharedMaterial: {fileID: 21202819797275496, guid: 6a84f857bec7e7345843ae29404c57ce,
@@ -10579,7 +10579,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: -0.0022691963, z: -0.031214677, w: 0}
   m_textInfo:
     textComponent: {fileID: 1348558070}
-    characterCount: 4
+    characterCount: 13
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -10940,7 +10940,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Manual
+  m_text: Manually
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
   m_sharedMaterial: {fileID: 21202819797275496, guid: 6a84f857bec7e7345843ae29404c57ce,
@@ -11010,7 +11010,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: -0.0022691963, z: -0.031214677, w: 0}
   m_textInfo:
     textComponent: {fileID: 1490065728}
-    characterCount: 6
+    characterCount: 8
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
