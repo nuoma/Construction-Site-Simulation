@@ -28,6 +28,9 @@ public class SensorTutorial : MonoBehaviour
     private string GPSReportString;
     public TextMeshProUGUI GPSReportText;
 
+    public GameObject DroneParent;
+    public GameObject LSParent;
+
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +45,8 @@ public class SensorTutorial : MonoBehaviour
         RFIDParent.SetActive(false);
         IMUParent.SetActive(false);
         GPSParent.SetActive(false);
+        DroneParent.SetActive(false);
+        LSParent.SetActive(false);
     }
 
     // Update is called once per frame
@@ -109,12 +114,14 @@ public class SensorTutorial : MonoBehaviour
         LScanner.SetActive(true);
         LSPanel.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialLS();
+        LSParent.SetActive(true);
     }
 
     public void Drone()
     {
         DronePanel.SetActive(true);
         SelectionPanel.SetActive(false);
+        DroneParent.SetActive(true);
     }
 
     public void Droneexe()

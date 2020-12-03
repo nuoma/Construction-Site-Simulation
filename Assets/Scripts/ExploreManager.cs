@@ -25,7 +25,20 @@ public class ExploreManager : MonoBehaviour
     public GameObject ConfirmButton;
     public GameObject ExploreLandingCanvas;
     public GameObject ActivityManager;
+    public GameObject ResetButton;
     private bool[] SelectedActivities = new bool[16];
+
+    public GameObject A1Parent;
+
+    public GameObject A5Panel;
+    public GameObject A6Panel;
+    public GameObject A7Panel;
+    public GameObject A8Panel;
+    public GameObject A9Panel;
+    public GameObject A10Panel;
+    public GameObject A11Panel;
+    public GameObject A12Panel;
+    public GameObject A13Panel;
 
     #endregion
 
@@ -33,7 +46,15 @@ public class ExploreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        A5Panel.SetActive(false);
+        A6Panel.SetActive(false);
+        A7Panel.SetActive(false);
+        A8Panel.SetActive(false);
+        A9Panel.SetActive(false);
+        A10Panel.SetActive(false);
+        A11Panel.SetActive(false);
+        A12Panel.SetActive(false);
+        A13Panel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -60,8 +81,6 @@ public class ExploreManager : MonoBehaviour
         if (button11.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[10] = true; } else { SelectedActivities[10] = false; }
         if (button12.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[11] = true; } else { SelectedActivities[11] = false; }
         if (button13.GetComponent<Interactable>().IsToggled == true) { SelectedActivities[12] = true; } else { SelectedActivities[12] = false; }
-
-
     }
 
     public void Confirm()
@@ -78,44 +97,99 @@ public class ExploreManager : MonoBehaviour
 
     private void ExecuteActivity()
     {
-        //A1
+        ResetButton.SetActive(true);
+
+        //A1 bulldozer move
         if (SelectedActivities[0] == true)
         {
             ActivityManager.GetComponent<ActivityManagerScript>().select_1();
         }
-        //A2
+        //A2 crane move
         if (SelectedActivities[1] == true)
         {
             ActivityManager.GetComponent<ActivityManagerScript>().select_2();
         }
-        //A3
+        //A3 material delivery
         if (SelectedActivities[2] == true)
         {
             ActivityManager.GetComponent<ActivityManagerScript>().select_3();
         }
-        //A4
+        //A4 worekr close call
         if (SelectedActivities[3] == true)
         {
             ActivityManager.GetComponent<ActivityManagerScript>().select_4();
             ActivityManager.GetComponent<ActivityManagerScript>().select_2();
         }
-        //A5
+        //A5 load haul
         if (SelectedActivities[4] == true)
         {
+            A5Panel.SetActive(true);
             ActivityManager.GetComponent<ActivityManagerScript>().select_5();
         }
-        //A6
+        //A6 material inventory
         if (SelectedActivities[5] == true)
         {
+            A6Panel.SetActive(true);
         }
-        //A7
-        //A8
-        //A9
-        //A10
-        //A11
-        //A12
+        //A7 detecting fall
+        if (SelectedActivities[6] == true)
+        {
+            A7Panel.SetActive(true);
+        }
+        //A8 scan building
+        if (SelectedActivities[7] == true)
+        {
+            A8Panel.SetActive(true);
+        }
+        //A9 scan floor
+        if (SelectedActivities[8] == true)
+        {
+            A9Panel.SetActive(true);
+        }
+        //A10 scan stockpile
+        if (SelectedActivities[9] == true)
+        {
+            A10Panel.SetActive(true);
+        }
+        //A11 scan old building
+        if (SelectedActivities[10] == true)
+        {
+            A11Panel.SetActive(true);
+        }
+        //A12 jobsite inspection
+        if (SelectedActivities[11] == true)
+        {
+            A12Panel.SetActive(true);
+        }
         //A13 IMU
+        if (SelectedActivities[12] == true)
+        {
+            A13Panel.SetActive(true);
+        }
 
+    }
+
+    //All show hide buttons.
+    //A1
+    public void showhide5()
+    {
+        bool flag = false;
+        Renderer[] renderers = A1Parent.GetComponentsInChildren<Renderer>();
+        foreach (var r in renderers)
+        {
+            // Do something with the renderer here...
+            if (flag)
+            {
+                r.enabled = false; // like disable it for example. 
+                flag = false;
+                Debug.Log("Render off");
+            }
+            else
+            {
+                r.enabled = true; // like disable it for example. 
+                flag = true;
+            }
+        }
     }
 
     public void ExitButtonFunction()

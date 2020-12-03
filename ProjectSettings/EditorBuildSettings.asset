@@ -15,11 +15,17 @@ EditorBuildSettings:
     path: Assets/2_Sensor.unity
     guid: c51f41f74d2789a4f93ca3200472ee11
   - enabled: 1
-    path: Assets/3_Implementation.unity
-    guid: 2223f7ff988126542919e7f08169c93c
+    path: Assets/3_select.unity
+    guid: 2c97fe3078d57cb4d9c507cc3564e033
   - enabled: 1
     path: Assets/4_CostBenefit.unity
     guid: 978dcd1c87b0a954bb02af37699ca8fb
+  - enabled: 1
+    path: Assets/3_auto(5).unity
+    guid: 46b9ba2c1f75c7446b28d29da9686bcc
+  - enabled: 1
+    path: Assets/3_manual(6).unity
+    guid: 33553b3b6176f364e9ae1b46844531e8
   - enabled: 0
     path: Assets/tabletopScene.unity
     guid: a2bd46d94b236c34da0e6812f83657c0

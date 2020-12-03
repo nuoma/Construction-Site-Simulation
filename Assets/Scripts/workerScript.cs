@@ -67,7 +67,7 @@ public class workerScript : MonoBehaviour
                 if (shoulderBool)
                 {
                     shoulderContent += "Time: " + timeCount.ToString() + " seconds ";
-                    ReportString = ReportString + "Shoulder:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.0")+" , ";
+                    ReportString = ReportString + "Shoulder:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.0")+ "\u00B0".ToString() + " , ";
                     //shoulderText.GetComponent<TextMeshProUGUI>().text = "Shoulder:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.00");
                     shoulderContent += "  x:" + shoulder.transform.eulerAngles.x.ToString("#.0") +
                         "  y:" + (shoulder.transform.eulerAngles.y % 140).ToString("#.0") +
@@ -79,7 +79,7 @@ public class workerScript : MonoBehaviour
                 if (thighBool)
                 {
                     thighContent += "Time: " + timeCount.ToString() + " seconds ";
-                    ReportString = ReportString + "Thigh:" + (thigh.transform.eulerAngles.y % 60).ToString("#.00") + " , ";
+                    ReportString = ReportString + "Thigh:" + (thigh.transform.eulerAngles.y % 60).ToString("#.00") + "\u00B0".ToString() + " , ";
                     //thighText.GetComponent<TextMeshProUGUI>().text = "Thigh:" + (thigh.transform.eulerAngles.y % 60).ToString("#.00");
                     thighContent += "Thigh:  x:" + thigh.transform.eulerAngles.x.ToString("#.00") +
                         "  y:" + (thigh.transform.eulerAngles.y % 60).ToString("#.00") +
@@ -91,7 +91,7 @@ public class workerScript : MonoBehaviour
                 if (backBool)
                 {
                     backContent += "Time: " + timeCount.ToString() + " seconds ";
-                    ReportString = ReportString + "Back: " + (back.transform.eulerAngles.y % 120).ToString("#.00") + " , ";
+                    ReportString = ReportString + "Back: " + (back.transform.eulerAngles.y % 120).ToString("#.00") + "\u00B0".ToString() + " , ";
                     //backText.GetComponent<TextMeshProUGUI>().text = "Back: " + (back.transform.eulerAngles.y % 120).ToString("#.00");
                     backContent += "Back:  x:" + back.transform.eulerAngles.x.ToString("#.00") +
                         "  y:" + (back.transform.eulerAngles.y % 120).ToString("#.00") +
@@ -103,7 +103,7 @@ public class workerScript : MonoBehaviour
                 if (neckBool)
                 {
                     neckContent += "Time: " + timeCount.ToString() + " seconds ";
-                    ReportString = ReportString + "Neck: " + (neck.transform.eulerAngles.y % 40).ToString("#.00")+" . \n \n";
+                    ReportString = ReportString + "Neck: " + (neck.transform.eulerAngles.y % 40).ToString("#.00")+ "\u00B0".ToString() + " . \n \n";
                     //neckText.GetComponent<TextMeshProUGUI>().text = "Neck: " + (neck.transform.eulerAngles.y % 40).ToString("#.00");
                     neckContent += "Neck:  x:" + neck.transform.eulerAngles.x.ToString("#.00") +
                         "  y:" + (neck.transform.eulerAngles.y % 40).ToString("#.00") +

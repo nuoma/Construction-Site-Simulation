@@ -18,6 +18,9 @@ public class modeselection : MonoBehaviour
         ManualCanvas.SetActive(false);
         manualselection.GetComponent<ManualSelection>().SetInteractablesFalse();
         manualselection.GetComponent<ManualSelection>().SetCubeFalse();
+        Debug.Log("SceneName:" + SceneManager.GetActiveScene().name);
+        if (SceneManager.GetActiveScene().name == "3_auto(5)") { Auto = true; Manual = false; } 
+        if (SceneManager.GetActiveScene().name == "3_manual(6)") { Auto = false; Manual = true; }
     }
 
     public void auto()

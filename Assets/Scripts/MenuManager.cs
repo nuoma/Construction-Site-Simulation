@@ -1670,11 +1670,20 @@ public class MenuManager : MonoBehaviour
         LegacyMainMenu.SetActive(true);
     }
 
+    //For automatic scene 5
     public void ReloadSceneButton()
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("MenuHub",LoadSceneMode.Single);
         //ActivityManager.GetComponent<ActivityManagerScript>().resetScene();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
+    }
+
+    //For manual scene 6
+    public void ReloadManualSceneButton()
+    {
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("MenuHub",LoadSceneMode.Single);
+        //ActivityManager.GetComponent<ActivityManagerScript>().resetScene();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
     }
 
     public void TutorialModeReloadSceneButton()

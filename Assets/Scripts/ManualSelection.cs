@@ -699,10 +699,10 @@ public class ManualSelection : MonoBehaviour
         if (SelectedSensorIndex == 3) CurrentSensor = "Drone";
         if (SelectedSensorIndex == 4) CurrentSensor = "IMU";
     }
-
+    //For manual scene no6
     public void ReloadSceneButton()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(3);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
     }
 
 

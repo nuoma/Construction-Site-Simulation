@@ -666,7 +666,7 @@ public class ActivityManagerScript : MonoBehaviour
         //Move Drone Parent Node
         //MDroneParentCanvas.transform.position = Activity12_MDroneCameraLocator.transform.position;
         //MDroneParentCanvas.transform.eulerAngles = new Vector3(MDroneParentCanvas.transform.eulerAngles.x, MDroneParentCanvas.transform.eulerAngles.y + 50, MDroneParentCanvas.transform.eulerAngles.z);
-        drone.transform.Find("Arrow").gameObject.SetActive(true);
+        //drone.transform.Find("Arrow").gameObject.SetActive(true);
     }
 
     public void TutorialLS()
