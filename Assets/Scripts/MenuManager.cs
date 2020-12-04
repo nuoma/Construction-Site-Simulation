@@ -245,8 +245,12 @@ public class MenuManager : MonoBehaviour
 
     private void CreateActivityDropdown()
     {
-        ActivityList = new List<string> { "Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
-            "Material Inventory", "Detecting Fall", "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building", "Jobsite Inspection", "Worker Ergonomics"};
+        //ActivityList = new List<string> { "Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
+        //    "Material Inventory", "Detecting Fall", "Work Progress Measurement – Building", "Scan Floor", "Scan Stockpile", "Scan Old Building", "Jobsite Inspection", "Worker Ergonomics"};
+        ActivityList = new List<string> { "Backfilling", "Crane Loading", "Material Delivery", "Manual Material handling", "Loading & Hauling",
+            "Material Inventory", "Manual Material Handling (2)", "Work Progress Measurement – Building", "Floor flatness measurement", "Work Progress Measurement – Stockpile", "As-built Measurement", "Site Inspection", "Painting Work"};
+
+
         foreach (string option in ActivityList)
         {
             Mdropdown1.SetItemTitle(option);

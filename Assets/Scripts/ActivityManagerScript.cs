@@ -691,9 +691,9 @@ public class ActivityManagerScript : MonoBehaviour
 
     public void TutorialLS()
     {
-        LSboxon();
+        //LSboxon();
         LSConstraint.GetComponent<LSConstraint>().BeginSignal();
-            scannerMenu.SetActive(true);     
+        scannerMenu.SetActive(true);     
     }
     public void GenericBackButton() //currently for all Back menus.
     {
