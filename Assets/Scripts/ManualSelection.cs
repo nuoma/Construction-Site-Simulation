@@ -250,7 +250,7 @@ public class ManualSelection : MonoBehaviour
     }
     private void CreateSensorsDropdown()//Dropdown 1
     {
-        SensorsList = new List<string> { "Sensors","GPS", "RFID", "Laser Scanner", "Drone", "IMU" };
+        SensorsList = new List<string> {"GPS", "RFID", "Laser Scanner", "Drone", "IMU" };//"Sensors",
         foreach (string option in SensorsList)
         {
             Dropdown1.CreateNewItem(option, null);
@@ -274,13 +274,20 @@ public class ManualSelection : MonoBehaviour
         //Debug.Log("Dropdown Value Changed : " + dropdown.selectedItemIndex);
         //for (int i = 0; i < 5; ++i){ SelectedSensors[i] = false; }
         //SelectedSensors[dropdown.selectedItemIndex] = true;
-        SelectedSensorIndex = dropdown.selectedItemIndex - 1;
+
+        //if (dropdown.selectedItemIndex == 0) SelectedSensorIndex = 0;
+        //else SelectedSensorIndex = dropdown.selectedItemIndex - 1;
+        SelectedSensorIndex = dropdown.selectedItemIndex;
         onSensorChanged = true;
     }
 
     void DropdownValueChangedActivity(CustomDropdown dropdown)
     {
-        SelectedActivityIndex = dropdown.selectedItemIndex - 1;
+
+        //if (dropdown.selectedItemIndex == 0) SelectedSensorIndex = 0;
+        //else SelectedActivityIndex = dropdown.selectedItemIndex - 1;
+        //SelectedSensorIndex = dropdown.selectedItemIndex;
+        SelectedActivityIndex = dropdown.selectedItemIndex;
         //Debug.Log("Dropdown 2 value change:"+dropdown.selectedItemIndex);
         //If LS or Drone, directly show run button.
         if (ActualActivityNumber == 8 || ActualActivityNumber == 9 || ActualActivityNumber == 10 || ActualActivityNumber == 11 || ActualActivityNumber == 12)//LS 8 9 10 11 Drone 11 12
@@ -385,6 +392,12 @@ public class ManualSelection : MonoBehaviour
         ManualSelectionListPanel.SetActive(true);
 
         Debug.Log("Actual Activity Number: "+ActualActivityNumber);
+
+        //Show hide button will mess with LS activity.
+        if (ActualActivityNumber != 8 && ActualActivityNumber != 9 && ActualActivityNumber != 10 && ActualActivityNumber != 11)
+        {
+            ShowHideButton.SetActive(true);
+        }
 
         //Turn on interactable and box according to activity.
         if (ActualActivityNumber == 1)
@@ -682,13 +695,13 @@ public class ManualSelection : MonoBehaviour
     {
         ActivityList.Clear();
         //Activity correspond to GPS
-        if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Activities","Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
+        if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
              "Detecting Fall" }); }
-        if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Activities","Dozer backfilling", "Crane Loading","Material Delivery", "Worker's Close Call", "Load & Haul",
+        if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Dozer backfilling", "Crane Loading","Material Delivery", "Worker's Close Call", "Load & Haul",
             "Material Inventory", "Detecting Fall" }); }
-        if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] { "Activities", "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building" }); }
-        if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] { "Activities", "Scan Old Building", "Jobsite Inspection" }); }
-        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] { "Activities", "Worker Ergonomics" }); }
+        if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] {  "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building" }); }
+        if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] {  "Scan Old Building", "Jobsite Inspection" }); }
+        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] {  "Worker Ergonomics" }); }
     }
 
     private void UpdateSensorString()
@@ -731,7 +744,7 @@ public class ManualSelection : MonoBehaviour
             //bool is false, set to true and hide everything
             //Switch to hide in-active assets.
             showhidetoggle = true;
-            mainUICollection.SetActive(false);
+            //mainUICollection.SetActive(false);
             MiscAssetNode.SetActive(false);
             //building.SetActive(false); //building-6 relate to these activities:
             //LS.SetActive(false);

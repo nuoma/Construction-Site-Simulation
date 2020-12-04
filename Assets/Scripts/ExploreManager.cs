@@ -48,7 +48,11 @@ public class ExploreManager : MonoBehaviour
 
     private bool showhidetoggle = false;
     public GameObject Building6;
+    public GameObject Building3;
     public GameObject ActivityResourcesNode;
+
+    public GameObject LS;
+    public GameObject MDrone;
     #endregion
 
     #region Start Update
@@ -229,6 +233,9 @@ public class ExploreManager : MonoBehaviour
             //Currently in hidden state, now show everything.
             showhidetoggle = false;
             Building6.SetActive(true);//building-6 special case shared by multiple activities
+            Building3.SetActive(true);
+            LS.SetActive(true);
+            MDrone.SetActive(true);
             foreach (Transform child in ActivityResourcesNode.transform)
             {
                 child.gameObject.SetActive(true);
@@ -247,29 +254,48 @@ public class ExploreManager : MonoBehaviour
 
 
             //if(Activity not active) {turn off;}
-            if (!(SelectedActivityNum == 1)) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 2))
+            if (!(SelectedActivityNum == 0)) { ActivityResourcesNode.transform.Find("Activity1").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 1))
             {
-                if (!(SelectedActivityNum == 4))
+                if (!(SelectedActivityNum == 3))
                     ActivityResourcesNode.transform.Find("Activity2").gameObject.SetActive(false);
             }
-            if (!(SelectedActivityNum == 3)) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 4)) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 5)) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 6)) { ActivityResourcesNode.transform.Find("Activity6").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 7)) { ActivityResourcesNode.transform.Find("Activity7").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 8)) { ActivityResourcesNode.transform.Find("Activity8").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 9)) { ActivityResourcesNode.transform.Find("Activity9").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 10)) { ActivityResourcesNode.transform.Find("Activity11A").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity11B").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 2)) { ActivityResourcesNode.transform.Find("Activity3").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 3)) { ActivityResourcesNode.transform.Find("Activity4").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 4)) { ActivityResourcesNode.transform.Find("Activity5").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 5)) { ActivityResourcesNode.transform.Find("Activity6").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 6)) { ActivityResourcesNode.transform.Find("Activity7").gameObject.SetActive(false); }
+            //Scan building
+            if (!(SelectedActivityNum == 7)) { ActivityResourcesNode.transform.Find("Activity8").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 8)) { ActivityResourcesNode.transform.Find("Activity9").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 9)) { ActivityResourcesNode.transform.Find("Activity11A").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity11B").gameObject.SetActive(false); }
             //11.Oldhouse
-            if (!(SelectedActivityNum == 11)) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 12)) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(false); }
-            if (!(SelectedActivityNum == 13)) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 10)) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 11)) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 12)) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(false); }
 
             //building-6 check
-            if (!(SelectedActivityNum == 2) && !(SelectedActivityNum == 4) && !(SelectedActivityNum == 9))
+            if (!(SelectedActivityNum == 1) && !(SelectedActivityNum == 3) && !(SelectedActivityNum == 8))
             {
                 Building6.SetActive(false);
+            }
+
+            //building-3 check
+            if (!(SelectedActivityNum == 6) && !(SelectedActivityNum == 7))
+            {
+                Building3.SetActive(false);
+            }
+
+            //LS check
+            //Only A8 LS is kept, other activities not yet moving the LS parent node,
+            if (!(SelectedActivityNum == 7))//&& !(SelectedActivityNum == 8) && !(SelectedActivityNum == 10) && !(SelectedActivityNum == 11)
+            {
+                LS.SetActive(false);
+            }
+            //Drone check
+            if ( !(SelectedActivityNum == 11))//!(SelectedActivityNum == 10) &&
+            {
+                MDrone.SetActive(false);
             }
 
         }

@@ -71,6 +71,16 @@ public class CostBenefit : MonoBehaviour
     private void GetContent()
     {
         Content = "";
+        Content += "Activites,Sensors,Workers Needed,Cost($),ProcessingTime(min),ActivitiesDisturbance\n";
+        Content += "Material Delivery,GPS,"+ R2C2.GetComponent<Interactable>().IsToggled + ","+ R2C3.GetComponent<TextMeshProUGUI>().text + ","+ R2C4.GetComponent<TextMeshProUGUI>().text + ","+ R2C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Material Delivery,RFID," + R3C2.GetComponent<Interactable>().IsToggled + "," + R3C3.GetComponent<TextMeshProUGUI>().text + "," + R3C4.GetComponent<TextMeshProUGUI>().text + "," + R3C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Scan Old Building,Laser Scanner," + R4C2.GetComponent<Interactable>().IsToggled + "," + R4C3.GetComponent<TextMeshProUGUI>().text + "," + R4C4.GetComponent<TextMeshProUGUI>().text + "," + R4C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Scan Old Building,Drone," + R5C2.GetComponent<Interactable>().IsToggled + "," + R5C3.GetComponent<TextMeshProUGUI>().text + "," + R5C4.GetComponent<TextMeshProUGUI>().text + "," + R5C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Worker Ergonomics,IMU," + R6C2.GetComponent<Interactable>().IsToggled + "," + R6C3.GetComponent<TextMeshProUGUI>().text + "," + R6C4.GetComponent<TextMeshProUGUI>().text + "," + R6C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Fall Detection,RFID," + R7C2.GetComponent<Interactable>().IsToggled + "," + R7C3.GetComponent<TextMeshProUGUI>().text + "," + R7C4.GetComponent<TextMeshProUGUI>().text + "," + R7C5.GetComponent<Interactable>().IsToggled + "\n";
+
+        /*
+                 Content = "";
         Content += "Activites,Sensors,Resources,Workers Needed,Cost($),ProcessingTime(min),ActivitiesDisturbance\n";
         Content += "Material Delivery,GPS,Truck,"+ R2C2.GetComponent<Interactable>().IsToggled + ","+ R2C3.GetComponent<TextMeshProUGUI>().text + ","+ R2C4.GetComponent<TextMeshProUGUI>().text + ","+ R2C5.GetComponent<Interactable>().IsToggled + "\n";
         Content += "Material Delivery,RFID,Rebar in truck," + R3C2.GetComponent<Interactable>().IsToggled + "," + R3C3.GetComponent<TextMeshProUGUI>().text + "," + R3C4.GetComponent<TextMeshProUGUI>().text + "," + R3C5.GetComponent<Interactable>().IsToggled + "\n";
@@ -79,5 +89,6 @@ public class CostBenefit : MonoBehaviour
         Content += "Worker Ergonomics,IMU,Carpenter Painter and floorer Avatars," + R6C2.GetComponent<Interactable>().IsToggled + "," + R6C3.GetComponent<TextMeshProUGUI>().text + "," + R6C4.GetComponent<TextMeshProUGUI>().text + "," + R6C5.GetComponent<Interactable>().IsToggled + "\n";
         Content += "Fall Detection,RFID, worker 1and2and3," + R7C2.GetComponent<Interactable>().IsToggled + "," + R7C3.GetComponent<TextMeshProUGUI>().text + "," + R7C4.GetComponent<TextMeshProUGUI>().text + "," + R7C5.GetComponent<Interactable>().IsToggled + "\n";
 
+         */
     }
 }

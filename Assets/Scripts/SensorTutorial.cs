@@ -60,6 +60,10 @@ public class SensorTutorial : MonoBehaviour
     public GameObject GPSpanelbutton;
     public GameObject GpsDozer;
 
+    public GameObject RFIDTagCanvas;
+
+    public GameObject GPStagpanel;
+
 
     // Start is called before the first frame update
     void Start()
@@ -84,6 +88,8 @@ public class SensorTutorial : MonoBehaviour
         dronett1.SetActive(false);
         dronett2.SetActive(false);
         dronett3.SetActive(false);
+
+        RFIDTagCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -132,10 +138,16 @@ public class SensorTutorial : MonoBehaviour
 
     public void GPSexe()
     {
-        
         GPSPanel.SetActive(false);
+        GPStagpanel.SetActive(false);
         GPSReportCanvas.SetActive(true);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialGPS();
+    }
+
+    public void GPStag()
+    {
+        GPStagpanel.SetActive(true);
+        GPSPanel.SetActive(false);
     }
 
     public void RFID()
@@ -148,11 +160,18 @@ public class SensorTutorial : MonoBehaviour
 
     public void RFIDexe()
     {
+        //RFIDTagCanvas.SetActive(false);
         if (RFIDWood.GetComponent<TutorialManualClick>().TagStatus == true)
         { RFIDwoodtooltip.SetActive(true); }
 
         if (RFIDVehicle.GetComponent<TutorialManualClick>().TagStatus == true)
         { RFIDvehicletooltip.SetActive(true); }
+    }
+
+    public void RFIDTag()
+    {
+        RFIDTagCanvas.SetActive(true);
+        RFIDpanel.SetActive(false);
     }
 
     public void LS()

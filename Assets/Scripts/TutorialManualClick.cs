@@ -22,11 +22,13 @@ public class TutorialManualClick : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (WarningBool && (myDialog == null))
         {
             myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", DialogWarningString, true);
             WarningBool = false;
         }
+        
     }
 
     public void ClickAction()
@@ -53,6 +55,7 @@ public class TutorialManualClick : MonoBehaviour
         else //not taggable object, show warning
         {
             //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", true);
+            Debug.Log("manual click warning dialog");
             WarningBool = true;
             DialogWarningString = "This object cannot be tagged.";
         }
