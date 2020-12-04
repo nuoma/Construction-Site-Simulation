@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Microsoft.MixedReality.Toolkit.Experimental.UI.BoundsControl;
 
 public class ActivityManagerScript : MonoBehaviour
 {
@@ -128,6 +129,11 @@ public class ActivityManagerScript : MonoBehaviour
 
     public GameObject LSAreset;
     public GameObject LSMreset;
+
+    public GameObject LStarget1;
+    public GameObject LStarget2;
+    public GameObject LStarget3;
+    public GameObject LStripod;
     #endregion
 
     #region main menu functionalities
@@ -159,10 +165,20 @@ public class ActivityManagerScript : MonoBehaviour
         A5TruckRFID.SetActive(false);
         A5BackhoeRFID.SetActive(false);
 
-
+        LStarget1.GetComponent<BoundsControl>().gameObject.SetActive(false);
+        LStarget2.GetComponent<BoundsControl>().gameObject.SetActive(false);
+        LStarget3.GetComponent<BoundsControl>().gameObject.SetActive(false);
+        LStripod.GetComponent<BoundsControl>().gameObject.SetActive(false);
 
     }
 
+    private void LSboxon()
+    {
+        LStarget1.GetComponent<BoundsControl>().gameObject.SetActive(true);
+        LStarget2.GetComponent<BoundsControl>().gameObject.SetActive(true);
+        LStarget3.GetComponent<BoundsControl>().gameObject.SetActive(true);
+        LStripod.GetComponent<BoundsControl>().gameObject.SetActive(true);
+    }
     private void Update()
     {
         A1_Dozer_GPS = Activity1Bulldozer.GetComponent<GenericGPS>().GGPSConent;
@@ -437,7 +453,7 @@ public class ActivityManagerScript : MonoBehaviour
         //Activity8.transform.Find("Arrow").gameObject.SetActive(true);
         //sensorSelected();
         AutoUI.SetActive(false);
-
+        LSboxon();
         scannerMenu.SetActive(true);
         //Vector3 ScannerPosition= Activity8.transform.position;
         //scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
@@ -453,6 +469,7 @@ public class ActivityManagerScript : MonoBehaviour
         //Activity9.transform.Find("Arrow").gameObject.SetActive(true);
         //sensorSelected();
         AutoUI.SetActive(false);
+        LSboxon();
         Vector3 ScannerPosition = Activity9.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
         LSConstraint.GetComponent<LSConstraint>().BeginSignal();
@@ -473,6 +490,7 @@ public class ActivityManagerScript : MonoBehaviour
     {
         //switchTag(Activity11AArrow);
         //Activity11A.transform.Find("Arrow").gameObject.SetActive(true);
+        LSboxon();
         AutoUI.SetActive(false);
         Activity11Canvas.SetActive(false);
         //sensorSelected();
@@ -487,6 +505,7 @@ public class ActivityManagerScript : MonoBehaviour
     {
         //switchTag(Activity11BArrow);
         //Activity11B.transform.Find("Arrow").gameObject.SetActive(true);
+        LSboxon();
         AutoUI.SetActive(false);
         Activity11Canvas.SetActive(false);
         //sensorSelected();
@@ -516,6 +535,7 @@ public class ActivityManagerScript : MonoBehaviour
         //Activity12Canvas.SetActive(false);
         //sensorSelected();
         //mainCamera.transform.position = Activity12_MDroneCameraLocator.transform.position;//4, move camera.
+        LSboxon();
         AutoUI.SetActive(false);
         Vector3 ScannerPosition = Activity12Laser.transform.position;
         scannerParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
@@ -671,7 +691,8 @@ public class ActivityManagerScript : MonoBehaviour
 
     public void TutorialLS()
     {
-            LSConstraint.GetComponent<LSConstraint>().BeginSignal();
+        LSboxon();
+        LSConstraint.GetComponent<LSConstraint>().BeginSignal();
             scannerMenu.SetActive(true);     
     }
     public void GenericBackButton() //currently for all Back menus.
