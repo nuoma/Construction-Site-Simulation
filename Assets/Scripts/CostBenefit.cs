@@ -17,21 +17,25 @@ public class CostBenefit : MonoBehaviour
     public GameObject R4C2;
     public GameObject R5C2;
     public GameObject R6C2;
+    public GameObject R7C2;
     public TextMeshProUGUI R2C3;
     public TextMeshProUGUI R3C3;
     public TextMeshProUGUI R4C3;
     public TextMeshProUGUI R5C3;
     public TextMeshProUGUI R6C3;
+    public TextMeshProUGUI R7C3;
     public TextMeshProUGUI R2C4;
     public TextMeshProUGUI R3C4;
     public TextMeshProUGUI R4C4;
     public TextMeshProUGUI R5C4;
     public TextMeshProUGUI R6C4;
+    public TextMeshProUGUI R7C4;
     public GameObject R2C5;
     public GameObject R3C5;
     public GameObject R4C5;
     public GameObject R5C5;
     public GameObject R6C5;
+    public GameObject R7C5;
 
     string filePath;
     string ReportFileName;
@@ -67,12 +71,13 @@ public class CostBenefit : MonoBehaviour
     private void GetContent()
     {
         Content = "";
-        Content += "Sensors,Workers Needed,Cost($),ProcessingTime(min),ActivitiesDisturbance\n";
-        Content += "GPS,"+ R2C2.GetComponent<Interactable>().IsToggled + ","+ R2C3.GetComponent<TextMeshProUGUI>().text + ","+ R2C4.GetComponent<TextMeshProUGUI>().text + ","+ R2C5.GetComponent<Interactable>().IsToggled + "\n";
-        Content += "RFID," + R3C2.GetComponent<Interactable>().IsToggled + "," + R3C3.GetComponent<TextMeshProUGUI>().text + "," + R3C4.GetComponent<TextMeshProUGUI>().text + "," + R3C5.GetComponent<Interactable>().IsToggled + "\n";
-        Content += "Laser Scanner," + R4C2.GetComponent<Interactable>().IsToggled + "," + R4C3.GetComponent<TextMeshProUGUI>().text + "," + R4C4.GetComponent<TextMeshProUGUI>().text + "," + R4C5.GetComponent<Interactable>().IsToggled + "\n";
-        Content += "Drone," + R5C2.GetComponent<Interactable>().IsToggled + "," + R5C3.GetComponent<TextMeshProUGUI>().text + "," + R5C4.GetComponent<TextMeshProUGUI>().text + "," + R5C5.GetComponent<Interactable>().IsToggled + "\n";
-        Content += "IMU," + R6C2.GetComponent<Interactable>().IsToggled + "," + R6C3.GetComponent<TextMeshProUGUI>().text + "," + R6C4.GetComponent<TextMeshProUGUI>().text + "," + R6C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Activites,Sensors,Resources,Workers Needed,Cost($),ProcessingTime(min),ActivitiesDisturbance\n";
+        Content += "Material Delivery,GPS,Truck,"+ R2C2.GetComponent<Interactable>().IsToggled + ","+ R2C3.GetComponent<TextMeshProUGUI>().text + ","+ R2C4.GetComponent<TextMeshProUGUI>().text + ","+ R2C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Material Delivery,RFID,Rebar in truck," + R3C2.GetComponent<Interactable>().IsToggled + "," + R3C3.GetComponent<TextMeshProUGUI>().text + "," + R3C4.GetComponent<TextMeshProUGUI>().text + "," + R3C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Scan Old Building,Laser Scanner,old building," + R4C2.GetComponent<Interactable>().IsToggled + "," + R4C3.GetComponent<TextMeshProUGUI>().text + "," + R4C4.GetComponent<TextMeshProUGUI>().text + "," + R4C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Scan Old Building,Drone,old building," + R5C2.GetComponent<Interactable>().IsToggled + "," + R5C3.GetComponent<TextMeshProUGUI>().text + "," + R5C4.GetComponent<TextMeshProUGUI>().text + "," + R5C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Worker Ergonomics,IMU,Carpenter Painter and floorer Avatars," + R6C2.GetComponent<Interactable>().IsToggled + "," + R6C3.GetComponent<TextMeshProUGUI>().text + "," + R6C4.GetComponent<TextMeshProUGUI>().text + "," + R6C5.GetComponent<Interactable>().IsToggled + "\n";
+        Content += "Fall Detection,RFID, worker 1and2and3," + R7C2.GetComponent<Interactable>().IsToggled + "," + R7C3.GetComponent<TextMeshProUGUI>().text + "," + R7C4.GetComponent<TextMeshProUGUI>().text + "," + R7C5.GetComponent<Interactable>().IsToggled + "\n";
 
     }
 }

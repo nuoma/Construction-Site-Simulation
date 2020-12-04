@@ -8,7 +8,7 @@ public class ManualClickSelect : MonoBehaviour
     public GameObject ManualSelectionCode;
     public GameObject TagFlag;
     public bool Taggable;
-    [HideInInspector] public bool TagStatus = false;
+    public bool TagStatus = false;
     [SerializeField] [Tooltip("Assign DialogSmall_192x96.prefab")] private GameObject DialogPrefabSmall;
     private bool WarningBool;
     private Dialog myDialog;

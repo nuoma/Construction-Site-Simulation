@@ -152,15 +152,22 @@ public class workerScript : MonoBehaviour
         timer = 0;
         timeCount = 0;
     }
- /*
-    public void select()
+    /*
+       public void select()
+       {
+           currentMenu.SetActive(false);
+           resultsMenu.SetActive(true);
+           recordData = true;
+       }
+
+       */
+    public void TutorialInitial()
     {
-        currentMenu.SetActive(false);
-        resultsMenu.SetActive(true);
-        recordData = true;
+        shoulderBool = false;
+        thighBool = false;
+        backBool = false;
+        neckBool = false;
     }
-
-
     public void shoulderSelect()
     {
         shoulderBool = !shoulderBool;
@@ -176,6 +183,7 @@ public class workerScript : MonoBehaviour
     public void neckSelect()
     {
         neckBool = !neckBool;
+        //neckBool = true;
     }
-    */
+    
 }

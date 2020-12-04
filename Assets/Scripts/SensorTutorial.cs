@@ -11,6 +11,7 @@ public class SensorTutorial : MonoBehaviour
     public GameObject RFIDpanel;
     public GameObject LSPanel;
     public GameObject DronePanel;
+    public GameObject DroneInspectPanel;
     public GameObject IMUPanel;
     public GameObject SelectionPanel;
     public GameObject BackButton;
@@ -30,6 +31,34 @@ public class SensorTutorial : MonoBehaviour
 
     public GameObject DroneParent;
     public GameObject LSParent;
+    public GameObject LSBackButton;
+
+    bool gpsB;
+    bool rfidB;
+    bool lsB;
+    bool droneB;
+    bool imuB;
+
+    public GameObject RFIDWood;
+    public GameObject RFIDVehicle;
+    public GameObject RFIDButton;
+
+    public GameObject dronett1;
+    public GameObject dronett2;
+    public GameObject dronett3;
+
+    public GameObject IMUtagpanel;
+    public GameObject IMUstt;
+    public GameObject IMUbtt;
+    public GameObject IMUttt;
+    public GameObject IMUntt;
+    public GameObject imucarpenter;
+
+    public GameObject RFIDwoodtooltip;
+    public GameObject RFIDvehicletooltip;
+
+    public GameObject GPSpanelbutton;
+    public GameObject GpsDozer;
 
 
     // Start is called before the first frame update
@@ -47,6 +76,14 @@ public class SensorTutorial : MonoBehaviour
         GPSParent.SetActive(false);
         DroneParent.SetActive(false);
         LSParent.SetActive(false);
+        RFIDwoodtooltip.SetActive(false);
+        RFIDvehicletooltip.SetActive(false);
+
+        RFIDButton.SetActive(false);
+        GPSpanelbutton.SetActive(false);
+        dronett1.SetActive(false);
+        dronett2.SetActive(false);
+        dronett3.SetActive(false);
     }
 
     // Update is called once per frame
@@ -56,6 +93,13 @@ public class SensorTutorial : MonoBehaviour
         IMUReportText.GetComponent<TextMeshProUGUI>().text = IMUReportString;
         PrepareGPSString();
         GPSReportText.GetComponent<TextMeshProUGUI>().text = GPSReportString;
+
+        //if (gpsB == true) { if()}
+        bool RFIDTagged = false;
+        if (RFIDWood.GetComponent<TutorialManualClick>().TagStatus == true || RFIDVehicle.GetComponent<TutorialManualClick>().TagStatus == true) RFIDTagged = true;
+        if (rfidB == true && RFIDTagged == true) RFIDButton.SetActive(true);
+
+        if(gpsB == true && GpsDozer.GetComponent<TutorialManualClick>().TagStatus == true) GPSpanelbutton.SetActive(true);
     }
 
     private void PrepareIMUString()
@@ -80,13 +124,15 @@ public class SensorTutorial : MonoBehaviour
 
     public void GPS()
     {
+        gpsB = true;
         GPSPanel.SetActive(true);
         SelectionPanel.SetActive(false);
+        GPSParent.SetActive(true);
     }
 
     public void GPSexe()
     {
-        GPSParent.SetActive(true);
+        
         GPSPanel.SetActive(false);
         GPSReportCanvas.SetActive(true);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialGPS();
@@ -94,57 +140,108 @@ public class SensorTutorial : MonoBehaviour
 
     public void RFID()
     {
+        rfidB = true;
         RFIDpanel.SetActive(true);
         SelectionPanel.SetActive(false);
+        RFIDParent.SetActive(true);
     }
 
     public void RFIDexe()
     {
-        RFIDParent.SetActive(true);
+        if (RFIDWood.GetComponent<TutorialManualClick>().TagStatus == true)
+        { RFIDwoodtooltip.SetActive(true); }
+
+        if (RFIDVehicle.GetComponent<TutorialManualClick>().TagStatus == true)
+        { RFIDvehicletooltip.SetActive(true); }
     }
 
     public void LS()
     {
+        lsB = true;
         LSPanel.SetActive(true);
         SelectionPanel.SetActive(false);
+        LSParent.SetActive(true);
     }
 
     public void LSexe()
     {
         LScanner.SetActive(true);
-        LSPanel.SetActive(false);
+        //LSPanel.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialLS();
-        LSParent.SetActive(true);
+        //LSBackButton.SetActive(true);
     }
 
     public void Drone()
     {
-        DronePanel.SetActive(true);
+        droneB = true;
+        DroneInspectPanel.SetActive(true);
         SelectionPanel.SetActive(false);
         DroneParent.SetActive(true);
+        drone.SetActive(true);
+
+        //show tooltips
+        dronett1.SetActive(true);
+        dronett2.SetActive(true);
+        dronett3.SetActive(true);
     }
 
     public void Droneexe()
     {
-        DronePanel.SetActive(false);
-        drone.SetActive(true);
+        //DronePanel.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialDrone();
+    }
+
+    public void DroneInspect()
+    {
+        DronePanel.SetActive(true);
+        DroneInspectPanel.SetActive(false);
     }
 
     public void IMU()
     {
+        imuB = true;
         IMUPanel.SetActive(true);
         SelectionPanel.SetActive(false);
+        IMUParent.SetActive(true);
+        imucarpenter.GetComponent<workerScript>().TutorialInitial();
     }
 
     public void IMUexe()
     {
         IMUPanel.SetActive(false);
-        IMUParent.SetActive(true);
+        IMUtagpanel.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialIMU();
         IMUReportCanvas.SetActive(true);
     }
 
+    public void imutag()
+    {
+        IMUPanel.SetActive(false);
+        IMUtagpanel.SetActive(true);
+    }
+
+    public void imuN()
+    {
+        IMUntt.SetActive(true);
+        imucarpenter.GetComponent<workerScript>().neckSelect();
+    }
+    public void imuS()
+    {
+        IMUstt.SetActive(true);
+        imucarpenter.GetComponent<workerScript>().shoulderSelect();
+    }
+
+    public void imuT()
+    {
+        IMUttt.SetActive(true);
+        imucarpenter.GetComponent<workerScript>().thighSelect();
+    }
+
+    public void imuBack()
+    {
+        IMUbtt.SetActive(true);
+        imucarpenter.GetComponent<workerScript>().backSelect();
+    }
     public void BackToSelection()
     {
         SceneManager.LoadScene(2);
