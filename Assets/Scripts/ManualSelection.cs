@@ -695,13 +695,13 @@ public class ManualSelection : MonoBehaviour
     {
         ActivityList.Clear();
         //Activity correspond to GPS
-        if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
+        if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Backfilling", "Crane Loading", "Material Delivery", "Material handling (1)", "Truck Load/Haul",
              "Detecting Fall" }); }
-        if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Dozer backfilling", "Crane Loading","Material Delivery", "Worker's Close Call", "Load & Haul",
+        if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Backfilling", "Crane Loading","Material Delivery", "Material handling (1)", "Truck Load/Haul",
             "Material Inventory", "Detecting Fall" }); }
-        if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] {  "Scan Building", "Scan Floor", "Scan Stockpile", "Scan Old Building" }); }
-        if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] {  "Scan Old Building", "Jobsite Inspection" }); }
-        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] {  "Worker Ergonomics" }); }
+        if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] {  "Cladding", "Flooring", "Stockpile unloading", "Renovation" }); }
+        if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] {  "Renovation", "Site Inspection" }); }
+        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] {  "Painting" }); }
     }
 
     private void UpdateSensorString()

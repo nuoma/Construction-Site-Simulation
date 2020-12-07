@@ -247,8 +247,8 @@ public class MenuManager : MonoBehaviour
     {
         //ActivityList = new List<string> { "Dozer backfilling", "Crane Loading", "Material Delivery", "Worker's Close Call", "Load & Haul",
         //    "Material Inventory", "Detecting Fall", "Work Progress Measurement – Building", "Scan Floor", "Scan Stockpile", "Scan Old Building", "Jobsite Inspection", "Worker Ergonomics"};
-        ActivityList = new List<string> { "Backfilling", "Crane Loading", "Material Delivery", "Manual Material handling", "Loading & Hauling",
-            "Material Inventory", "Manual Material Handling (2)", "Work Progress Measurement – Building", "Floor flatness measurement", "Work Progress Measurement – Stockpile", "As-built Measurement", "Site Inspection", "Painting Work"};
+        ActivityList = new List<string> { "Backfilling", "Crane Loading", "Material Delivery", "Material handling (1)", "Truck Load/Haul",
+            "Material Inventory", "Material Handling (2)", "Cladding", "Flooring", "Stockpile unloading", "Renovation", "Site Inspection", "Painting"};
 
 
         foreach (string option in ActivityList)
