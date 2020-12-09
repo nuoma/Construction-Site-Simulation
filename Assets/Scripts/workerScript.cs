@@ -28,10 +28,10 @@ public class workerScript : MonoBehaviour
     public string ReportString = "";
     public string teststring = "test";
 
-    private bool shoulderBool = true;
-    private bool thighBool = true;
-    private bool backBool = true;
-    private bool neckBool = true;
+    private bool shoulderBool = false;
+    private bool thighBool = false;
+    private bool backBool = false;
+    private bool neckBool = false;
     private bool recordData = false;
     private float timer = 0;
     private int timeCount = 0;
@@ -112,6 +112,7 @@ public class workerScript : MonoBehaviour
                 //else
                 //neckText.GetComponent<TextMeshProUGUI>().text = "";
 
+                ReportString = ReportString + "\n \n";
                 //ReportText.GetComponent<TextMeshProUGUI>().text = ReportString;
                 //ReportString = ""; //Reset report string to empty after each frame
             }

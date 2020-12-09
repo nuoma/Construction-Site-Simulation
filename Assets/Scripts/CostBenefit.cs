@@ -68,6 +68,11 @@ public class CostBenefit : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    public void Scene4Reset()
+    {
+        SceneManager.LoadScene(4);
+    }
+
     private void GetContent()
     {
         Content = "";

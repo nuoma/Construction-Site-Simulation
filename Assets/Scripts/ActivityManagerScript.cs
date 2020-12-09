@@ -111,6 +111,9 @@ public class ActivityManagerScript : MonoBehaviour
     [HideInInspector] public string A7_w1_GPS;
     [HideInInspector] public string A7_w2_GPS;
     [HideInInspector] public string A7_w3_GPS;
+    [HideInInspector] public string A14_P_GPS;
+    [HideInInspector] public string A14_L_GPS;
+    [HideInInspector] public string A14_C_GPS;
     [HideInInspector] public bool A7_w1_GPSdisplay;
     [HideInInspector] public bool A7_w2_GPSdisplay;
     [HideInInspector] public bool A7_w3_GPSdisplay;
@@ -126,6 +129,13 @@ public class ActivityManagerScript : MonoBehaviour
     public GameObject A1DozerRFID;
     public GameObject A2CraneRFID;
     public GameObject A3TruckRFID;
+
+    public GameObject IMUPainterWorker;
+    public GameObject IMULaborerWorker;
+    public GameObject IMUCarpenterWorker;
+    public GameObject IMUPainterWorkerTooltip;
+    public GameObject IMULaborerWorkerTooltip;
+    public GameObject IMUCarpenterWorkerTooltip;
 
     public GameObject LSAreset;
     public GameObject LSMreset;
@@ -202,6 +212,9 @@ public class ActivityManagerScript : MonoBehaviour
         //if (A7_w1_GPSdisplay) { A7w1_GPSTMP.GetComponent<TextMeshProUGUI>().text = A7_w1_GPS; }
         //if (A7_w2_GPSdisplay) { A7w2_GPSTMP.GetComponent<TextMeshProUGUI>().text = A7_w2_GPS; }
         //if (A7_w3_GPSdisplay) { A7w3_GPSTMP.GetComponent<TextMeshProUGUI>().text = A7_w3_GPS; }
+        A14_P_GPS = IMUPainterWorker.GetComponent<GenericGPS>().GGPSConent;
+        A14_L_GPS = IMULaborerWorker.GetComponent<GenericGPS>().GGPSConent;
+        A14_C_GPS = IMUCarpenterWorker.GetComponent<GenericGPS>().GGPSConent;
 
     }
 
@@ -605,6 +618,34 @@ public class ActivityManagerScript : MonoBehaviour
 
         //execute IMU function
         Activity14.GetComponent<A14>().done();
+    }
+
+    public void select_Painter_GPS()
+    {
+        IMUPainterWorker.GetComponent<GenericGPS>().start();
+    }
+
+    public void select_Laborer_GPS()
+    {
+        IMULaborerWorker.GetComponent<GenericGPS>().start();
+    }
+    public void select_Carpenter_GPS()
+    {
+        IMUCarpenterWorker.GetComponent<GenericGPS>().start();
+    }
+
+    //Just show the tooltips
+    public void select_Painter_RFID()
+    {
+        IMUPainterWorkerTooltip.SetActive(true);
+    }
+    public void select_Laborer_RFID()
+    {
+        IMULaborerWorkerTooltip.SetActive(true);
+    }
+    public void select_Carpenter_RFID()
+    {
+        IMUCarpenterWorkerTooltip.SetActive(true);
     }
 
     public void TutorialIMU()

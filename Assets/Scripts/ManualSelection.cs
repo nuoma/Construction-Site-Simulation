@@ -64,7 +64,7 @@ public class ManualSelection : MonoBehaviour
     public GameObject A13Painter;
     public GameObject A13Laborer;
     public GameObject A13Carpenter;
-    public GameObject A13Carpenter2;
+    //public GameObject A13Carpenter2;
 
     public bool RFIDReportEnable;
     public bool GPSReportEnable;
@@ -86,6 +86,13 @@ public class ManualSelection : MonoBehaviour
     public GameObject mainUICollection;
     public GameObject ActivityResourcesNode;
     public GameObject ShowHideButton;
+
+    public GameObject IMU_P;//Panels for joint selection
+    public GameObject IMU_L;
+    public GameObject IMU_C;
+    public GameObject IMUPainter;
+    public GameObject IMULabor;
+    public GameObject IMUCarpenter;
     #endregion
 
     #region Start Update
@@ -105,6 +112,10 @@ public class ManualSelection : MonoBehaviour
         RunButton.SetActive(false);
         ResetButton.SetActive(false);
         ShowHideButton.SetActive(false);
+
+        IMU_P.SetActive(false);
+        IMU_L.SetActive(false);
+        IMU_C.SetActive(false);
     }
 
     public void SetInteractablesFalse()
@@ -129,7 +140,7 @@ public class ManualSelection : MonoBehaviour
         A13Painter.GetComponent<Interactable>().IsEnabled = false;
         A13Laborer.GetComponent<Interactable>().IsEnabled = false;
         A13Carpenter.GetComponent<Interactable>().IsEnabled = false;
-        A13Carpenter2.GetComponent<Interactable>().IsEnabled = false;
+        //A13Carpenter2.GetComponent<Interactable>().IsEnabled = false;
     }
 
     public void SetCubeFalse()
@@ -154,7 +165,7 @@ public class ManualSelection : MonoBehaviour
         A13Painter.transform.Find("Cube").gameObject.SetActive(false);
         A13Laborer.transform.Find("Cube").gameObject.SetActive(false);
         A13Carpenter.transform.Find("Cube").gameObject.SetActive(false);
-        A13Carpenter2.transform.Find("Cube").gameObject.SetActive(false);
+       // A13Carpenter2.transform.Find("Cube").gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -226,7 +237,10 @@ public class ManualSelection : MonoBehaviour
             + ActivityManagerScript.GetComponent<ActivityManagerScript>().A4_worker_GPS
             + ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w1_GPS
             + ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w2_GPS
-            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w3_GPS;
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A7_w3_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_P_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_L_GPS
+            + ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_C_GPS;
     }
 
     //this is mainly for A6, original RFID
@@ -250,7 +264,7 @@ public class ManualSelection : MonoBehaviour
     }
     private void CreateSensorsDropdown()//Dropdown 1
     {
-        SensorsList = new List<string> {"GPS", "RFID", "Laser Scanner", "Drone", "IMU" };//"Sensors",
+        SensorsList = new List<string> {"GPS", "RFID", "Laser Scanner", "Drone", "Worker Ergonomics(IMU)" };//"Sensors",
         foreach (string option in SensorsList)
         {
             Dropdown1.CreateNewItem(option, null);
@@ -327,6 +341,9 @@ public class ManualSelection : MonoBehaviour
             if (SelectedActivityIndex == 3) ActualActivityNumber = 4;
             if (SelectedActivityIndex == 4) ActualActivityNumber = 5;
             if (SelectedActivityIndex == 5) ActualActivityNumber = 7;
+            if (SelectedActivityIndex == 6) ActualActivityNumber = 13;
+            if (SelectedActivityIndex == 7) ActualActivityNumber = 14;
+            if (SelectedActivityIndex == 8) ActualActivityNumber = 15;
         }
         if (SelectedSensorIndex == 1)//RFID
         {
@@ -337,6 +354,10 @@ public class ManualSelection : MonoBehaviour
             if (SelectedActivityIndex == 4) ActualActivityNumber = 5;
             if (SelectedActivityIndex == 5) ActualActivityNumber = 6;
             if (SelectedActivityIndex == 6) ActualActivityNumber = 7;
+            if (SelectedActivityIndex == 7) ActualActivityNumber = 13;
+            if (SelectedActivityIndex == 8) ActualActivityNumber = 14;
+            if (SelectedActivityIndex == 9) ActualActivityNumber = 15;
+
         }
         if (SelectedSensorIndex == 2)//LS
         {
@@ -352,7 +373,9 @@ public class ManualSelection : MonoBehaviour
         }
         if (SelectedSensorIndex == 4)//IMU
         {
-            if (SelectedActivityIndex == 0) ActualActivityNumber = 13;
+            if (SelectedActivityIndex == 0) ActualActivityNumber = 13; //P
+            if (SelectedActivityIndex == 1) ActualActivityNumber = 14;//L
+            if (SelectedActivityIndex == 2) ActualActivityNumber = 15;//C
         }
     }
 
@@ -377,6 +400,7 @@ public class ManualSelection : MonoBehaviour
 
     public void TagButtonAction()
     {
+        TagButton.SetActive(false);
         //SelectedActivityIndex to ActualActivityNumber.
         LUT();
 
@@ -463,6 +487,7 @@ public class ManualSelection : MonoBehaviour
         if (ActualActivityNumber == 12) RunButton.SetActive(true);
 
         //Worker IMU
+        /*
         if (ActualActivityNumber == 13)
         {
             A13Painter.GetComponent<Interactable>().IsEnabled = true;
@@ -473,6 +498,46 @@ public class ManualSelection : MonoBehaviour
             A13Carpenter.transform.Find("Cube").gameObject.SetActive(true);
             A13Carpenter2.GetComponent<Interactable>().IsEnabled = true;
             A13Carpenter2.transform.Find("Cube").gameObject.SetActive(true);
+        }
+        */
+
+        //20201208 IMU workers addition
+        //GPS RFID for IMU workers
+        if ( ActualActivityNumber == 13)
+        {
+            A13Painter.GetComponent<Interactable>().IsEnabled = true;
+            A13Painter.transform.Find("Cube").gameObject.SetActive(true);
+        }
+        if ( ActualActivityNumber == 14)
+        {
+            A13Laborer.GetComponent<Interactable>().IsEnabled = true;
+            A13Laborer.transform.Find("Cube").gameObject.SetActive(true);
+        }
+        if ( ActualActivityNumber == 15)
+        {
+            A13Carpenter.GetComponent<Interactable>().IsEnabled = true;
+            A13Carpenter.transform.Find("Cube").gameObject.SetActive(true);
+        }
+
+        //20201207 Changed IMU
+
+        //P
+        if (SelectedSensorIndex == 04 && ActualActivityNumber == 13)
+        {
+            ManualSelectionListPanel.SetActive(false); 
+            IMU_P.SetActive(true);
+        }
+        //L
+        if (SelectedSensorIndex == 04 && ActualActivityNumber == 14)
+        {
+            ManualSelectionListPanel.SetActive(false);
+            IMU_L.SetActive(true);
+        }
+        //C
+        if (SelectedSensorIndex == 04 && ActualActivityNumber == 15) 
+        {
+            ManualSelectionListPanel.SetActive(false);
+            IMU_C.SetActive(true);
         }
     }
 
@@ -493,7 +558,9 @@ public class ManualSelection : MonoBehaviour
         if (ActualActivityNumber == 10) Text = "Stockpile 1 \nStockpile 2 \n";
         if (ActualActivityNumber == 11) Text = "Old Building \n";
         if (ActualActivityNumber == 12) Text = "Entire Jobsite. \n";
-        if (ActualActivityNumber == 13) Text = "Painter \nLaborer \nCarpenter 1 \nCarpenter 2 \n";
+        if (ActualActivityNumber == 13) Text = "Painter \n";
+        if (ActualActivityNumber == 14) Text = "Laborer \n";
+        if (ActualActivityNumber == 15) Text = "Carpenter \n";
 
         ManualSelectionListPanel.transform.Find("ResourceList").GetComponent<TextMeshProUGUI>().text = Text;
 
@@ -650,9 +717,10 @@ public class ManualSelection : MonoBehaviour
         if (ActualActivityNumber == 11 && SelectedSensorIndex == 3) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_11Drone();
 
         //A12 drone
-        if (ActualActivityNumber == 12 && SelectedSensorIndex == 3) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_12(); 
+        if (ActualActivityNumber == 12 && SelectedSensorIndex == 3) ActivityManagerScript.GetComponent<ActivityManagerScript>().select_12();
 
         //A13 IMU, dont need to specify sensor, because A13 is only reachable by selecting IMU in the first place.
+        /*
         if (ActualActivityNumber == 13 && SelectedSensorIndex == 4)
         {
             if (A13Painter.GetComponent<ManualClickSelect>().TagStatus == true)
@@ -668,6 +736,40 @@ public class ManualSelection : MonoBehaviour
             //display IMU
             IMUReportEnable = true;
             Debug.Log("IMU report enabled");
+        }
+        */
+        //IMU Painter GPS
+        if (ActualActivityNumber == 13 && SelectedSensorIndex == 0)
+        {
+            GPSReportEnable = true;
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_Painter_GPS();
+        }
+        //IMU Painter RFID
+        if (ActualActivityNumber == 13 && SelectedSensorIndex == 1)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_Painter_RFID();
+        }
+        //IMU Laborer GPS
+        if (ActualActivityNumber == 14 && SelectedSensorIndex == 0)
+        {
+            GPSReportEnable = true;
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_Laborer_GPS();
+        }
+        //IMU laborer RFID
+        if (ActualActivityNumber == 14 && SelectedSensorIndex == 1)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_Laborer_RFID();
+        }
+        //IMU Carpenter GPS
+        if (ActualActivityNumber == 15 && SelectedSensorIndex == 0)
+        {
+            GPSReportEnable = true;
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_Carpenter_GPS();
+        }
+        //IMU carpenter RFID
+        if (ActualActivityNumber == 15 && SelectedSensorIndex == 1)
+        {
+            ActivityManagerScript.GetComponent<ActivityManagerScript>().select_Carpenter_RFID();
         }
     }
 
@@ -696,12 +798,14 @@ public class ManualSelection : MonoBehaviour
         ActivityList.Clear();
         //Activity correspond to GPS
         if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Backfilling", "Crane Loading", "Material Delivery", "Material handling (1)", "Truck Load/Haul",
-             "Detecting Fall" }); }
+             "Detecting Fall","Painting","Labor","Carpentry" }); }
+        //RFID activities
         if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Backfilling", "Crane Loading","Material Delivery", "Material handling (1)", "Truck Load/Haul",
-            "Material Inventory", "Detecting Fall" }); }
+            "Material Inventory", "Detecting Fall" ,"Painting","Labor","Carpentry" }); }
         if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] {  "Cladding", "Flooring", "Stockpile unloading", "Renovation" }); }
         if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] {  "Renovation", "Site Inspection" }); }
-        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] {  "Painting" }); }
+        //IMU activities
+        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] {  "Painting","Labor","Carpentry" }); }
     }
 
     private void UpdateSensorString()
@@ -710,7 +814,7 @@ public class ManualSelection : MonoBehaviour
         if (SelectedSensorIndex == 1) CurrentSensor = "RFID";
         if (SelectedSensorIndex == 2) CurrentSensor = "Laser Scanner";
         if (SelectedSensorIndex == 3) CurrentSensor = "Drone";
-        if (SelectedSensorIndex == 4) CurrentSensor = "IMU";
+        if (SelectedSensorIndex == 4) CurrentSensor = "Worker Ergonomics(IMU)";
     }
     //For manual scene no6
     public void ReloadSceneButton()
@@ -769,6 +873,8 @@ public class ManualSelection : MonoBehaviour
             if (! (ActualActivityNumber == 11)) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(false); }
             if (! (ActualActivityNumber == 12)) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(false); }
             if (! (ActualActivityNumber == 13)) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(false); }
+            if (!(ActualActivityNumber == 14)) { ActivityResourcesNode.transform.Find("Activity15").gameObject.SetActive(false); }
+            if (!(ActualActivityNumber == 15)) { ActivityResourcesNode.transform.Find("Activity16").gameObject.SetActive(false); }
 
             //building-6 check
             if (! (ActualActivityNumber == 2) && ! (ActualActivityNumber == 4) && ! (ActualActivityNumber == 9))
@@ -789,6 +895,127 @@ public class ManualSelection : MonoBehaviour
         }
         //MenuManager Finish
     }
-    
+
+    #endregion
+
+    #region IMU related
+    //Painter
+    public void PainterConfirm()
+    {
+        //panel inactive
+        IMU_P.SetActive(false);
+        //IMU report canvas panel
+        IMUReportEnable = true;
+        //IMU functions
+        SetInteractablesFalse();
+        SetCubeFalse();
+        ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_painter = true;
+        ActivityManagerScript.GetComponent<ActivityManagerScript>().select_13_new();
+    }
+
+    public void PainterNeck()
+    {
+        //IMUntt.SetActive(true);//show tooltip
+        IMUPainter.GetComponent<workerScript>().neckSelect();//toggle on and off
+    }
+    public void PainterShoulder()
+    {
+        //IMUstt.SetActive(true);
+        IMUPainter.GetComponent<workerScript>().shoulderSelect();
+    }
+
+    public void PainterThigh()
+    {
+        //IMUttt.SetActive(true);
+        IMUPainter.GetComponent<workerScript>().thighSelect();
+    }
+
+    public void PainterBack()
+    {
+        //IMUbtt.SetActive(true);
+        IMUPainter.GetComponent<workerScript>().backSelect();
+    }
+    //Labor
+    public void LabororConfirm()
+    {
+        //panel inactive
+        IMU_L.SetActive(false);
+        //IMU report canvas panel
+        IMUReportEnable = true;
+        //IMU functions
+        SetInteractablesFalse();
+        SetCubeFalse();
+        ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_laborer = true;
+        ActivityManagerScript.GetComponent<ActivityManagerScript>().select_13_new();
+    }
+
+    public void LabororNeck()
+    {
+        //IMUntt.SetActive(true);//show tooltip
+        IMULabor.GetComponent<workerScript>().neckSelect();//toggle on and off
+    }
+    public void LabororShoulder()
+    {
+        //IMUstt.SetActive(true);
+        IMULabor.GetComponent<workerScript>().shoulderSelect();
+    }
+
+    public void LabororThigh()
+    {
+        //IMUttt.SetActive(true);
+        IMULabor.GetComponent<workerScript>().thighSelect();
+    }
+
+    public void LabororBack()
+    {
+        //IMUbtt.SetActive(true);
+        IMULabor.GetComponent<workerScript>().backSelect();
+    }
+    //Carpenter
+    public void CarpenterConfirm()
+    {
+        //panel inactive
+        IMU_C.SetActive(false);
+        //IMU report canvas panel
+        IMUReportEnable = true;
+        //IMU functions
+        SetInteractablesFalse();
+        SetCubeFalse();
+        ActivityManagerScript.GetComponent<ActivityManagerScript>().A14_c1 = true;
+        ActivityManagerScript.GetComponent<ActivityManagerScript>().select_13_new();
+    }
+
+    public void CarpenterNeck()
+    {
+        //IMUntt.SetActive(true);//show tooltip
+        IMUCarpenter.GetComponent<workerScript>().neckSelect();//toggle on and off
+    }
+    public void CarpenterShoulder()
+    {
+        //IMUstt.SetActive(true);
+        IMUCarpenter.GetComponent<workerScript>().shoulderSelect();
+    }
+
+    public void CarpenterThigh()
+    {
+        //IMUttt.SetActive(true);
+        IMUCarpenter.GetComponent<workerScript>().thighSelect();
+    }
+
+    public void CarpenterBack()
+    {
+        //IMUbtt.SetActive(true);
+        IMUCarpenter.GetComponent<workerScript>().backSelect();
+    }
+
+    public void IMUStop()
+    {
+        IMUReportEnable = false;
+        IMUReportCanvas.SetActive(false);
+        ActivityManagerScript.GetComponent<ActivityManagerScript>().A13_stop();
+        //mainUICollection.SetActive(true);
+        //ManualSelectionParent.GetComponent<ManualSelection>().IMUReportEnable = false;
+    }
+
     #endregion
 }
