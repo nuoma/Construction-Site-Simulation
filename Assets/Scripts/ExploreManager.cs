@@ -45,6 +45,12 @@ public class ExploreManager : MonoBehaviour
     public GameObject A11Tooltip;
     public GameObject A12Tooltip;
     public GameObject A13Tooltip;
+    public GameObject A14Tooltip;
+    public GameObject A15Tooltip;
+
+    public GameObject OldHouseWindowTooltip;
+    public GameObject OldHouseRoofTooltip;
+    public GameObject OldHouseFloorTooltip;
 
     private bool showhidetoggle = false;
     public GameObject Building6;
@@ -72,7 +78,13 @@ public class ExploreManager : MonoBehaviour
         A11Tooltip.SetActive(false);
         A12Tooltip.SetActive(false);
         A13Tooltip.SetActive(false);
+        A14Tooltip.SetActive(false);
+        A15Tooltip.SetActive(false);
         NearMenuIsolate.SetActive(false);
+
+        OldHouseWindowTooltip.SetActive(false);
+        OldHouseRoofTooltip.SetActive(false);
+        OldHouseFloorTooltip.SetActive(false);
     }
 
     // Update is called once per frame
@@ -175,6 +187,9 @@ public class ExploreManager : MonoBehaviour
         if (SelectedActivityNum == 10)
         {
             A11Tooltip.SetActive(true);
+            OldHouseWindowTooltip.SetActive(true);
+            OldHouseRoofTooltip.SetActive(true);
+            OldHouseFloorTooltip.SetActive(true);
         }
         //A12 jobsite inspection
         if (SelectedActivityNum == 11)
@@ -182,9 +197,27 @@ public class ExploreManager : MonoBehaviour
             A12Tooltip.SetActive(true);
         }
         //A13 IMU
+        //Painter
         if (SelectedActivityNum == 12)
         {
             A13Tooltip.SetActive(true);
+        }
+
+        //L
+        if (SelectedActivityNum == 13)
+        {
+            A14Tooltip.SetActive(true);
+        }
+        //C
+        if (SelectedActivityNum == 14)
+        {
+            A15Tooltip.SetActive(true);
+        }
+
+        //All activities
+        if (SelectedActivityNum == 15)
+        {
+            AllActivities();
         }
 
     }
@@ -222,6 +255,8 @@ public class ExploreManager : MonoBehaviour
         A11Tooltip.SetActive(true);
         A12Tooltip.SetActive(true);
         A13Tooltip.SetActive(true);
+        A14Tooltip.SetActive(true);
+        A15Tooltip.SetActive(true);
     }
 
     public void ShowHide()
@@ -273,6 +308,8 @@ public class ExploreManager : MonoBehaviour
             if (!(SelectedActivityNum == 10)) { ActivityResourcesNode.transform.Find("Activity12").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Laser").gameObject.SetActive(false); ActivityResourcesNode.transform.Find("Activity12_Drone").gameObject.SetActive(false); }
             if (!(SelectedActivityNum == 11)) { ActivityResourcesNode.transform.Find("Activity13_Drone").gameObject.SetActive(false); }
             if (!(SelectedActivityNum == 12)) { ActivityResourcesNode.transform.Find("Activity14").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 13)) { ActivityResourcesNode.transform.Find("Activity15").gameObject.SetActive(false); }
+            if (!(SelectedActivityNum == 14)) { ActivityResourcesNode.transform.Find("Activity16").gameObject.SetActive(false); }
 
             //building-6 check
             if (!(SelectedActivityNum == 1) && !(SelectedActivityNum == 3) && !(SelectedActivityNum == 8))

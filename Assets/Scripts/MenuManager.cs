@@ -1154,7 +1154,7 @@ public class MenuManager : MonoBehaviour
 
             //string name = "A" + j + "POS";
             //Activate Chevron and live for 5 seconds.
-            StartCoroutine(ActivityPointer(PointingChevron, j, 5.0f));
+            StartCoroutine(ActivityPointer(PointingChevron, j, 10.0f));
 
         }
 

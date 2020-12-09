@@ -264,7 +264,7 @@ public class ManualSelection : MonoBehaviour
     }
     private void CreateSensorsDropdown()//Dropdown 1
     {
-        SensorsList = new List<string> {"GPS", "RFID", "Laser Scanner", "Drone", "Worker Ergonomics(IMU)" };//"Sensors",
+        SensorsList = new List<string> {"GPS", "RFID", "Laser Scanner", "Drone", "IMU" };//"Sensors",
         foreach (string option in SensorsList)
         {
             Dropdown1.CreateNewItem(option, null);
@@ -778,7 +778,7 @@ public class ManualSelection : MonoBehaviour
     {
         string name = "A" + ActualActivityNumber + "POS";
         //Activate Chevron and live for 10 seconds.
-        StartCoroutine(ShowAndHide(PointingChevron, name, 8.0f));
+        StartCoroutine(ShowAndHide(PointingChevron, name, 10.0f));
     }
 
     // Activate chevron, give location, and keep it active for 5 seconds.
@@ -798,14 +798,14 @@ public class ManualSelection : MonoBehaviour
         ActivityList.Clear();
         //Activity correspond to GPS
         if (SelectedSensorIndex == 0) { ActivityList.AddRange(new string[] { "Backfilling", "Crane Loading", "Material Delivery", "Material handling (1)", "Truck Load/Haul",
-             "Detecting Fall","Painting","Labor","Carpentry" }); }
+             "Detecting Fall","Painting","Labor Work","Carpentry" }); }
         //RFID activities
         if (SelectedSensorIndex == 1) { ActivityList.AddRange(new string[] {  "Backfilling", "Crane Loading","Material Delivery", "Material handling (1)", "Truck Load/Haul",
-            "Material Inventory", "Detecting Fall" ,"Painting","Labor","Carpentry" }); }
+            "Material Inventory", "Detecting Fall" ,"Painting","Labor Work","Carpentry" }); }
         if (SelectedSensorIndex == 2) { ActivityList.AddRange(new string[] {  "Cladding", "Flooring", "Stockpile unloading", "Renovation" }); }
         if (SelectedSensorIndex == 3) { ActivityList.AddRange(new string[] {  "Renovation", "Site Inspection" }); }
         //IMU activities
-        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] {  "Painting","Labor","Carpentry" }); }
+        if (SelectedSensorIndex == 4) { ActivityList.AddRange(new string[] {  "Painting","Labor Work","Carpentry" }); }
     }
 
     private void UpdateSensorString()
@@ -814,7 +814,7 @@ public class ManualSelection : MonoBehaviour
         if (SelectedSensorIndex == 1) CurrentSensor = "RFID";
         if (SelectedSensorIndex == 2) CurrentSensor = "Laser Scanner";
         if (SelectedSensorIndex == 3) CurrentSensor = "Drone";
-        if (SelectedSensorIndex == 4) CurrentSensor = "Worker Ergonomics(IMU)";
+        if (SelectedSensorIndex == 4) CurrentSensor = "IMU";
     }
     //For manual scene no6
     public void ReloadSceneButton()
