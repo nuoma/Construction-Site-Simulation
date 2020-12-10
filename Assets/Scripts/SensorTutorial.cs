@@ -185,7 +185,7 @@ public class SensorTutorial : MonoBehaviour
     public void LSexe()
     {
         LScanner.SetActive(true);
-        //LSPanel.SetActive(false);
+        LSPanel.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialLS();
         //LSBackButton.SetActive(true);
     }
@@ -206,7 +206,7 @@ public class SensorTutorial : MonoBehaviour
 
     public void Droneexe()
     {
-        //DronePanel.SetActive(false);
+        DronePanel.SetActive(false);
         ActivityManager.GetComponent<ActivityManagerScript>().TutorialDrone();
     }
 

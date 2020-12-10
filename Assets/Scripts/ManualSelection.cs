@@ -93,6 +93,10 @@ public class ManualSelection : MonoBehaviour
     public GameObject IMUPainter;
     public GameObject IMULabor;
     public GameObject IMUCarpenter;
+
+    public TextMeshProUGUI Dropdown1Title;
+
+    private bool Dropdown1TitleChangeBool;
     #endregion
 
     #region Start Update
@@ -179,6 +183,13 @@ public class ManualSelection : MonoBehaviour
             CreateActivitiesDropdown();
             UpdateSensorString();
             onSensorChanged = false;
+        }
+
+        //Title of dropdown 1 should be sensor until a sensor change is happened, and another boolean indicating this only happen once
+        if (!onSensorChanged && !Dropdown1TitleChangeBool)
+        {
+            Dropdown1Title.GetComponent<TextMeshProUGUI>().text = "Sensors";
+            Dropdown1TitleChangeBool = true;
         }
 
         //after selection is made, activate run button.

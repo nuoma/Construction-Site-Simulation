@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 using UnityEngine.SceneManagement;
+using Microsoft.MixedReality.Toolkit.Experimental.Utilities;
 
 public class ExploreManager : MonoBehaviour
 {
@@ -59,6 +60,10 @@ public class ExploreManager : MonoBehaviour
 
     public GameObject LS;
     public GameObject MDrone;
+
+    public GameObject CAMPOS;
+
+    [SerializeField] private GameObject PointingChevron;
     #endregion
 
     #region Start Update
@@ -85,6 +90,7 @@ public class ExploreManager : MonoBehaviour
         OldHouseWindowTooltip.SetActive(false);
         OldHouseRoofTooltip.SetActive(false);
         OldHouseFloorTooltip.SetActive(false);
+        PointingChevron.SetActive(false);
     }
 
     // Update is called once per frame
@@ -127,6 +133,10 @@ public class ExploreManager : MonoBehaviour
     {
         //ResetButton.SetActive(true);
         NearMenuIsolate.SetActive(true);
+
+        //pointing chevron
+        //ActivityIndicator();
+
         //A1 bulldozer move
         if (SelectedActivityNum == 0)
         {
@@ -257,6 +267,22 @@ public class ExploreManager : MonoBehaviour
         A13Tooltip.SetActive(true);
         A14Tooltip.SetActive(true);
         A15Tooltip.SetActive(true);
+    }
+
+    private void ActivityIndicator()
+    {
+        string name = "A" + SelectedActivityNum + "POS";
+        //Activate Chevron and live for 10 seconds.
+        StartCoroutine(ShowAndHide(PointingChevron, name, 10.0f));
+    }
+
+    // Activate chevron, give location, and keep it active for 5 seconds.
+    public IEnumerator ShowAndHide(GameObject go, string name, float delay)
+    {
+        go.GetComponent<DirectionalIndicator>().DirectionalTarget = CAMPOS.transform.Find(name).transform;
+        go.SetActive(true);
+        yield return new WaitForSeconds(delay);
+        go.SetActive(false);
     }
 
     public void ShowHide()

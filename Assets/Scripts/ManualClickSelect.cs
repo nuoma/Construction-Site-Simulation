@@ -23,10 +23,13 @@ public class ManualClickSelect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (WarningBool && (myDialog == null))
+        if (WarningBool) 
         {
-            myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", DialogWarningString, true);
-            WarningBool = false;
+            if (myDialog == null)
+            {
+                myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", DialogWarningString, true);
+                WarningBool = false;
+            } 
         }
 
         //currently configuring as A2 crane activity + GPS
@@ -74,7 +77,11 @@ public class ManualClickSelect : MonoBehaviour
         else //not taggable object, show warning
         {
             //Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", "This is not taggable.", true);
-            WarningBool = true;
+            if (myDialog == null)
+            {
+                WarningBool = true;
+            }
+            
             DialogWarningString = gameObject.name + " cannot be tagged with " + ManualSelectionCode.GetComponent<ManualSelection>().CurrentSensor;
         }
 
