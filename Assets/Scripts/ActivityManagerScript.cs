@@ -489,13 +489,27 @@ public class ActivityManagerScript : MonoBehaviour
         scannerMenu.SetActive(true);
     }
 
-
+    //A9 scan floor, only move
+    public Vector3 Explore_A9_MoveLSOnly()
+    {
+        Vector3 ScannerPosition = Activity9.transform.position;
+        //DummyLSParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        return ScannerPosition;
+    }
 
     public void select10()
     {
         //choose between 11A and 11B
         Activity11Canvas.SetActive(true);
 
+    }
+
+    //A10 scan stockpile, only move
+    public Vector3 Explore_A10_MoveLSOnly()
+    {
+        Vector3 ScannerPosition = Activity11A.transform.position;
+        //DummyLSParentNode.transform.position = ScannerPosition;//new Vector3(droneMove[0], droneMove[1], droneMove[2]); ;// change scanner parent node position to building 2.
+        return ScannerPosition;
     }
 
     //laser scan stockpile 1
