@@ -70,7 +70,7 @@ public class bubble : MonoBehaviour
     public void horizontalMoveMRTK(SliderEventData newValue)
     {
         float HValuePost = 2 * newValue.NewValue - 1.0f;//change scale from 0~1 to -1~1
-        horizontalMultiplier = HValuePost * 0.32f;
+        horizontalMultiplier = HValuePost * 0.31f;
         //if (HValuePost > 0.15 || HValuePost < -0.15)
         //    horizontalMultiplier = HValuePost;
         //else

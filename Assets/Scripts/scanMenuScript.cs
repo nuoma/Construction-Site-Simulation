@@ -26,6 +26,8 @@ public class scanMenuScript : MonoBehaviour
     [SerializeField] private float[] scannerMove = new float[3];
     [SerializeField] public GameObject ScannerInterfaceButton;
 
+    public GameObject Arrow;
+
     string p1;
     string p2;
     string p3;
@@ -49,6 +51,7 @@ public class scanMenuScript : MonoBehaviour
         AutoResetButton.SetActive(false);
         tripod.GetComponent<Renderer>().enabled = false;
         scanner.GetComponent<Renderer>().enabled = false;
+        Arrow.SetActive(false);
 
 
         for (int i = 0; i < targets.Length; i++)
@@ -66,6 +69,7 @@ public class scanMenuScript : MonoBehaviour
     {
         tripodMenu.SetActive(true);
         tripod.GetComponent<Renderer>().enabled = true;
+        Arrow.SetActive(true);
     }
     public void positionTripod()
     {
@@ -135,7 +139,7 @@ public class scanMenuScript : MonoBehaviour
     {
         //this condition is now used to change button interactable.
         //if (tripod.GetComponent<Renderer>().enabled == true && scanner.GetComponent<Renderer>().enabled == true && targetsEnabled && tripodLevel)
-  
+        Arrow.SetActive(false);
         TargetsMenu.SetActive(false);
         //backButton.SetActive(true);
         //if auto selection menu mode

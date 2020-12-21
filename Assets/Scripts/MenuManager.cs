@@ -50,6 +50,7 @@ public class MenuManager : MonoBehaviour
     public TextMeshProUGUI IMUReportText;
     public TextMeshProUGUI ShowSelectionText;
     public TextMeshProUGUI CostBenefitText;
+    public TextMeshProUGUI TitleText;
 
     private bool[] SelectedActivities = new bool[16];
     private bool[] SelectedSensors = new bool[5];
@@ -1241,6 +1242,7 @@ public class MenuManager : MonoBehaviour
     //Activities Confirm.
     public void A_Confirm()
     {
+        TitleText.GetComponent<TextMeshProUGUI>().text = "Automatic selection, please select sensors to be used with this activity.";
         Mdropdown1.ForceClose();
 
         int TempActivityNumber = 0;
@@ -1405,6 +1407,7 @@ public class MenuManager : MonoBehaviour
     //Sensor Confirm.
     public void S_Confirm()
     {
+        TitleText.GetComponent<TextMeshProUGUI>().text = "Automatic selection, please select resources to be used with selected sensor.";
         Mdropdown2.ForceClose();
         CheckActivitySensors();
         //S_confirm_button.SetActive(false);
