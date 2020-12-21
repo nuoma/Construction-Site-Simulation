@@ -144,6 +144,7 @@ public class ActivityManagerScript : MonoBehaviour
     public GameObject LStarget2;
     public GameObject LStarget3;
     public GameObject LStripod;
+    public GameObject BubbleLeveler;
     #endregion
 
     #region main menu functionalities
@@ -699,9 +700,12 @@ public class ActivityManagerScript : MonoBehaviour
         drone.SetActive(true);
         //mainCamera.transform.position = newPosition + new Vector3(droneMove[0], droneMove[1], droneMove[2]);
         //GetComponent<Canvas>().enabled = false;
-        ManualDroneBackButton.SetActive(true);
+        //ManualDroneBackButton.SetActive(true);
         droneCanvas.SetActive(true);//here should be drone canvas instead of task canvas
         drone.transform.Find("Arrow").gameObject.SetActive(true);
+
+        //MDroneParentCanvas.transform.position = Activity12_MDroneCameraLocator.transform.position;
+        //drone.transform.position = Activity12_DroneLocator.transform.position;
         //drone.GetComponent<droneScript>().start();
     }
 
@@ -715,7 +719,7 @@ public class ActivityManagerScript : MonoBehaviour
         drone.transform.position = Activity12_DroneLocator.transform.position; //3, move drone to locator position.
         //mainCamera.transform.position = Activity12_MDroneCameraLocator.transform.position;//4, move camera.
         //GetComponent<Canvas>().enabled = false; //1, Disable main menu canvas.
-        ManualDroneBackButton.SetActive(true);//Backbutton active
+        //ManualDroneBackButton.SetActive(true);//Backbutton active
         droneCanvas.SetActive(true);//Drone canvas active
 
         //drone canvas move location and rotate
@@ -725,7 +729,7 @@ public class ActivityManagerScript : MonoBehaviour
 
         //Move Drone Parent Node
         MDroneParentCanvas.transform.position = Activity12_MDroneCameraLocator.transform.position;
-        MDroneParentCanvas.transform.eulerAngles = new Vector3(MDroneParentCanvas.transform.eulerAngles.x, MDroneParentCanvas.transform.eulerAngles.y + 50, MDroneParentCanvas.transform.eulerAngles.z);
+        //MDroneParentCanvas.transform.eulerAngles = new Vector3(MDroneParentCanvas.transform.eulerAngles.x, MDroneParentCanvas.transform.eulerAngles.y + 50, MDroneParentCanvas.transform.eulerAngles.z);
 
         drone.transform.Find("Arrow").gameObject.SetActive(true);
         //drone.GetComponent<droneScript>().start();
@@ -747,7 +751,7 @@ public class ActivityManagerScript : MonoBehaviour
     public void TutorialLS()
     {
         //LSboxon();
-        LSConstraint.GetComponent<LSConstraint>().BeginSignal();
+        //LSConstraint.GetComponent<LSConstraint>().BeginSignal();
         scannerMenu.SetActive(true);     
     }
     public void GenericBackButton() //currently for all Back menus.
@@ -767,6 +771,15 @@ public class ActivityManagerScript : MonoBehaviour
         LSResetButton.SetActive(false);
         ConcurencySuspension = true;
         LaserScannerBackButton.SetActive(false);
+    }
+
+    public void ManualDroneReset()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(6);
+    }
+    public void AutoDroneReset()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(5);
     }
 
     public void ManualDroneManualModeBackButton()
@@ -794,6 +807,16 @@ public class ActivityManagerScript : MonoBehaviour
         LaserScannerBackButton.SetActive(false);
         GetComponent<Canvas>().enabled = true;
         gameObject.SetActive(true);
+    }
+
+    public void BubbleLevelerBackButton()
+    {
+        //resetMainCam();
+        BubbleLeveler.SetActive(false);
+        GetComponent<Canvas>().enabled = true;//re-show hidden scanner initial canvas.
+        gameObject.SetActive(true);
+        //re-enable scaner menu
+        scannerMenu.SetActive(true);
     }
 
     public void DroneBackButton()

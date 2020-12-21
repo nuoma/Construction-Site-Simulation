@@ -132,6 +132,8 @@ public class ExploreManager : MonoBehaviour
         //pointing chevron
         //ActivityIndicator();
 
+        ShowHide();
+
         //A1 bulldozer move
         if (SelectedActivityNum == 0)
         {
@@ -344,6 +346,9 @@ public class ExploreManager : MonoBehaviour
             //bool is false, set to true and hide everything
             //Switch to hide in-active assets.
             showhidetoggle = true;
+
+            //All activities, hide nothing
+            if (SelectedActivityNum == 15) return;
             //mainUICollection.SetActive(false);
             //MiscAssetNode.SetActive(false);
             //building.SetActive(false); //building-6 relate to these activities:
@@ -441,8 +446,10 @@ public class ExploreManager : MonoBehaviour
             //A14 carpentry
             if (!(SelectedActivityNum == 14)) { ActivityResourcesNode.transform.Find("Activity16").gameObject.SetActive(false); }
 
-            //building-6 check
-            if (!(SelectedActivityNum == 1) && !(SelectedActivityNum == 3) && !(SelectedActivityNum == 8))
+            
+
+                //building-6 check
+                if (!(SelectedActivityNum == 1) && !(SelectedActivityNum == 3) && !(SelectedActivityNum == 8))
             {
                 Building6.SetActive(false);
             }

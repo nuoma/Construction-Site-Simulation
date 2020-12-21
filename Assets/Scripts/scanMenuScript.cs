@@ -34,10 +34,13 @@ public class scanMenuScript : MonoBehaviour
     bool targetsMoved = false;
     bool tripodLevel = false;
     Renderer[][] targetRenderers = new Renderer[3][];
-     public GameObject TripodParentNode;
+    public GameObject TripodParentNode;
+
+    public GameObject BubbleLeveler;
+
     void Start()
     {
-
+        BubbleLeveler.SetActive(false);
         ScannerInterfaceButton.GetComponent<Button>().interactable = false;
 
         tripodMenu.SetActive(false);
@@ -66,14 +69,21 @@ public class scanMenuScript : MonoBehaviour
     }
     public void positionTripod()
     {
-        Vector3 newPosition = tripod.transform.position;
-        mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
+        //Vector3 newPosition = tripod.transform.position;
+        //mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
         backButton.SetActive(true);
         //mainMenu.GetComponent<Canvas>().enabled = false;
         mainMenu.SetActive(false);
     }
     public void levelTripod()
     {
+        //new with bubble leveler
+        BubbleLeveler.SetActive(true);
+        //mainMenu.SetActive(false);
+        //old implementation disable entire activity manager
+        //we only need to hide scanner menu itself, while tripod menu is disabled completely
+        scannerMenu.SetActive(false);
+        //old
         tripodLevel = true;
         tripodMenu.SetActive(false);
         TripodParentNode.GetComponent<NearInteractionGrabbable>().enabled = false;
@@ -115,8 +125,8 @@ public class scanMenuScript : MonoBehaviour
         targetsMoved = true;
         TargetsMenu.SetActive(false);
         mainMenu.SetActive(false);
-        Vector3 newPosition = tripod.transform.position;
-        mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
+        //Vector3 newPosition = tripod.transform.position;
+        //mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
         backButton.SetActive(true);
         //mainMenu.GetComponent<Canvas>().enabled = false;
     }
@@ -144,7 +154,7 @@ public class scanMenuScript : MonoBehaviour
         //scannerCanvas.GetComponent<Canvas>().enabled = true;
         scannerCanvas.SetActive(true);// substitute above function.
         Vector3 newPosition = scanner.transform.position;
-        mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
+        //mainCamera.transform.position = newPosition + new Vector3(scannerMove[0], scannerMove[1], scannerMove[2]);
         //mainMenu.GetComponent<Canvas>().enabled = false;
         scannerMenu.SetActive(false);
 

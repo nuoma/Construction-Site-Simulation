@@ -97,6 +97,8 @@ public class ManualSelection : MonoBehaviour
     public TextMeshProUGUI Dropdown1Title;
 
     private bool Dropdown1TitleChangeBool;
+
+    private bool initialFlag;
     #endregion
 
     #region Start Update
@@ -121,6 +123,28 @@ public class ManualSelection : MonoBehaviour
         IMU_L.SetActive(false);
         IMU_C.SetActive(false);
     }
+
+    private void initialize()
+    {
+        //create sensors list
+        CreateActivityInitialDropdown();
+        CreateSensorsDropdown();
+
+        SetInteractablesFalse();
+        SetCubeFalse();
+
+        LSConfirmButton.SetActive(false);
+        TagButton.SetActive(false);
+        ManualSelectionListPanel.SetActive(false);
+        RunButton.SetActive(false);
+        ResetButton.SetActive(false);
+        ShowHideButton.SetActive(false);
+
+        IMU_P.SetActive(false);
+        IMU_L.SetActive(false);
+        IMU_C.SetActive(false);
+    }
+
 
     public void SetInteractablesFalse()
     {
@@ -175,6 +199,12 @@ public class ManualSelection : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!initialFlag)
+        {
+            //initialize();
+            initialFlag = true;
+        }
+        
         LUT();
         if (onSensorChanged)
         {

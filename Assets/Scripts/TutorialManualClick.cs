@@ -25,7 +25,7 @@ public class TutorialManualClick : MonoBehaviour
         
         if (WarningBool && (myDialog == null))
         {
-            myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", DialogWarningString, true);
+            myDialog = Dialog.Open(DialogPrefabSmall, DialogButtonType.OK, "Warning", DialogWarningString, false);
             WarningBool = false;
         }
         

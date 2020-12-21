@@ -7,8 +7,15 @@ using TMPro;
 public class SensorTutorial : MonoBehaviour
 {
 
-    public GameObject GPSPanel;
+    public GameObject GPSPanel1;
+    public GameObject GPSPanel2;
+    public GameObject GPSPanel3;
+    public GameObject GPShand1;
+    public GameObject GPShand2;
+    public GameObject RFIDhand1;
+    public GameObject RFIDhand2;
     public GameObject RFIDpanel;
+    
     public GameObject LSPanel;
     public GameObject DronePanel;
     public GameObject DroneInspectPanel;
@@ -62,7 +69,7 @@ public class SensorTutorial : MonoBehaviour
 
     public GameObject RFIDTagCanvas;
 
-    public GameObject GPStagpanel;
+    
 
 
     // Start is called before the first frame update
@@ -70,7 +77,7 @@ public class SensorTutorial : MonoBehaviour
     {
         SelectionPanel.SetActive(true);
         BackButton.SetActive(false);
-        GPSPanel.SetActive(false);
+        GPSPanel1.SetActive(false);
         RFIDpanel.SetActive(false);
         LSPanel.SetActive(false);
         DronePanel.SetActive(false);
@@ -90,6 +97,10 @@ public class SensorTutorial : MonoBehaviour
         dronett3.SetActive(false);
 
         RFIDTagCanvas.SetActive(false);
+        GPShand1.SetActive(false);
+        GPShand2.SetActive(false);
+        RFIDhand1.SetActive(false);
+        RFIDhand2.SetActive(false);
     }
 
     // Update is called once per frame
@@ -131,24 +142,38 @@ public class SensorTutorial : MonoBehaviour
     public void GPS()
     {
         gpsB = true;
-        GPSPanel.SetActive(true);
+        GPSPanel1.SetActive(true);
         SelectionPanel.SetActive(false);
         GPSParent.SetActive(true);
     }
 
-    public void GPSexe()
+    public void GPSButton1()
     {
-        GPSPanel.SetActive(false);
-        GPStagpanel.SetActive(false);
-        GPSReportCanvas.SetActive(true);
-        ActivityManager.GetComponent<ActivityManagerScript>().TutorialGPS();
+        GPSPanel2.SetActive(true);
+        GPSPanel1.SetActive(false);
     }
 
-    public void GPStag()
+    public void GPSButton2()
     {
-        GPStagpanel.SetActive(true);
-        GPSPanel.SetActive(false);
+        GPSPanel3.SetActive(true);
+        GPSPanel2.SetActive(false);
+
+        //enable hand coach
+        GPShand1.SetActive(true);
+        GPShand2.SetActive(true);
     }
+    public void GPSButtonFinal()
+    {
+        GPSPanel1.SetActive(false);
+        GPSPanel2.SetActive(false);
+        GPSPanel3.SetActive(false);
+        GPSReportCanvas.SetActive(true);
+        ActivityManager.GetComponent<ActivityManagerScript>().TutorialGPS();
+        GPShand1.SetActive(false);
+        GPShand2.SetActive(false);
+    }
+
+
 
     public void RFID()
     {
@@ -156,6 +181,8 @@ public class SensorTutorial : MonoBehaviour
         RFIDpanel.SetActive(true);
         SelectionPanel.SetActive(false);
         RFIDParent.SetActive(true);
+        RFIDhand1.SetActive(true);
+        RFIDhand2.SetActive(true);
     }
 
     public void RFIDexe()
@@ -166,6 +193,9 @@ public class SensorTutorial : MonoBehaviour
 
         if (RFIDVehicle.GetComponent<TutorialManualClick>().TagStatus == true)
         { RFIDvehicletooltip.SetActive(true); }
+
+        RFIDhand1.SetActive(false);
+        RFIDhand2.SetActive(false);
     }
 
     public void RFIDTag()

@@ -128,13 +128,15 @@ public class MenuManager : MonoBehaviour
     public GameObject IMUPainter;
     public GameObject IMULabor;
     public GameObject IMUCarpenter;
+
+    private bool initialFlag;
     #endregion
 
     //----------------------------------------------------------
 
     #region Start Update
 
-    void Start()
+    public void Start()
     {
 
         HideShowButton.SetActive(false);
@@ -174,9 +176,49 @@ public class MenuManager : MonoBehaviour
        // VisualBlock.SetActive(false);
     }
 
+    public void SceneInitialize()
+    {
+        HideShowButton.SetActive(false);
+        //create activity list
+        CreateActivityDropdown();
+        //create sensors list
+        CreateSensorsDropdown();
+        //resources list should be selected accordingly
+        CreateResourcesDropdown();
+
+        IMUReportCanvas.SetActive(false);
+        GPSReportCanvas.SetActive(false);
+        RFIDReportCanvas.SetActive(false);
+        PointingChevron.SetActive(false);
+        ComboSelectionCanvas.SetActive(false);
+        CostBenefitPanel.SetActive(false);
+        StopButtonObj.SetActive(false);
+        NAButton.SetActive(false);
+
+        A_confirm_button.SetActive(false);
+        S_confirm_button.SetActive(false);
+        R_confirm_button.SetActive(false);
+
+        //Mdropdown1.transform.Find("DisablePanel").gameObject.SetActive(false);
+        Mdropdown2.GetComponent<Button>().interactable = false;
+        //Mdropdown2.transform.Find("DisablePanel").gameObject.SetActive(true);
+        Mdropdown3.GetComponent<Button>().interactable = false;
+        //Mdropdown3.transform.Find("DisablePanel").gameObject.SetActive(true);
+        SelectButton.SetActive(false);
+
+        CurrentActivitySelection = 0;
+
+        //activity selection panel
+        ActivitySelectionParentPanel.gameObject.SetActive(false);
+
+        ConcurrentSelectionMenu.SetActive(false);
+        // VisualBlock.SetActive(false);
+    }
+
 
     void Update()
     {
+
         //update selected activity for each frame
         UpdateActivitySelected();
         UpdateSensorSelected();
