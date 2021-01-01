@@ -62,7 +62,7 @@ MonoBehaviour:
         Shader: {fileID: 0}
         GameObject: {fileID: 0}
         Vector2: {x: 0, y: 0}
-        Vector3: {x: 0.98, y: 1.02, z: 0.98}
+        Vector3: {x: 0.9, y: 1.1, z: 0.9}
         Vector4: {x: 0, y: 0, z: 0, w: 0}
         Color: {r: 0, g: 0, b: 0, a: 0}
         Quaternion: {x: 0, y: 0, z: 0, w: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
         Shader: {fileID: 0}
         GameObject: {fileID: 0}
         Vector2: {x: 0, y: 0}
-        Vector3: {x: 0.9, y: 1.1, z: 0.9}
+        Vector3: {x: 0.6, y: 1.5, z: 0.6}
         Vector4: {x: 0, y: 0, z: 0, w: 0}
         Color: {r: 0, g: 0, b: 0, a: 0}
         Quaternion: {x: 0, y: 0, z: 0, w: 0}

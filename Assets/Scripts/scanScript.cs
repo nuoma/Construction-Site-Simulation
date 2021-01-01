@@ -57,6 +57,10 @@ public class scanScript : MonoBehaviour
     float cameraHeight;
 
     ColorBlock colorVar;
+
+    public GameObject ResultExitButton;
+    public GameObject ResultManualExitButton;
+    public GameObject ModeSelection;
     #endregion
 
     // Start is called before the first frame update
@@ -94,14 +98,24 @@ public class scanScript : MonoBehaviour
         //prompt interface
         if (resolution != 0)
             p1 = "Resolution Selected. \n";
+        else
+            p1 = "";
         if (quality != 0)
             p2 = "Quality Selected. \n";
+        else
+            p2 = "";
         if (color != 0)
             p3 = "Color Selected. \n";
+        else
+            p3 = "";
         if (profile != 0)
             p4 = "Profile Selected. \n";
+        else
+            p4 = "";
         if (coverage)
             p5 = "Coverage Selected.\n";
+        else
+            p5 = "";
         SelectionPrompt.GetComponent<TextMeshProUGUI>().text = "Selected:" + p1 + p2 + p3 + p4 +p5;
 
         //Scan condition filter check
@@ -130,7 +144,21 @@ public class scanScript : MonoBehaviour
             scanner.GetComponent<Animator>().SetBool("spin", false);
             displayCanvas.SetActive(true);
             ScanStatusText.GetComponent<TextMeshProUGUI>().text = "Scan Finished";
-            if(camera360)
+
+            //if auto selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Auto == true)
+            {
+                ResultExitButton.SetActive(true);
+                ResultManualExitButton.SetActive(false);
+            }
+            //if manual selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Manual == true)
+            {
+                ResultManualExitButton.SetActive(true);
+                ResultExitButton.SetActive(false);
+            }
+
+            if (camera360)
             {
                 displayCanvas.transform.Find("Panel").gameObject.SetActive(false);
                 displayCanvas.transform.Find("Panel").gameObject.SetActive(true);

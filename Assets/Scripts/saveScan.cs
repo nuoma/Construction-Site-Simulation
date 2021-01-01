@@ -9,7 +9,6 @@ public class saveScan : MonoBehaviour
     [SerializeField] private RenderTexture texture360;
     [SerializeField] private GameObject ParentScanScript;
     [SerializeField] private GameObject ActivityManager;
-
     private Texture2D texture180;
      
 
@@ -110,5 +109,45 @@ public class saveScan : MonoBehaviour
         //show main ui and sensor reset
         //ActivityManager.GetComponent<ActivityManagerScript>().SensorReset();
         ActivityManager.GetComponent<ActivityManagerScript>().ResetForLS();
+    }
+
+    public void ManualSaveExit()
+    {
+        //save image
+        byte[] bytes;
+
+        if (display.transform.GetChild(0).gameObject.activeSelf)
+        {
+            bytes = texture180.EncodeToPNG();
+        }
+        else
+        {
+            bytes = toTexture2D(texture360).EncodeToPNG();
+        }
+
+
+        string filePath = Application.persistentDataPath + "/laserScans";
+        //string filePath = Application.dataPath + "/laserScans";
+
+        if (!Directory.Exists(filePath))
+        {
+            Directory.CreateDirectory(filePath);
+        }
+
+        string filename = string.Format("{0}/snap_{1}.png",
+            filePath,
+            System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+
+        File.WriteAllBytes(filename, bytes);
+
+        //display.enabled = false;
+        display.SetActive(false);
+
+
+        //disable LS canvas
+        ParentScanScript.GetComponent<scanScript>().exit();
+        //show main ui and sensor reset
+        //ActivityManager.GetComponent<ActivityManagerScript>().SensorReset();
+        ActivityManager.GetComponent<ActivityManagerScript>().ResetForLSManualMode();
     }
 }

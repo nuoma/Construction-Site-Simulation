@@ -156,8 +156,10 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.Dialog
                 // For HoloLens 1 and other platforms, place the dialog for far interactions with gaze or pointers.
                 // Size is maintained by ConstantViewSize solver
                 RadialView rv = dialogGameObject.GetComponent<RadialView>();
-                rv.MinDistance = 1.5f;
-                rv.MaxDistance = 2.0f;
+                //rv.MinDistance = 1.5f;
+                //rv.MaxDistance = 2.0f;
+                rv.MinDistance = 5f;
+                rv.MaxDistance = 10f;
             }
 
             Dialog dialog = dialogGameObject.GetComponent<Dialog>();

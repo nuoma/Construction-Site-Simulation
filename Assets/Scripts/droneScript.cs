@@ -16,7 +16,7 @@ public class droneScript : MonoBehaviour
     [SerializeField] private GameObject Backbutton;
 
     private int FrmCount = 0;
-    public bool startRot;
+    [HideInInspector] public bool startRot;
 
     private float zMax = 7.8f;
     private float zMin = -6f;
@@ -32,6 +32,10 @@ public class droneScript : MonoBehaviour
     [HideInInspector] public bool taskSelected = false;
     [HideInInspector] public bool power = false;
     [HideInInspector] public bool motor = false;
+
+    public GameObject FlightCanvasBackButton;
+    public GameObject FlightCanvasManualBackButton;
+    public GameObject ModeSelection;
 
     // Start is called before the first frame update
     public void Start()
@@ -82,10 +86,21 @@ public class droneScript : MonoBehaviour
     public void powerOn()
     {
         if (power)
-        { power = false; flyButton.GetComponent<Button>().interactable = false; }
+        { power = false;  }
         else
         { power = true; }
 
+        if (power && motor)
+        {
+            GetComponent<Animator>().SetBool("fly", true);
+            //ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
+            //colorVar.highlightedColor = new Color32(138, 255, 114, 255);
+            //colorVar.pressedColor = new Color32(17, 101, 0, 255);
+            //flyButton.GetComponent<Button>().colors = colorVar;
+            flyButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        { flyButton.GetComponent<Button>().interactable = false; }
     }
 
     public void enginesOn()
@@ -98,10 +113,10 @@ public class droneScript : MonoBehaviour
         if (power && motor)
         {
             GetComponent<Animator>().SetBool("fly", true);
-            ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
-            colorVar.highlightedColor = new Color32(138, 255, 114, 255);
-            colorVar.pressedColor = new Color32(17, 101, 0, 255);
-            flyButton.GetComponent<Button>().colors = colorVar;
+            //ColorBlock colorVar = flyButton.GetComponent<Button>().colors;
+            //colorVar.highlightedColor = new Color32(138, 255, 114, 255);
+            //colorVar.pressedColor = new Color32(17, 101, 0, 255);
+            //flyButton.GetComponent<Button>().colors = colorVar;
             flyButton.GetComponent<Button>().interactable = true;
         }
         else
@@ -121,6 +136,19 @@ public class droneScript : MonoBehaviour
             //droneCamera.gameObject.SetActive(true);
             startRot = true;
             Backbutton.SetActive(false);
+
+            //if auto selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Auto == true)
+            {
+                FlightCanvasBackButton.SetActive(true);
+                FlightCanvasManualBackButton.SetActive(false);
+            }
+            //if manual selection menu mode
+            if (ModeSelection.GetComponent<modeselection>().Manual == true)
+            {
+                FlightCanvasManualBackButton.SetActive(true);
+                FlightCanvasBackButton.SetActive(false);
+            }      
         }
     }
 

@@ -396,8 +396,8 @@ namespace Microsoft.MixedReality.Toolkit.Experimental.UI
         {
             ResetClosingTime();
             gameObject.SetActive(true);
-            ActivateSpecificKeyboard(LayoutType.Alpha);
-
+            //ActivateSpecificKeyboard(LayoutType.Alpha);
+            ActivateSpecificKeyboard(LayoutType.Symbol);
             OnPlacement(this, EventArgs.Empty);
 
             // todo: if the app is built for xaml, our prefab and the system keyboard may be displayed.

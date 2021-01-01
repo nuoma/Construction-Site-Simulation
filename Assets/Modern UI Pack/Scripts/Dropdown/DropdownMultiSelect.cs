@@ -320,5 +320,24 @@ namespace Michsky.UI.ModernUIPack
             Item item = new Item();
             dropdownItems.Add(item);
         }
+
+        public void ForceClose()
+        {
+            //Animate();
+            
+            if (isOn == true)
+            {
+                Animate();
+                isOn = false;
+            }
+            
+            gameObject.transform.SetParent(currentListParent, true);
+            gameObject.transform.SetSiblingIndex(siblingIndex);
+            triggerObject.SetActive(false);
+            //transform.Find("Item List").gameObject.SetActive(false);
+            //itemList.gameobject.SetActive(false);
+            //if (isListItem == true)
+            //   gameObject.transform.SetParent(currentListParent, true);
+        }
     }
 }
